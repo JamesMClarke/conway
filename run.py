@@ -1,11 +1,12 @@
 from square import Square
+import random
 
 class Board:
     width = 8
     length = 8
 
     def __init__(self):
-        self.grid = [[Square(False) for j in range(self.width)] for i in range(self.length)]
+        self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.width)] for i in range(self.length)]
 
 
     def print_grid(self):
