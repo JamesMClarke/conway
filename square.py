@@ -1,12 +1,12 @@
 class Square:
     def __init__(self,  is_alive:
-        self.is_alive = is_alive:
+        self.__is_alive = is_alive:
     
 def get_is_alive():
-    return self.is_alive
+    return self.__is_alive
 
 def kill():
-    self.is_alive = False
+    self.__is_alive = False
 
 def revive():
-    self.is_alive = True 
+    self.__is_alive = True 
