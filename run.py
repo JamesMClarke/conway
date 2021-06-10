@@ -1,6 +1,10 @@
 from square import Square
 import random
 
+def main():
+    board = Board()
+    board.print_grid()
+
 class Board:
     width = 8
     length = 8
@@ -19,5 +23,5 @@ class Board:
             print("")
             print("-".join(["-"] * self.width))
 
-board = Board()
-board.print_grid()
+if __name__ == "__main__":
+    main()
