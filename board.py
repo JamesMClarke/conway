@@ -73,14 +73,17 @@ class Board:
         for x in self.grid:
             for y in x:
                 # start new line if greater than width
-
+                rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
                 if(y.get_is_alive()):
                     #coordinates squares are overwiring one another
-                    self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1, tags ="setStateButton")
+                    #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1, tags ="setStateButton")
+                    self.canvas.itemconfig(rect,fill="Green")
                     self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
 
                 else:
-                    self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "red", outline = 'black',width=1,tags ="setStateButton")
+                    self.canvas.itemconfig(rect,fill="Red")
+
+                    #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "red", outline = 'black',width=1,tags ="setStateButton")
                     self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
 
                 x_coord = x_coord + rect_size
@@ -98,9 +101,9 @@ class Board:
                 
         root.mainloop()
 
-    def change_cell_state(a,b):
+    def change_cell_state(x,y):
 
-        print("A ",a,"\n","B",b)
+        print("Code for cell state change goes here")
 
 
 if __name__ == "__main__":
