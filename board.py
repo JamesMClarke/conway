@@ -3,14 +3,16 @@ import random
 
 def main():
     board = Board()
+    board.grid[0][0].revive()
     board.print_grid()
 
 class Board:
-    width = 8
+    width = 3
     length = 8
 
     def __init__(self):
-        self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.width)] for i in range(self.length)]
+        #bool(random.getrandbits(1))
+        self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
 
 
     def print_grid(self):
