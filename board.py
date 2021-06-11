@@ -56,6 +56,8 @@ class Board:
     
     def grid_gui(self):
         #ToDo put  in a frame
+        #ToDo allow user to change state of cell
+        #ToDo add user configurable sizing and colouring of rectangles
         #creates tkinter gui grid on a canvas
 
     
@@ -69,22 +71,19 @@ class Board:
 
         #adjust value to change rect size
         rect_size = 50
+        #loops through grid array
+        for i in self.grid:
+            for j in i:
 
-        for x in self.grid:
-            for y in x:
-                # start new line if greater than width
                 rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
-                if(y.get_is_alive()):
-                    #coordinates squares are overwiring one another
+
+                if(j.get_is_alive()):
                     #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1, tags ="setStateButton")
                     self.canvas.itemconfig(rect,fill="Green")
-                    self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
-
+                    #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
                 else:
                     self.canvas.itemconfig(rect,fill="Red")
-
-                    #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "red", outline = 'black',width=1,tags ="setStateButton")
-                    self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
+                    #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
 
                 x_coord = x_coord + rect_size
 
@@ -101,9 +100,12 @@ class Board:
                 
         root.mainloop()
 
-    def change_cell_state(x,y):
+    def change_cell_state(self):
 
         print("Code for cell state change goes here")
+
+    def update_board():
+
 
 
 if __name__ == "__main__":
