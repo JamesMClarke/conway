@@ -36,21 +36,24 @@ class Board:
         x_coord = 0
         y_coord = 0 
 
+        #adjust value to change rect size
+        rect_size = 50
+
         for x in self.grid:
             for y in x:
                 # start new line if greater than width
 
                 if(y.get_is_alive()):
                     #coordinates squares are overwiring one another
-                    self.grid_canvas.create_rectangle(x_coord, y_coord, x_coord+25, y_coord+25, fill = "Green", outline = 'black',width=1)
+                    self.grid_canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1)
                 else:
-                    self.grid_canvas.create_rectangle(x_coord, y_coord, x_coord+25, y_coord+25, fill = "red", outline = 'black',width=1)
-                x_coord = x_coord + 25
+                    self.grid_canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "red", outline = 'black',width=1)
+                x_coord = x_coord + rect_size
 
 
                 #if x_coord is >= than grid width * rect width, increments y_coord by itself plus rect width. resets x_coord coord
-                if x_coord >= self.width*25:
-                    y_coord = y_coord+25
+                if x_coord >= self.width*rect_size:
+                    y_coord = y_coord+rect_size
                     x_coord = 0 
                 self.grid_canvas.pack()
                 
