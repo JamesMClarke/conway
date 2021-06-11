@@ -3,8 +3,8 @@ import random
 
 def main():
     board = Board()
-    board.grid[0][0].revive()
-    board.print_grid()
+    board.grid[2][0].revive()
+    board.print_new()
 
 class Board:
     width = 3
@@ -19,6 +19,16 @@ class Board:
         for x in self.grid:
             for y in x:
                 if(y.get_is_alive()):
+                    print("X", end ="|")
+                else:
+                    print(" ", end ="|")
+            print("")
+            print("-".join(["-"] * self.width))
+
+    def print_new(self):
+        for y in range(0 , self.length):
+            for x in range(0, self.width):
+                if(self.grid[x][y].get_is_alive()):
                     print("X", end ="|")
                 else:
                     print(" ", end ="|")
