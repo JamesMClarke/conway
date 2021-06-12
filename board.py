@@ -7,32 +7,6 @@ def main():
     board.print_grid()
     board.grid_gui()
 
-class Board:
-    width = 8
-    length = 8
-
-    def __init__(self):
-        self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.width)] for i in range(self.length)]
-
-
-    def print_grid(self):
-        for x in self.grid:
-            for y in x:
-                if(y.get_is_alive()):
-                    print("X", end ="|")
-                else:
-                    print("D", end ="|")
-            print("")
-            print("-".join(["-"] * self.width))
-
-    def change_cell_state(self):from square import Square
-import random
-from tkinter import *
-
-def main():
-    board = Board()
-    board.print_grid()
-    board.grid_gui()
 
 class Board:
     width = 8
