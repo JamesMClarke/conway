@@ -1,11 +1,12 @@
+from tkinter import *
 from square import Square
 import random
-from tkinter import *
 
 def main():
     board = Board()
     board.tick()
     print()
+    board.grid_gui()
     board.print_new()
 
 class Board:
@@ -24,8 +25,8 @@ class Board:
         #self.grid[2][6].revive()
         #self.grid[1][0].revive()
         #self.grid[1][7].revive()
-
-
+    
+   
     def print_new(self):
         for y in range(0 , self.length):
             for x in range(0, self.width):
@@ -69,9 +70,9 @@ class Board:
                 if(neighbours == 3):
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
-                    self.grid[x][y].kill()    
+                    self.grid[x][y].kill()
     
-   def grid_gui(self):
+    def grid_gui(self):
         #ToDo put  in a frame
         #ToDo allow user to change state of cell
         #ToDo add user configurable sizing and colouring of rectangles
@@ -89,12 +90,12 @@ class Board:
         #adjust value to change rect size
         rect_size = 50
         #loops through grid array
-        for i in self.grid:
-            for j in i:
+        for y in range(0 , self.length):
+            for x in range(0, self.width):
 
                 rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
 
-                if(j.get_is_alive()):
+                if(self.grid[x][y].get_is_alive()):
                     #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1, tags ="setStateButton")
                     self.canvas.itemconfig(rect,fill="Green")
                     #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
@@ -116,13 +117,6 @@ class Board:
                 
                 
         root.mainloop()
-
-    def change_cell_state(self):
-
-        print("Code for cell state change goes here")
-
-    def update_board():
-
 
 
 if __name__ == "__main__":
