@@ -78,12 +78,12 @@ class Board:
         #ToDo add user configurable sizing and colouring of rectangles
         #creates tkinter gui grid on a canvas
 
-    
+        rect_size = 50
         root = Tk()
         root.title("Conways Game of Life")
 
 
-        self.canvas = Canvas(root, width=800, height=800)
+        self.canvas = Canvas(root, width=self.width*rect_size, height=self.length*rect_size)
         x_coord = 0
         y_coord = 0 
 
@@ -96,18 +96,14 @@ class Board:
                 rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
 
                 if(self.grid[x][y].get_is_alive()):
-                    #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1, tags ="setStateButton")
                     self.canvas.itemconfig(rect,fill="Green")
-                    #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
                 else:
                     self.canvas.itemconfig(rect,fill="Red")
-                    #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
 
                 x_coord = x_coord + rect_size
 
                     
 
-                #if x_coord is >= than grid width * rect width, increments y_coord by itself plus rect width. resets x_coord coord
                 if x_coord >= self.width*rect_size:
                     y_coord = y_coord+rect_size
                     x_coord = 0 
