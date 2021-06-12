@@ -1,12 +1,14 @@
+from tkinter import *
 from square import Square
 import random
-from tkinter import *
 
 def main():
     board = Board()
     board.tick()
     print()
     board.print_new()
+    board.grid_gui()
+
 
 class Board:
     width = 3
@@ -24,8 +26,8 @@ class Board:
         #self.grid[2][6].revive()
         #self.grid[1][0].revive()
         #self.grid[1][7].revive()
-
-
+    
+   
     def print_new(self):
         for y in range(0 , self.length):
             for x in range(0, self.width):
@@ -69,44 +71,42 @@ class Board:
                 if(neighbours == 3):
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
-                    self.grid[x][y].kill()    
+                    self.grid[x][y].kill()
     
-   def grid_gui(self):
+    def grid_gui(self):
         #ToDo put  in a frame
         #ToDo allow user to change state of cell
         #ToDo add user configurable sizing and colouring of rectangles
         #creates tkinter gui grid on a canvas
 
-    
+
+
+        #adjust value to change rect size
+        rect_size = 15
+        
         root = Tk()
         root.title("Conways Game of Life")
 
-
-        self.canvas = Canvas(root, width=800, height=800)
+        self.canvas = Canvas(root, width=self.width*rect_size, height=self.length*rect_size)
         x_coord = 0
         y_coord = 0 
 
-        #adjust value to change rect size
-        rect_size = 50
         #loops through grid array
-        for i in self.grid:
-            for j in i:
+        for y in range(0 , self.length):
+            for x in range(0, self.width):
 
                 rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
 
-                if(j.get_is_alive()):
-                    #self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "Green", outline = 'black',width=1, tags ="setStateButton")
+                #change  
+                if(self.grid[x][y].get_is_alive()):
                     self.canvas.itemconfig(rect,fill="Green")
-                    #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
                 else:
                     self.canvas.itemconfig(rect,fill="Red")
-                    #self.canvas.tag_bind("setStateButton","<Button-1>",self.change_cell_state)
 
                 x_coord = x_coord + rect_size
 
                     
 
-                #if x_coord is >= than grid width * rect width, increments y_coord by itself plus rect width. resets x_coord coord
                 if x_coord >= self.width*rect_size:
                     y_coord = y_coord+rect_size
                     x_coord = 0 
@@ -116,13 +116,6 @@ class Board:
                 
                 
         root.mainloop()
-
-    def change_cell_state(self):
-
-        print("Code for cell state change goes here")
-
-    def update_board():
-
 
 
 if __name__ == "__main__":
