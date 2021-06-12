@@ -94,11 +94,11 @@ class Board:
         for y in range(0 , self.length):
             for x in range(0, self.width):
 
-                rect_array =  [[]]
+                self.rect_array =  [[]]
                 rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1)
                 
                 #array of rect referemce for onclick
-                rect_array.append(rect)
+                self.rect_array.append(rect)
                 #change  
                 if(self.grid[x][y].get_is_alive()):
                     self.canvas.itemconfig(rect,fill="Green")
