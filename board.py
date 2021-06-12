@@ -9,6 +9,7 @@ def main():
     board.tick()
     print()
     board.print_new()
+    board.show_gui()
 
 class Board:
     width = 3
@@ -82,5 +83,6 @@ class Board:
             grid_gui = Grid_gui()
             create_grid = grid_gui.create_grid
             create_grid(grid_gui,self.grid)
+            
 if __name__ == "__main__":
     main()
