@@ -1,13 +1,14 @@
 from square import Square
 import random
 from tkinter import *
+import time
+from grid_gui import Grid_gui
 
 def main():
     board = Board()
     board.tick()
     print()
     board.print_new()
-    board.grid_gui()
 
 class Board:
     width = 3
@@ -16,7 +17,10 @@ class Board:
     def __init__(self):
         #Creates a random grid
         self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-
+        grid_gui = Grid_gui()
+        create_grid = grid_gui.create_grid
+        create_grid(grid_gui,self.grid)
+        
         #Creates blank grid for testing
         #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
 
@@ -72,53 +76,8 @@ class Board:
                 elif(neighbours != 2):
                     self.grid[x][y].kill()
     
-    def grid_gui(self):
-        #ToDo put  in a frame
-        #ToDo allow user to change state of cell
-        #ToDo add user configurable sizing and colouring of rectangles
-        #creates tkinter gui grid on a canvas
-
-
-
-        #adjust value to change rect size
-        rect_size = 15
-        
-        root = Tk()
-        root.title("Conways Game of Life")
-
-        self.canvas = Canvas(root, width=self.width*rect_size, height=self.length*rect_size)
-        x_coord = 0
-        y_coord = 0 
-
-        #loops through grid array
-        for y in range(0 , self.length):
-            for x in range(0, self.width):
-
-                rect_array =  [[]]
-                rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1)
-                
-                #array of rect referemce for onclick
-                rect_array.append(rect)
-                #change  
-                if(self.grid[x][y].get_is_alive()):
-                    self.canvas.itemconfig(rect,fill="Green")
-                else:
-                    self.canvas.itemconfig(rect,fill="Red")
-
-                x_coord = x_coord + rect_size
-
-                    
-
-                if x_coord >= self.width*rect_size:
-                    y_coord = y_coord+rect_size
-                    x_coord = 0 
-                self.canvas.pack()
-
-
-                
-                
-        root.mainloop()
-
+    
+    
 
 if __name__ == "__main__":
     main()
