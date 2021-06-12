@@ -18,7 +18,7 @@ def create_grid(grid,grid_width, grid_length ):
 
 
     
-    rect_array = [grid_width][grid_length]
+   # rect_array = [grid_width][grid_length]
 
     for y in range(0 ,grid_length):
         for x in range(0, grid_width):
