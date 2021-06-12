@@ -17,9 +17,7 @@ class Board:
     def __init__(self):
         #Creates a random grid
         self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-        grid_gui = Grid_gui()
-        create_grid = grid_gui.create_grid
-        create_grid(grid_gui,self.grid)
+       
         
         #Creates blank grid for testing
         #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
@@ -76,8 +74,13 @@ class Board:
                 elif(neighbours != 2):
                     self.grid[x][y].kill()
     
-    
-    
+   
+                
+                
 
+    def show_gui(self):
+            grid_gui = Grid_gui()
+            create_grid = grid_gui.create_grid
+            create_grid(grid_gui,self.grid)
 if __name__ == "__main__":
     main()
