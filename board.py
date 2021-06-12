@@ -2,7 +2,7 @@ from square import Square
 import random
 from tkinter import *
 import time
-from grid_gui import Grid_gui
+from grid_gui import create_grid
 
 def main():
     board = Board()
@@ -18,7 +18,6 @@ class Board:
     def __init__(self):
         #Creates a random grid
         self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-       
         
         #Creates blank grid for testing
         #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
@@ -80,9 +79,8 @@ class Board:
                 
 
     def show_gui(self):
-            grid_gui = Grid_gui()
-            create_grid = grid_gui.create_grid
-            create_grid(grid_gui,self.grid)
-            
+        create_grid(self.grid,self.width,self.length)
+
+
 if __name__ == "__main__":
     main()
