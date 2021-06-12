@@ -6,8 +6,9 @@ def main():
     board = Board()
     board.tick()
     print()
-    board.grid_gui()
     board.print_new()
+    board.grid_gui()
+
 
 class Board:
     width = 3
@@ -78,23 +79,25 @@ class Board:
         #ToDo add user configurable sizing and colouring of rectangles
         #creates tkinter gui grid on a canvas
 
-        rect_size = 50
+
+
+        #adjust value to change rect size
+        rect_size = 15
+        
         root = Tk()
         root.title("Conways Game of Life")
-
 
         self.canvas = Canvas(root, width=self.width*rect_size, height=self.length*rect_size)
         x_coord = 0
         y_coord = 0 
 
-        #adjust value to change rect size
-        rect_size = 50
         #loops through grid array
         for y in range(0 , self.length):
             for x in range(0, self.width):
 
                 rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
 
+                #change  
                 if(self.grid[x][y].get_is_alive()):
                     self.canvas.itemconfig(rect,fill="Green")
                 else:
