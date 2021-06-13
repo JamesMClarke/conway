@@ -11,6 +11,9 @@ def main():
     board.print_new()
     time.sleep(2)
     board.show_grid()
+    time.sleep(2)
+
+    board.update_board()
 
 class Board:
     width = 3
@@ -19,7 +22,8 @@ class Board:
     def __init__(self):
         #Creates a random grid
         self.grid = [[Square(bool(random.getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-        
+        self.gui =  Grid_gui(self.grid,self.width,self.length)
+
         #Creates blank grid for testing
         #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
 
@@ -78,7 +82,11 @@ class Board:
         
    
     def show_grid(self):
-        gui =  Grid_gui(self.grid,self.width,self.length)
+        self.gui.create_grid()
+
+    def update_board(self):
+        self.gui.update_gui
+
            
                 
 
