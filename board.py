@@ -1,15 +1,16 @@
+from grid_gui import Grid_gui
 from square import Square
 import random
 from tkinter import *
 import time
-from grid_gui import create_grid
 
 def main():
     board = Board()
     board.tick()
     print()
     board.print_new()
-    board.show_gui()
+    time.sleep(2)
+    board.show_grid()
 
 class Board:
     width = 3
@@ -38,6 +39,7 @@ class Board:
                     print("D", end ="|")
             print("")
             print("-".join(["-"] * self.width))
+
     
     def no_of_neighbours(self, x, y):
         neighbours = 0
@@ -73,14 +75,13 @@ class Board:
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
                     self.grid[x][y].kill()
-    
+        
    
+    def show_grid(self):
+        gui =  Grid_gui(self.grid,self.width,self.length)
+           
                 
-                
 
-    def show_gui(self):
-        create_grid(self.grid,self.width,self.length)
-
-
+   
 if __name__ == "__main__":
     main()
