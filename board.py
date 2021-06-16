@@ -6,10 +6,11 @@ from time import sleep
 
 def main():
     board = Board()
-    board.print_new()
+    gui =  Grid_gui(board.grid,board.width,board.length)
+    #board.print_new()
+    gui.create_grid()
     sleep(2)
-    board.show_grid()
-    board.update_board()
+    gui.update_gui()
    
     
 class Board:
@@ -19,8 +20,6 @@ class Board:
     def __init__(self):
         #Creates a random grid
         self.grid = [[Square(bool(getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-        self.gui =  Grid_gui(self.grid,self.width,self.length)
-
         #Creates blank grid for testing
         #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
 
@@ -76,29 +75,6 @@ class Board:
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
                     self.grid[x][y].kill()
-
-    
-    def grid_gui(self):
-        #ToDo put  in a frame
-        #ToDo allow user to change state of cell
-        #ToDo add user configurable sizing and colouring of rectangles
-        #creates tkinter gui grid on a canvas
-
-
-
-        #adjust value to change rect size
-        rect_size = 15
-        
-   
-    def show_grid(self):
-        self.gui.create_grid()
-
-    def update_board(self):
-        self.gui.update_gui()
-
-           
-                
-
    
 if __name__ == "__main__":
     main()
