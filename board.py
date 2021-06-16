@@ -7,14 +7,14 @@ from time import sleep
 def main():
     board = Board()
     board.print_new()
-    time.sleep(2)
+    sleep(2)
     board.show_grid()
     board.update_board()
    
     
 class Board:
-    width = 20
-    length = 20
+    width = 10
+    length = 10
 
     def __init__(self):
         #Creates a random grid
