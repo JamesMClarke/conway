@@ -11,10 +11,10 @@ def main():
     board.print_new()
     time.sleep(2)
     board.show_grid()
-    time.sleep(2)
-
     board.update_board()
-
+   
+    
+    
 class Board:
     width = 3
     length = 8
@@ -85,7 +85,7 @@ class Board:
         self.gui.create_grid()
 
     def update_board(self):
-        self.gui.update_gui
+        self.gui.update_gui()
 
            
                 
