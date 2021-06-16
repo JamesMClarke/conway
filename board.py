@@ -1,22 +1,17 @@
-from tkinter import *
+from grid_gui import Grid_gui
 from square import Square
+from tkinter import *
 from random import getrandbits
 from time import sleep
 
 def main():
     board = Board()
     board.print_new()
-    print()
-    while(True):
-        sleep(2)
-        print()
-        board.tick()
-        print()
-        board.print_new()
-        print()
-        #board.grid_gui()
-
-
+    time.sleep(2)
+    board.show_grid()
+    board.update_board()
+   
+    
 class Board:
     width = 20
     length = 20
@@ -24,6 +19,7 @@ class Board:
     def __init__(self):
         #Creates a random grid
         self.grid = [[Square(bool(getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
+        self.gui =  Grid_gui(self.grid,self.width,self.length)
 
         #Creates blank grid for testing
         #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
@@ -44,6 +40,7 @@ class Board:
                     print(" ", end ="|")
             print("")
             print("-".join(["-"] * self.width))
+
     
     def no_of_neighbours(self, x, y):
         neighbours = 0
@@ -79,8 +76,7 @@ class Board:
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
                     self.grid[x][y].kill()
-            print("")
-            print("-".join(["-"] * self.width))
+
     
     def grid_gui(self):
         #ToDo put  in a frame
@@ -93,39 +89,16 @@ class Board:
         #adjust value to change rect size
         rect_size = 15
         
-        root = Tk()
-        root.title("Conways Game of Life")
+   
+    def show_grid(self):
+        self.gui.create_grid()
 
-        self.canvas = Canvas(root, width=self.width*rect_size, height=self.length*rect_size)
-        x_coord = 0
-        y_coord = 0 
+    def update_board(self):
+        self.gui.update_gui()
 
-        #loops through grid array
-        for y in range(0 , self.length):
-            for x in range(0, self.width):
-
-                rect = self.canvas.create_rectangle(x_coord, y_coord, x_coord+rect_size, y_coord+rect_size, fill = "White", outline = 'black',width=1, tags ="setStateButton")
-
-                #change  
-                if(self.grid[x][y].get_is_alive()):
-                    self.canvas.itemconfig(rect,fill="Green")
-                else:
-                    self.canvas.itemconfig(rect,fill="Red")
-
-                x_coord = x_coord + rect_size
-
-                    
-
-                if x_coord >= self.width*rect_size:
-                    y_coord = y_coord+rect_size
-                    x_coord = 0 
-                self.canvas.pack()
-
-
+           
                 
-                
-        root.mainloop()
 
-
+   
 if __name__ == "__main__":
     main()
