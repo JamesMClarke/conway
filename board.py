@@ -3,15 +3,16 @@ from square import Square
 from tkinter import *
 from random import getrandbits
 from time import sleep
+import asyncio
 
-def main():
+async def main():
     board = Board()
     gui =  Grid_gui(board.grid,board.width,board.length)
     #board.print_new()
     gui.create_grid()
     while True:
+        await asyncio.sleep(1)
         board.tick()
-        sleep(1)
         gui.update_gui()
    
     
@@ -79,4 +80,4 @@ class Board:
                     self.grid[x][y].kill()
    
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
