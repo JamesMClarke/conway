@@ -9,8 +9,9 @@ class Grid_gui:
     def __init__(self,grid,grid_width,grid_length):
 
         self._root = Tk()
-        self.label = Label(self._root, text="Conways Game of Life")
-        self.label.pack()
+        self._root.title("Conways Game of Life")
+        self._root.geometry(self.window_size)
+        #self.label.pack()
         self.grid = grid
         self.grid_width = grid_width
         self.grid_length = grid_length
