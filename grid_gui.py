@@ -7,10 +7,10 @@ from tkinter import *
     
 class Grid_gui:
     def __init__(self,grid,grid_width,grid_length):
+
         self._root = Tk()
         self.label = Label(self._root, text="Conways Game of Life")
         self.label.pack()
-
         self.grid = grid
         self.grid_width = grid_width
         self.grid_length = grid_length
@@ -38,27 +38,22 @@ class Grid_gui:
 
 
     def create_grid(self):
+        
         self.canvas = Canvas(self._root,width=self.grid_width *self.rect_size, height=self.grid_length*self.rect_size)
-
         x_coord = 0
         y_coord = 0 
 
         for y in range(0 ,self.grid_length):
             for x in range(0, self.grid_width ):
 
-
                 rectangle = self.canvas.create_rectangle(x_coord, y_coord, x_coord+self.rect_size, y_coord+self.rect_size, fill = "White", outline = 'grey',width=1)
                 #self.canvas.tag_bind('on_user_click',"<Button-1>",change_cell_state)
                 self.rect_list[x][y] = rectangle
-                print('rect',self.rect_list[0][0]) 
-            
-   
-                    
+             
                 if(self.grid[x][y].get_is_alive()):
                     self.canvas.itemconfig(rectangle,fill="White")
                 else:
                     self.canvas.itemconfig(rectangle,fill="Black")
-
 
                 x_coord += self.rect_size
             
