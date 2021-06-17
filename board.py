@@ -9,8 +9,10 @@ def main():
     gui =  Grid_gui(board.grid,board.width,board.length)
     #board.print_new()
     gui.create_grid()
-    sleep(2)
-    gui.update_gui()
+    while True:
+        board.tick()
+        sleep(1)
+        gui.update_gui()
    
     
 class Board:

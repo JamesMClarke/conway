@@ -19,8 +19,6 @@ class Grid_gui:
         self.rect_size = 15
         self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
 
-        #self.canvas = Canvas(root,width=self.grid_width *self.rect_size, height=self.grid_length*self.rect_size)
-
         self.window_width = str(self.grid_width *self.rect_size)
         self.window_height = str(self.grid_length *self.rect_size)
         self.window_size = (self.window_width+'x'+self.window_height)
@@ -62,8 +60,16 @@ class Grid_gui:
             self._root.update()
 
     def update_gui(self):
-        rectangle = self.rect_list[1][5]
-        self.canvas.itemconfigure(rectangle,fill='green')
+
+        for y in range(0 ,self.grid_length):
+            for x in range(0, self.grid_width ):
+                rectangle = self.rect_list[x][y]
+
+                if(self.grid[x][y].get_is_alive()):
+                    self.canvas.itemconfig(rectangle,fill="white")
+                else:
+                    self.canvas.itemconfig(rectangle,fill="Black")
+
         self.canvas.pack()
         self._root.update()
 
