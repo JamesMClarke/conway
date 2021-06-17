@@ -15,7 +15,7 @@ class Grid_gui:
         self.grid_width = grid_width
         self.grid_length = grid_length
 
-        self.rect_size = 15
+        self.rect_size = 10
         self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
 
         self.window_width = str(self.grid_width *self.rect_size)
@@ -23,20 +23,7 @@ class Grid_gui:
         self.window_size = (self.window_width+'x'+self.window_height)  
         print('window size =',self.window_size)
 
-        #To Do put menu in frame in main loop
-        #Add funcs for options 
-        menubar = Menu(self._root)
-        options_menu = Menu(menubar, tearoff=0)
-        options_menu.add_command(label="reload board", command="")
-        options_menu.add_command(label="change board size", command="")
-        options_menu.add_command(label="change rectangle size", command="")
-        options_menu.add_separator()
-        options_menu.add_command(label="Exit", command=self._root.destroy)
-        menubar.add_cascade(label="Options", menu=options_menu)
-
-        self._root.config(menu=menubar)
-
-
+        
     def create_grid(self):
         
         self.canvas = Canvas(self._root,width=self.grid_width *self.rect_size, height=self.grid_length*self.rect_size)
@@ -79,8 +66,6 @@ class Grid_gui:
         self._root.update()
 
       
-       
-
 
    
 
