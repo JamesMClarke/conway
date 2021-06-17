@@ -10,8 +10,7 @@ class Grid_gui:
 
         self._root = Tk()
         self._root.title("Conways Game of Life")
-        self._root.geometry(self.window_size)
-        #self.label.pack()
+
         self.grid = grid
         self.grid_width = grid_width
         self.grid_length = grid_length
