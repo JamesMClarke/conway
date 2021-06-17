@@ -17,8 +17,8 @@ async def main():
    
     
 class Board:
-    width = 10
-    length = 10
+    width = 100
+    length = 100
 
     def __init__(self):
         #Creates a random grid
@@ -31,19 +31,7 @@ class Board:
         #self.grid[2][6].revive()
         #self.grid[1][0].revive()
         #self.grid[1][7].revive()
-    
-   
-    def print_new(self):
-        for y in range(0 , self.length):
-            for x in range(0, self.width):
-                if(self.grid[x][y].get_is_alive()):
-                    print("X", end ="|")
-                else:
-                    print(" ", end ="|")
-            print("")
-            print("-".join(["-"] * self.width))
-
-    
+        
     def no_of_neighbours(self, x, y):
         neighbours = 0
         
@@ -73,7 +61,6 @@ class Board:
         for y in range(0 , self.length):
             for x in range(0, self.width):
                 neighbours = self.no_of_neighbours(x ,y)
-                print(neighbours, end ="|")
                 if(neighbours == 3):
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
