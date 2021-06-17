@@ -1,5 +1,4 @@
 from tkinter import *
-import time
 
 #ToDo Update method find away to access rectangles for reference
 #ToDo add options menu
@@ -21,10 +20,21 @@ class Grid_gui:
 
         self.window_width = str(self.grid_width *self.rect_size)
         self.window_height = str(self.grid_length *self.rect_size)
-        self.window_size = (self.window_width+'x'+self.window_height)
+        self.window_size = (self.window_width+'x'+self.window_height)  
         print('window size =',self.window_size)
 
+        #To Do put menu in frame in main loop
+        #Add funcs for options 
+        menubar = Menu(self._root)
+        options_menu = Menu(menubar, tearoff=0)
+        options_menu.add_command(label="reload board", command="")
+        options_menu.add_command(label="change board size", command="")
+        options_menu.add_command(label="change rectangle size", command="")
+        options_menu.add_separator()
+        options_menu.add_command(label="Exit", command=self._root.destroy)
+        menubar.add_cascade(label="Options", menu=options_menu)
 
+        self._root.config(menu=menubar)
 
 
     def create_grid(self):
