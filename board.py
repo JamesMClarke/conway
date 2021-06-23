@@ -2,23 +2,24 @@ from grid_gui import Grid_gui
 from square import Square
 from tkinter import *
 from random import getrandbits
-from time import sleep
 import asyncio
 
+
 async def main():
-    board = Board()
-    gui =  Grid_gui(board.grid,board.width,board.length)
+    gui =  Grid_gui()
     #board.print_new()
-    gui.create_grid()
+    print(gui.get_width())
+    board = Board()
+
+    gui.create_grid(board.grid,board.width,board.length)
     while True:
         await asyncio.sleep(1)
         board.tick()
         gui.update_gui()
-   
     
 class Board:
-    width = 100
     length = 100
+    width = 100
 
     def __init__(self):
         #Creates a random grid

@@ -4,29 +4,32 @@ from tkinter import *
 #ToDo add options menu
 
 
-    
-class Grid_gui:
-    def __init__(self,grid,grid_width,grid_length):
 
+
+
+
+
+class Grid_gui:
+    def __init__(self):
+        self.settings()
         self._root = Tk()
         self._root.title("Conways Game of Life")
+        #self.window_width = str(self.grid_width *self.rect_size)
+        #self.window_height = str(self.grid_length *self.rect_size)
+        #self.window_size = (self.window_width+'x'+self.window_height)  
+        #print('window size =',self.window_size)
 
+        
+    def create_grid(self,grid,grid_width,grid_length):
+        
+        self.board_frame = Frame(self._root)
         self.grid = grid
         self.grid_width = grid_width
         self.grid_length = grid_length
-
         self.rect_size = 10
         self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
-
-        self.window_width = str(self.grid_width *self.rect_size)
-        self.window_height = str(self.grid_length *self.rect_size)
-        self.window_size = (self.window_width+'x'+self.window_height)  
-        print('window size =',self.window_size)
-
-        
-    def create_grid(self):
-        
-        self.canvas = Canvas(self._root,width=self.grid_width *self.rect_size, height=self.grid_length*self.rect_size)
+        self.canvas = Canvas(self.board_frame,width=self.grid_width *self.rect_size, height=self.grid_length*self.rect_size)
+       
         x_coord = 0
         y_coord = 0 
 
@@ -49,7 +52,8 @@ class Grid_gui:
                     x_coord = 0 
 
             self.canvas.pack()
-            self._root.update()
+
+            self.board_frame.pack()
 
     def update_gui(self):
 
@@ -63,9 +67,28 @@ class Grid_gui:
                     self.canvas.itemconfig(rectangle,fill="Black")
 
         self.canvas.pack()
-        self._root.update()
+        self.board_frame.update()
+
+        
+    def settings(self):
+        settings_win = Tk()
+        settings_win.title('settings')
+        sframe =Frame(settings_win)
+        sframe.pack()
+
+        self.r_entry = Entry(sframe)
+        self.r_entry.insert(-1,10)
+        self.r_entry.pack()
+        button = Button(sframe,text='confirm settings',command=self.set_width)
+        button.pack()
+        settings_win.mainloop()
+
+    def set_width(self):
+        self.rs = self.r_entry.get()
+        print(self.rs)
+        
+    def get_width(self):
+        return self.rs
 
       
-
-   
 
