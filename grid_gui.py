@@ -10,8 +10,9 @@ from tkinter import *
 
 
 class Grid_gui:
-    def __init__(self):
+    def __init__(self):        
         self.settings()
+        self.square_picker()
         self._root = Tk()
         self._root.title("Conways Game of Life")
         #self.window_width = str(self.grid_width *self.rect_size)
@@ -82,6 +83,14 @@ class Grid_gui:
         button = Button(sframe,text='confirm settings',command=self.set_width)
         button.pack()
         settings_win.mainloop()
+    
+    def square_picker(self):
+        #code goes here
+        square_pick_win = Tk()
+        square_pick_win.title('Starting Squares')
+        spw_frame = Frame(square_pick_win)
+        spw_frame.pack()
+        square_pick_win.mainloop()
 
     def set_width(self):
         self.rs = self.r_entry.get()
