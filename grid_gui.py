@@ -1,13 +1,5 @@
 from tkinter import *
 
-#ToDo Update method find away to access rectangles for reference
-#ToDo add options menu
-
-
-
-
-
-
 
 class Grid_gui:
     def __init__(self):        
@@ -98,14 +90,6 @@ class Grid_gui:
         button = Button(sframe,text='confirm settings',command=self.confirm_settings)
         button.pack()
         self.settings_win.mainloop()
-    
-    def square_picker(self):
-        #code goes here
-        square_pick_win = Tk()
-        square_pick_win.title('Starting Squares')
-        spw_frame = Frame(square_pick_win)
-        spw_frame.pack()
-        square_pick_win.mainloop()
 
     def confirm_settings(self):
         #ToDo add catch incase of input not being an int
@@ -120,6 +104,13 @@ class Grid_gui:
     def get_length(self):
         return self.length
 
+    def square_picker(self):
+        #code goes here
+        square_pick_win = Tk()
+        square_pick_win.title('Starting Squares')
+        spw_frame = Frame(square_pick_win)
+        spw_frame.pack()
+        square_pick_win.mainloop()
 
       
 
