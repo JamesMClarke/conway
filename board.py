@@ -6,11 +6,16 @@ import asyncio
 
 
 async def main():
+  
+
     gui =  Grid_gui()
+    global b_width
+    b_width = gui.get_width()
+    global b_length
+    b_length = gui.get_length()
     #board.print_new()
     print(gui.get_width())
     board = Board()
-
     gui.create_grid(board.grid,board.width,board.length)
     while True:
         await asyncio.sleep(1)
@@ -18,10 +23,11 @@ async def main():
         gui.update_gui()
     
 class Board:
-    length = 100
-    width = 100
+    
 
     def __init__(self):
+        self.length = b_length
+        self.width = b_width
         #Creates a random grid
         self.grid = [[Square(bool(getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
         #Creates blank grid for testing

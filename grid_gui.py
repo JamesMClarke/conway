@@ -27,7 +27,6 @@ class Grid_gui:
         self.grid = grid
         self.grid_width = grid_width
         self.grid_length = grid_length
-        self.rect_size = 10
         self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
         self.canvas = Canvas(self.board_frame,width=self.grid_width *self.rect_size, height=self.grid_length*self.rect_size)
        
@@ -72,17 +71,33 @@ class Grid_gui:
 
         
     def settings(self):
-        settings_win = Tk()
-        settings_win.title('settings')
-        sframe =Frame(settings_win)
+        
+        self.settings_win = Tk()
+        self.settings_win.title('settings')
+        sframe =Frame(self.settings_win)
         sframe.pack()
+        
+        w_label = Label(sframe,text='set board width')
+        w_label.pack()
+        self.width_entry = Entry(sframe)
+        self.width_entry.insert(-1,10)
+        self.width_entry.pack()
 
-        self.r_entry = Entry(sframe)
-        self.r_entry.insert(-1,10)
-        self.r_entry.pack()
-        button = Button(sframe,text='confirm settings',command=self.set_width)
+        l_label = Label(sframe,text='set board length')
+        l_label.pack()
+        self.length_entry = Entry(sframe)
+        self.length_entry.insert(-1,10)
+        self.length_entry.pack()
+
+        s_label = Label(sframe,text='set rectangle size')
+        s_label.pack()
+        self.size_entry = Entry(sframe)
+        self.size_entry.insert(-1,10)
+        self.size_entry.pack()
+
+        button = Button(sframe,text='confirm settings',command=self.confirm_settings)
         button.pack()
-        settings_win.mainloop()
+        self.settings_win.mainloop()
     
     def square_picker(self):
         #code goes here
@@ -92,12 +107,19 @@ class Grid_gui:
         spw_frame.pack()
         square_pick_win.mainloop()
 
-    def set_width(self):
-        self.rs = self.r_entry.get()
-        print(self.rs)
+    def confirm_settings(self):
+        #ToDo add catch incase of input not being an int
+        self.width = int(self.width_entry.get())
+        self.length = int(self.length_entry.get())
+        self.rect_size = int(self.size_entry.get())
+        self.settings_win.destroy()
         
     def get_width(self):
-        return self.rs
+        return self.width
+    
+    def get_length(self):
+        return self.length
+
 
       
 
