@@ -104,6 +104,7 @@ class Grid_gui:
     def get_length(self):
         return self.length
 
+
     def square_picker(self):
         #code goes here
         square_pick_win = Tk()
