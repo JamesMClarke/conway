@@ -114,14 +114,15 @@ class Grid_gui:
         #creates tkinter gui grid on a canvas
 
     
-        root = Tk()
-        root.title("Conways Game of Life")
+        self.root = Tk()
+        self.root.title("Conways Game of Life")
 
         for y in range(0, self.grid_width):
             for x in range(0, self.grid_length):
-                Button(root, text=str(x)+","+str(y), command=partial(self.change_cell_state, x, y)).grid(row=x,column=y)
+                Button(self.root, text=str(x)+","+str(y), command=lambda r=y ,c=x: self.change_cell_state(c, r)).grid(row=x,column=y)
+                #Button(self.root, text=str(x)+","+str(y), command=partial(self.change_cell_state, x, y)).grid(row=x,column=y)
                
-        root.mainloop()
+        self.root.mainloop()
 
 
       
