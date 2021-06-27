@@ -4,7 +4,7 @@ from tkinter import *
 class Grid_gui:
     def __init__(self):        
         self.settings()
-        #self.square_picker()
+        self.square_picker()
         self._root = Tk()
         self._root.title("Conways Game of Life")
         #self.window_width = str(self.grid_width *self.rect_size)
@@ -104,14 +104,24 @@ class Grid_gui:
     def get_length(self):
         return self.grid_length
 
+    def change_cell_state(self, x, y):
+
+        print(x, y)
 
     def square_picker(self):
-        #code goes here
-        square_pick_win = Tk()
-        square_pick_win.title('Starting Squares')
-        spw_frame = Frame(square_pick_win)
-        spw_frame.pack()
-        square_pick_win.mainloop()
+        #ToDo put  in a frame
+        #creates tkinter gui grid on a canvas
+
+    
+        root = Tk()
+        root.title("Conways Game of Life")
+
+        for y in range(0, self.grid_width):
+            for x in range(0, self.grid_length):
+                Button(root, text=str(x)+","+str(y), command=lambda: self.change_cell_state(int(x), int(y))).grid(row=x,column=y)
+               
+        root.mainloop()
+
 
       
 
