@@ -4,7 +4,7 @@ from tkinter import *
 class Grid_gui:
     def __init__(self):        
         self.settings()
-        self.square_picker()
+        #self.square_picker()
         self._root = Tk()
         self._root.title("Conways Game of Life")
         #self.window_width = str(self.grid_width *self.rect_size)
