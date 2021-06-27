@@ -1,4 +1,5 @@
 from tkinter import *
+from functools import partial
 
 
 class Grid_gui:
@@ -118,7 +119,7 @@ class Grid_gui:
 
         for y in range(0, self.grid_width):
             for x in range(0, self.grid_length):
-                Button(root, text=str(x)+","+str(y), command=lambda: self.change_cell_state(int(x), int(y))).grid(row=x,column=y)
+                Button(root, text=str(x)+","+str(y), command=partial(self.change_cell_state, x, y)).grid(row=x,column=y)
                
         root.mainloop()
 
