@@ -93,16 +93,16 @@ class Grid_gui:
 
     def confirm_settings(self):
         #ToDo add catch incase of input not being an int
-        self.width = int(self.width_entry.get())
-        self.length = int(self.length_entry.get())
+        self.grid_width = int(self.width_entry.get())
+        self.grid_length = int(self.length_entry.get())
         self.rect_size = int(self.size_entry.get())
         self.settings_win.destroy()
         
     def get_width(self):
-        return self.width
+        return self.grid_width
     
     def get_length(self):
-        return self.length
+        return self.grid_length
 
 
     def square_picker(self):
