@@ -3,6 +3,7 @@ from functools import partial
 
 
 class Grid_gui:
+
     def __init__(self):        
         self.settings()
         self.square_picker()
@@ -97,6 +98,7 @@ class Grid_gui:
         self.grid_width = int(self.width_entry.get())
         self.grid_length = int(self.length_entry.get())
         self.rect_size = int(self.size_entry.get())
+        self.temp_grid = [[False for j in range(self.grid_length)] for i in range(self.grid_width )]
         self.settings_win.destroy()
         
     def get_width(self):
@@ -105,25 +107,30 @@ class Grid_gui:
     def get_length(self):
         return self.grid_length
 
-    def change_cell_state(self, x, y):
-
+    def change_cell_state(self, x,y ):
+        if(self.temp_grid[x][y]):
+            self.temp_grid[x][y] = False
+        else:
+            self.temp_grid[x][y] = True
         print(x, y)
+        print(self.temp_grid)
 
     def square_picker(self):
         #ToDo put  in a frame
         #creates tkinter gui grid on a canvas
 
     
-        self.root = Tk()
-        self.root.title("Conways Game of Life")
+        root = Tk()
+        root.title("Conways Game of Life")
+        canvas = Canvas(root, width=800, height=800)
 
         for y in range(0, self.grid_width):
             for x in range(0, self.grid_length):
-                Button(self.root, text=str(x)+","+str(y), command=lambda r=y ,c=x: self.change_cell_state(c, r)).grid(row=x,column=y)
-                #Button(self.root, text=str(x)+","+str(y), command=partial(self.change_cell_state, x, y)).grid(row=x,column=y)
-               
-        self.root.mainloop()
-
-
-      
+                
+                if(self.temp_grid[x][y]):
+                    Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="green").grid(row=x,column=y)
+                else:
+                    Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="red").grid(row=x,column=y)
+        canvas.pack()
+        root.mainloop()
 
