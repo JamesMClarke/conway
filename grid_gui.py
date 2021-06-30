@@ -107,30 +107,39 @@ class Grid_gui:
     def get_length(self):
         return self.grid_length
 
-    def change_cell_state(self, x,y ):
+    def change_cell_state(self, x,y):
+        button = self.button_list[x][y]
+        print('button',self.button_list[x][y])
+
         if(self.temp_grid[x][y]):
             self.temp_grid[x][y] = False
+            button.config(bg='red')
         else:
             self.temp_grid[x][y] = True
+            button.config(bg='Green')
         print(x, y)
         print(self.temp_grid)
 
     def square_picker(self):
         #ToDo put  in a frame
         #creates tkinter gui grid on a canvas
+        self.button_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
 
     
         root = Tk()
         root.title("Conways Game of Life")
         canvas = Canvas(root, width=800, height=800)
-
+        #do not put .grid at end of button will break code
         for y in range(0, self.grid_width):
             for x in range(0, self.grid_length):
-                
-                if(self.temp_grid[x][y]):
-                    Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="green").grid(row=x,column=y)
+                if(self.temp_grid[x][y]):                    
+                    button = Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="Green")
+                    button.grid(row=x,column=y)
                 else:
-                    Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="red").grid(row=x,column=y)
+                    button = Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="Red")
+                    button.grid(row=x,column=y) 
+
+                self.button_list[x][y] = button
         canvas.pack()
         root.mainloop()
 
