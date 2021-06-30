@@ -132,13 +132,14 @@ class Grid_gui:
         #do not put .grid at end of button will break code
         for y in range(0, self.grid_width):
             for x in range(0, self.grid_length):
-                if(self.temp_grid[x][y]):                    
-                    button = Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="Green")
-                    button.grid(row=x,column=y)
-                else:
-                    button = Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r), bg="Red")
-                    button.grid(row=x,column=y) 
+                button = Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r))
 
+                if(self.temp_grid[x][y]):                    
+                    button.config(bg='Green')
+
+                else:
+                    button.config(bg='red')
+                button.grid(row=x,column=y) 
                 self.button_list[x][y] = button
         canvas.pack()
         root.mainloop()
