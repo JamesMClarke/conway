@@ -1,19 +1,15 @@
 from grid_gui import Grid_gui
 from square import Square
+from boards import Board_Type
 from tkinter import *
 from random import getrandbits
 import asyncio
 
 
 async def main():
-  
-
     gui =  Grid_gui()
-    #b_width = gui.get_width()
-    #b_length = gui.get_length()
-    #board.print_new()
-    print(gui.get_width())
-    board = Board(gui.get_width(), gui.get_length())
+    grid, type = gui.get_grid()
+    board = Board(gui.get_width(), gui.get_length(), grid, type)
     gui.create_grid(board.grid,board.width,board.length)
     while True:
         await asyncio.sleep(1)
@@ -21,15 +17,16 @@ async def main():
         gui.update_gui()
     
 class Board:
-    
-
-    def __init__(self, width, length):
+    #Add enum ext
+    #Make user grid
+    def __init__(self, width, length, grid, type):
         self.length = length
         self.width = width
-        #Creates a random grid
-        self.grid = [[Square(bool(getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-        #Creates blank grid for testing
-        #elf.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
+        if(type == Board_Type['user']):
+            self.grid_from_input(grid)
+        elif(type == Board_Type['random']):
+            #Creates a random grid
+            self.grid = [[Square(bool(getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
 
         #Puts an alive square for testing
         #self.grid[0][1].revive()
@@ -70,6 +67,17 @@ class Board:
                     self.grid[x][y].revive()
                 elif(neighbours != 2):
                     self.grid[x][y].kill()
+
+    def grid_from_input(self, user_grid):
+        self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
+        print(user_grid)
+        for y in range(0, self.width):
+            for x in range(0, self.length):
+                if(user_grid[x][y]):  
+                    print("Reviving ", x, y)
+                    self.grid[x][y].revive()
+
+
    
 if __name__ == "__main__":
     asyncio.run(main())

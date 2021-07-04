@@ -1,5 +1,6 @@
 from tkinter import *
 from functools import partial
+from boards import Board_Type
 
 
 class Grid_gui:
@@ -13,7 +14,6 @@ class Grid_gui:
         #self.window_height = str(self.grid_length *self.rect_size)
         #self.window_size = (self.window_width+'x'+self.window_height)  
         #print('window size =',self.window_size)
-
         
     def create_grid(self,grid,grid_width,grid_length):
         
@@ -107,6 +107,10 @@ class Grid_gui:
     def get_length(self):
         return self.grid_length
 
+    def get_grid(self):
+        type = Board_Type['user']
+        return self.temp_grid, type
+
     def change_cell_state(self, x,y):
         button = self.button_list[x][y]
         print('button',self.button_list[x][y])
@@ -117,8 +121,6 @@ class Grid_gui:
         else:
             self.temp_grid[x][y] = True
             button.config(bg='Green')
-        print(x, y)
-        print(self.temp_grid)
 
     def square_picker(self):
         #ToDo put  in a frame
@@ -132,7 +134,7 @@ class Grid_gui:
         #do not put .grid at end of button will break code
         for y in range(0, self.grid_width):
             for x in range(0, self.grid_length):
-                button = Button(canvas, text=str(x)+","+str(y), command=lambda r=y ,c=x, : self.change_cell_state(c, r))
+                button = Button(canvas, text=" ", command=lambda r=y ,c=x, : self.change_cell_state(c, r))
 
                 if(self.temp_grid[x][y]):                    
                     button.config(bg='Green')
@@ -141,6 +143,8 @@ class Grid_gui:
                     button.config(bg='red')
                 button.grid(row=x,column=y) 
                 self.button_list[x][y] = button
+        
+        Okay = Button(canvas, text="Okay", command=root.destroy).grid(row=0 , column=self.grid_width+1)
         canvas.pack()
         root.mainloop()
 
