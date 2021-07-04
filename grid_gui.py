@@ -31,7 +31,6 @@ class Grid_gui:
             for x in range(0, self.grid_width ):
 
                 rectangle = self.canvas.create_rectangle(x_coord, y_coord, x_coord+self.rect_size, y_coord+self.rect_size, fill = "White", outline = 'grey',width=1)
-                #self.canvas.tag_bind('on_user_click',"<Button-1>",change_cell_state)
                 self.rect_list[x][y] = rectangle
              
                 if(self.grid[x][y].get_is_alive()):
@@ -132,8 +131,8 @@ class Grid_gui:
         root.title("Conways Game of Life")
         canvas = Canvas(root, width=800, height=800)
         #do not put .grid at end of button will break code
-        for y in range(0, self.grid_width):
-            for x in range(0, self.grid_length):
+        for y in range(0, self.grid_length):
+            for x in range(0, self.grid_width):
                 button = Button(canvas, text=" ", command=lambda r=y ,c=x, : self.change_cell_state(c, r))
 
                 if(self.temp_grid[x][y]):                    
@@ -141,7 +140,7 @@ class Grid_gui:
 
                 else:
                     button.config(bg='red')
-                button.grid(row=x,column=y) 
+                button.grid(row=y,column=x) 
                 self.button_list[x][y] = button
         
         Okay = Button(canvas, text="Okay", command=root.destroy).grid(row=0 , column=self.grid_width+1)

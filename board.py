@@ -13,7 +13,7 @@ async def main():
     gui.create_grid(board.grid,board.width,board.length)
     while True:
         await asyncio.sleep(1)
-        board.tick()
+        #board.tick()
         gui.update_gui()
     
 class Board:
