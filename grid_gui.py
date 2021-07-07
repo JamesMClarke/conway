@@ -1,3 +1,4 @@
+from random import Random
 from tkinter import *
 from functools import partial
 from boards import Board_Type
@@ -107,8 +108,8 @@ class Grid_gui:
         return self.grid_length
 
     def get_grid(self):
-        type = Board_Type['user']
-        return self.temp_grid, type
+        #type = Board_Type['user']
+        return self.temp_grid, self._boad_type
 
     def change_cell_state(self, x,y):
         button = self.button_list[x][y]
@@ -120,16 +121,23 @@ class Grid_gui:
         else:
             self.temp_grid[x][y] = True
             button.config(bg='Green')
+    
+    def square_picker_type(self, board):
+        print("Squares pickedS")
+        self._boad_type = board
+        #TODO Make window close when buttons pressed
+        #Currently works if you manually close the window
+        self.picker.destroy
 
     def square_picker(self):
         #TODO put  in a frame
         #creates tkinter gui grid on a canvas
         self.button_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
-
+        self.picking= True
     
-        root = Tk()
-        root.title("Conways Game of Life")
-        canvas = Canvas(root, width=800, height=800)
+        self.picker = Tk()
+        self.picker.title("Conways Game of Life")
+        canvas = Canvas(self.picker, width=800, height=800)
         #do not put .grid at end of button will break code
         for y in range(0, self.grid_length):
             for x in range(0, self.grid_width):
@@ -143,9 +151,14 @@ class Grid_gui:
                 button.grid(row=y,column=x) 
                 self.button_list[x][y] = button
         
-        #TODO Add Random option to continue
         #TODO Add preset pattens to continue using ether json or xml
-        Okay = Button(canvas, text="Okay", command=root.destroy).grid(row=0 , column=self.grid_width+1)
+        Okay = Button(canvas, text="Okay", command=self.square_picker_type(Board_Type['user']))
+        Okay.grid(row=0 , column=self.grid_width+1)
+        Random = Button(canvas, text="Random", command=self.square_picker_type(Board_Type['random']))
+        Random.grid(row=1 , column=self.grid_width+1)
+        print(self.picking)
+        if(not self.picking):
+            self.picker.destroy
         canvas.pack()
-        root.mainloop()
+        self.picker.mainloop()
 
