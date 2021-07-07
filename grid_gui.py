@@ -93,7 +93,7 @@ class Grid_gui:
         self.settings_win.mainloop()
 
     def confirm_settings(self):
-        #ToDo add catch incase of input not being an int
+        #TODO add catch incase of input not being an int
         self.grid_width = int(self.width_entry.get())
         self.grid_length = int(self.length_entry.get())
         self.rect_size = int(self.size_entry.get())
@@ -122,7 +122,7 @@ class Grid_gui:
             button.config(bg='Green')
 
     def square_picker(self):
-        #ToDo put  in a frame
+        #TODO put  in a frame
         #creates tkinter gui grid on a canvas
         self.button_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
 
@@ -143,6 +143,8 @@ class Grid_gui:
                 button.grid(row=y,column=x) 
                 self.button_list[x][y] = button
         
+        #TODO Add Random option to continue
+        #TODO Add preset pattens to continue using ether json or xml
         Okay = Button(canvas, text="Okay", command=root.destroy).grid(row=0 , column=self.grid_width+1)
         canvas.pack()
         root.mainloop()
