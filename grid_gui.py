@@ -8,7 +8,7 @@ class Grid_gui:
 
     def __init__(self):        
         self.settings()
-        self.square_picker()
+        #self.square_picker()
         self._root = Tk()
         self._root.title("Conways Game of Life")
         #self.window_width = str(self.grid_width *self.rect_size)
@@ -66,32 +66,32 @@ class Grid_gui:
         
     def settings(self):
         
-        self.settings_win = Tk()
-        self.settings_win.title('settings')
-        sframe =Frame(self.settings_win)
-        sframe.pack()
+        self.setup_win = Tk()
+        self.setup_win.title('Setup')
+        self.sframe =Frame(self.setup_win)
+        self.sframe.pack()
         
-        w_label = Label(sframe,text='set board width')
+        w_label = Label(self.sframe,text='set board width')
         w_label.pack()
-        self.width_entry = Entry(sframe)
+        self.width_entry = Entry(self.sframe)
         self.width_entry.insert(-1,10)
         self.width_entry.pack()
 
-        l_label = Label(sframe,text='set board length')
+        l_label = Label(self.sframe,text='set board length')
         l_label.pack()
-        self.length_entry = Entry(sframe)
+        self.length_entry = Entry(self.sframe)
         self.length_entry.insert(-1,10)
         self.length_entry.pack()
 
-        s_label = Label(sframe,text='set rectangle size')
+        s_label = Label(self.sframe,text='set rectangle size')
         s_label.pack()
-        self.size_entry = Entry(sframe)
+        self.size_entry = Entry(self.sframe)
         self.size_entry.insert(-1,10)
         self.size_entry.pack()
 
-        button = Button(sframe,text='confirm settings',command=self.confirm_settings)
+        button = Button(self.sframe,text='confirm settings',command=self.confirm_settings)
         button.pack()
-        self.settings_win.mainloop()
+        self.setup_win.mainloop()
 
     def confirm_settings(self):
         #TODO add catch incase of input not being an int
@@ -99,7 +99,9 @@ class Grid_gui:
         self.grid_length = int(self.length_entry.get())
         self.rect_size = int(self.size_entry.get())
         self.temp_grid = [[False for j in range(self.grid_length)] for i in range(self.grid_width )]
-        self.settings_win.destroy()
+        self.sframe.destroy()
+        self.square_picker()
+
         
     def get_width(self):
         return self.grid_width
@@ -127,7 +129,7 @@ class Grid_gui:
         self._boad_type = board
         #TODO Make window close when buttons pressed
         #Currently works if you manually close the window
-        self.picker.destroy
+        #self.setup_win.destroy()
 
     def square_picker(self):
         #TODO put  in a frame
@@ -135,9 +137,9 @@ class Grid_gui:
         self.button_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
         self.picking= True
     
-        self.picker = Tk()
-        self.picker.title("Conways Game of Life")
-        canvas = Canvas(self.picker, width=800, height=800)
+        #self.picker = Tk()
+        #self.picker.title("Conways Game of Life")
+        canvas = Canvas(self.setup_win, width=800, height=800)
         #do not put .grid at end of button will break code
         for y in range(0, self.grid_length):
             for x in range(0, self.grid_width):
@@ -160,5 +162,4 @@ class Grid_gui:
         if(not self.picking):
             self.picker.destroy
         canvas.pack()
-        self.picker.mainloop()
-
+        self.setup_win.update()
