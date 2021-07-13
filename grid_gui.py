@@ -13,8 +13,8 @@ white = (255,255,255)
 grey = (115, 115, 115)
 l_black = (50,50,50)
 sq_size = 20
-width = 10
-height = 10
+width = 20
+height = 20
 backgroup_colour = white
 line_colour = black
 alive_colour = (255, 0, 0)
@@ -49,11 +49,10 @@ class Grid_gui:
         #temp blank vars
         grid =""
         type = Board_Type['random']
-        board = Board(10, 10, grid, type)
+        board = Board(width, height, grid, type)
         #TODO Add getters rather than this
         self.grid, self.grid_width, self.grid_length = board.grid, board.width, board.length
-        self.drawGrid()
-        #move 
+        self.drawGrid() 
         while True:
             #await asyncio.sleep(1)
             pygame.time.wait(1000)
@@ -72,8 +71,8 @@ class Grid_gui:
 
         self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
         
-        for x in range (0,800,sq_size):
-            for y in range (0,800,sq_size):
+        for x in range (0,width*sq_size,sq_size):
+            for y in range (0,height*sq_size,sq_size):
                 rect =  pygame.Rect(x,y,sq_size,sq_size)
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
 
