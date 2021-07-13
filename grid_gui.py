@@ -129,7 +129,8 @@ class Grid_gui:
         self._boad_type = board
         #TODO Make window close when buttons pressed
         #Currently works if you manually close the window
-        #self.setup_win.destroy()
+        if self._boad_type == None:
+            self.setup_win.destroy()
 
     def square_picker(self):
         #TODO put  in a frame
@@ -154,12 +155,9 @@ class Grid_gui:
                 self.button_list[x][y] = button
         
         #TODO Add preset pattens to continue using ether json or xml
-        Okay = Button(canvas, text="Okay", command=self.square_picker_type(Board_Type['user']))
+        Okay = Button(canvas, text="Okay", command=lambda : self.square_picker_type(Board_Type['user']))
         Okay.grid(row=0 , column=self.grid_width+1)
-        Random = Button(canvas, text="Random", command=self.square_picker_type(Board_Type['random']))
+        Random = Button(canvas, text="Random", command=lambda : self.square_picker_type(Board_Type['random']))
         Random.grid(row=1 , column=self.grid_width+1)
-        print(self.picking)
-        if(not self.picking):
-            self.picker.destroy
         canvas.pack()
         self.setup_win.update()
