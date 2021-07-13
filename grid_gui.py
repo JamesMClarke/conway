@@ -56,6 +56,7 @@ class Grid_gui:
         #move 
         while True:
             #await asyncio.sleep(1)
+            pygame.time.wait(1000)
             board.tick()
             self.update_board()
             for event in pygame.event.get():
