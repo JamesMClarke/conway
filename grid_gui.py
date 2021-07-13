@@ -41,11 +41,12 @@ class Grid_gui:
         #TODO Add getters rather than this
         self.grid, self.grid_width, self.grid_length = board.grid, board.width, board.length
         self.drawGrid() 
+        self.update_board()
         while True:
             #await asyncio.sleep(1)
             pygame.time.wait(1000)
-            board.tick()
-            self.update_board()
+            changes = board.tick()
+            self.update_by_changes(changes)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -67,7 +68,8 @@ class Grid_gui:
 
 
     #updates square if corropsonding cell depending on state 
-    #TODO  change so that it call tick return list of cells whose state has changed in cycle    
+    #TODO  I don't this this needs it's own method
+    # It is only called once and could probs be included in draw grid  
     def update_board(self):
 
         for y in range(0 ,self.grid_length):
@@ -76,6 +78,16 @@ class Grid_gui:
                     self.draw_sq(x*sq_size,y*sq_size,alive_colour)
                 else:
                     self.draw_sq(x*sq_size,y*sq_size,dead_colour)
+
+    def update_by_changes(self, changes):
+        for c in changes:
+            x, y, change = c.get_cords()
+            if(change == "Add"):
+                self.draw_sq(x*sq_size,y*sq_size,alive_colour)
+            else:
+                #TODO Fix this
+                #The squares are revived but not killed on the grid
+                self.draw_sq(x*sq_size,y*sq_size,dead_colour)
 
     #draws square 
     def draw_sq(self,x,y,colour):

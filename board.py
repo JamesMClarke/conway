@@ -1,6 +1,7 @@
 from square import Square
 from boards import Board_Type
 from random import getrandbits
+from cords import Cords
 
 #TODO GUI call board
 #TODO create board getter
@@ -50,13 +51,20 @@ class Board:
         return neighbours
 
     def tick(self):
+        changes = []
         for y in range(0 , self.length):
             for x in range(0, self.width):
                 neighbours = self.no_of_neighbours(x ,y)
                 if(neighbours == 3):
-                    self.grid[x][y].revive()
+                    if(not self.grid[x][y].get_is_alive()):
+                        self.grid[x][y].revive()
+                        changes.append(Cords(x, y, "Add"))
                 elif(neighbours != 2):
-                    self.grid[x][y].kill()
+                    if(not self.grid[x][y].get_is_alive()):
+                        self.grid[x][y].kill()
+                        changes.append(Cords(x, y, "Remove"))
+        
+        return changes
 
     def grid_from_input(self, user_grid):
         self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
