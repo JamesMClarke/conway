@@ -5,16 +5,16 @@ from tkinter import *
 from random import getrandbits
 import asyncio
 
-
+#TODO GUI call board
 async def main():
     gui =  Grid_gui()
     grid, type = gui.get_grid()
-    board = Board(gui.get_width(), gui.get_length(), grid, type)
-    gui.create_grid(board.grid,board.width,board.length)
+    board = Board(gui.get_width(), gui.get_height(), grid, type)
+    gui.drawGrid(board.grid,board.width,board.length)
     while True:
         await asyncio.sleep(1)
         board.tick()
-        gui.update_gui()
+        gui.update_board()
     
 class Board:
     #Add enum ext
