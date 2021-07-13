@@ -6,7 +6,7 @@ import sys
 import asyncio
 
 #TODO in check neighbours if state is changed pass to list and pass to update   
-#TODO 
+
 
 black =(0,0,0)
 white = (255,255,255)
@@ -24,18 +24,6 @@ line_size = 1
 
 async def main():
     gui =  Grid_gui()
-    #temp blank vars
-    """
-    Doesn't do anything
-    grid =""
-    type = Board_Type['random']
-    board = Board(10, 10, grid, type)
-    gui.drawGrid(board.grid,board.width,board.length)
-    while True:
-        await asyncio.sleep(1)
-        board.tick()
-        gui.update_board()
-    """
 
 class Grid_gui:
 
@@ -79,8 +67,7 @@ class Grid_gui:
 
 
     #updates square if corropsonding cell depending on state 
-    #TODO  change so that it call tick return list of cells whose state has changed in cycle
-    #TODO             
+    #TODO  change so that it call tick return list of cells whose state has changed in cycle    
     def update_board(self):
 
         for y in range(0 ,self.grid_length):

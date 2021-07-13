@@ -3,8 +3,7 @@ from boards import Board_Type
 from random import getrandbits
 
 #TODO GUI call board
-#TODO create board getter 
-#TODO 
+#TODO create board getter
 
     
 class Board:
