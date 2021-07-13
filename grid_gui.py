@@ -1,44 +1,52 @@
 from random import Random
-from functools import partial
-import random
 from boards import Board_Type
+from board import Board
 import pygame
 import sys
+import asyncio
 
 #TODO in check neighbours if state is changed pass to list and pass to update   
+#TODO 
 
 black =(0,0,0)
 white = (255,255,255)
 grey = (115, 115, 115)
 l_black = (50,50,50)
-rectSize = 10
+sq_size = 10
 display_width = 800
 display_height = 800
 
 
-class Grid_gui:
 
+async def main():
+    gui =  Grid_gui()
+    #temp blank vars
+    grid =""
+    type = Board_Type['random']
+    board = Board(10, 10, grid, type)
+    gui.drawGrid(board.grid,board.width,board.length)
+    while True:
+        await asyncio.sleep(1)
+        board.tick()
+        gui.update_board()
+
+class Grid_gui:
 
     def __init__(self):        
         
-
         pygame.init()
         self.screen = pygame.display.set_mode((display_width,display_height))
         self.screen.fill(black)
+        #move 
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            pygame.display.update()
+
        
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-        pygame.display.update()
-
-       
-
-        #self.window_width = str(self.grid_width *self.rect_size)
-        #self.window_height = str(self.grid_length *self.rect_size)
-        #self.window_size = (self.window_width+'x'+self.window_height)  
-        #print('window size =',self.window_size)
 
     def drawGrid(self,grid,grid_width,grid_length):
 
@@ -47,12 +55,16 @@ class Grid_gui:
         self.grid_length = grid_length
         self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
         
-        for x in range (0,800,rectSize):
-            for y in range (0,800,rectSize):
-                rect =  pygame.Rect(x,y,rectSize,rectSize)
+        for x in range (0,800,sq_size):
+            for y in range (0,800,sq_size):
+                rect =  pygame.Rect(x,y,sq_size,sq_size)
                 pygame.draw.rect(self.screen,white,rect,1)
-              
-               
+
+
+
+    #updates square if corropsonding cell depending on state 
+    #TODO  change so that it call tick return list of cells whose state has changed in cycle
+    #TODO             
     def update_board(self):
 
         for y in range(0 ,self.grid_length):
@@ -62,21 +74,12 @@ class Grid_gui:
                 else:
                     self.draw_sq(x,y,l_black)
 
-
+    #draws square 
     def draw_sq(self,x,y,colour):
 
-        rect =  pygame.Rect(x,y,rectSize,rectSize)
+        rect =  pygame.Rect(x,y,sq_size,sq_size)
         pygame.draw.rect(self.screen,colour,rect)
 
-    def get_grid(self):
-        type = Board_Type['random']
-        grid =""
-        return grid,type
 
-    def get_width(self):
-        width = display_width
-        return width
-
-    def get_height(self):
-        height = display_height
-        return height
+if __name__ == "__main__":
+    asyncio.run(main())

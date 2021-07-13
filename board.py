@@ -1,20 +1,11 @@
-from grid_gui import Grid_gui
 from square import Square
 from boards import Board_Type
-from tkinter import *
 from random import getrandbits
-import asyncio
 
 #TODO GUI call board
-async def main():
-    gui =  Grid_gui()
-    grid, type = gui.get_grid()
-    board = Board(gui.get_width(), gui.get_height(), grid, type)
-    gui.drawGrid(board.grid,board.width,board.length)
-    while True:
-        await asyncio.sleep(1)
-        board.tick()
-        gui.update_board()
+#TODO create board getter 
+#TODO 
+
     
 class Board:
     #Add enum ext
@@ -78,6 +69,5 @@ class Board:
                     self.grid[x][y].revive()
 
 
+
    
-if __name__ == "__main__":
-    asyncio.run(main())
