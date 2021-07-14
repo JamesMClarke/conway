@@ -85,13 +85,11 @@ class Grid_gui:
             if(change == "Add"):
                 self.draw_sq(x*sq_size,y*sq_size,alive_colour)
             else:
-                #TODO Fix this
-                #The squares are revived but not killed on the grid
                 self.draw_sq(x*sq_size,y*sq_size,dead_colour)
 
     #draws square 
     def draw_sq(self,x,y,colour):
-
+        print(x/sq_size,y/sq_size,colour)
         rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 

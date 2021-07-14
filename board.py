@@ -60,7 +60,7 @@ class Board:
                         self.grid[x][y].revive()
                         changes.append(Cords(x, y, "Add"))
                 elif(neighbours != 2):
-                    if(not self.grid[x][y].get_is_alive()):
+                    if(self.grid[x][y].get_is_alive()):
                         self.grid[x][y].kill()
                         changes.append(Cords(x, y, "Remove"))
         
