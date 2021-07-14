@@ -9,7 +9,7 @@ import asyncio
 
 sys.path.insert(1, 'data/')
 from colours import *
-#TODO in check neighbours if state is changed pass to list and pass to update   
+#TODO Work out why it looks different when picking squares compaired to when the game is actually running
 
 #Settings
 sq_size = 20
@@ -39,7 +39,7 @@ class Grid_gui:
         #Variables which will change during the game
         self.user_picking = False
         self.playing = False
-        
+        self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
         #temp blank vars        
@@ -59,25 +59,38 @@ class Grid_gui:
                 if event.type == pygame.MOUSEBUTTONUP:
                     #If the use is still picking
                     x,y = pygame.mouse.get_pos()
-                    if(self.user_picking and x <= display_width):
+                    if(x <= display_width):
                         #Works out col and row and add this to changes to update visual board
-                        print(x//sq_size, y//sq_size)
-                        changes.append(Cords(x//sq_size, y//sq_size, "Add"))
+                        real_x, real_y = x//sq_size, y//sq_size
+                        print(real_x,real_y)
+                        changes.append(Cords(real_x, real_y, "Add"))
                         #Revives the sqaure at the given pos in the logical grid
                         #TODO This will need to changed
-                        board.revive_square(x//sq_size, y//sq_size)
+                        self.temp_grid[real_x][real_y] = True
                     elif(x > display_width):
+                        print(y)
+                        if (y >= 10 and y <= 40):
                         #TODO This need defining properly
                         #Handle mouse clicks on buttons
-                        type = Board_Type['random']
-                        grid =""
-                        board = Board(width, height, grid, type)
-                        self.grid = board.get_grid()
-                        self.grid_width = board.get_width()
-                        self.grid_length = board.get_length()
-                        self.playing = True
-                        self.load_sq()
-                        print(type)
+                            type = Board_Type['random']
+                            grid =""
+                            board = Board(width, height, grid, type)
+                            self.grid = board.get_grid()
+                            self.grid_width = board.get_width()
+                            self.grid_length = board.get_length()
+                            self.playing = True
+                            self.load_sq()
+                            print(type)
+                        elif ( y >= 50 and y <= 80):
+                            type = Board_Type['user']
+                            board = Board(width, height, self.temp_grid, type)
+                            self.grid = board.get_grid()
+                            self.grid_width = board.get_width()
+                            self.grid_length = board.get_length()
+                            self.playing = True
+                            self.load_sq()
+                            print(type)
+
                     
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -98,6 +111,9 @@ class Grid_gui:
         font = pygame.font.SysFont(None, font_size)
         img = font.render('Random', True, blue)
         self.screen.blit(img, (display_width+10, 20))
+
+        img2 = font.render('User Input', True, blue)
+        self.screen.blit(img2, (display_width+10, 50))
 
 
     def load_sq(self):
