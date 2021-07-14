@@ -84,4 +84,7 @@ class Board:
 
     def get_length(self):
         return self.length
+
+    def revive_square(self, x, y):
+        self.grid[x][y].revive
    

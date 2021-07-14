@@ -1,6 +1,7 @@
 from random import Random, randint
 from boards import Board_Type
 from board import Board
+from cords import Cords
 import pygame
 import pygame_menu
 import sys
@@ -20,6 +21,7 @@ dead_colour = backgroup_colour
 line_size = 1
 display_width = width * sq_size
 display_height = height * sq_size
+user_picking = False
 
 #TODO add menu's for pattern placement 
 async def main():
@@ -41,18 +43,32 @@ class Grid_gui:
         self.grid_width = board.get_width()
         self.grid_length = board.get_length()
         #settings is commented out as it does nothing atm
-        self.settings_menu()
+        #self.settings_menu()
         self.drawGrid() 
-        while True:
-            #await asyncio.sleep(1)
-            pygame.time.wait(1000)
-            changes = board.tick()
-            self.update_by_changes(changes)
+        changes = []
+        while True:                               
+            if not user_picking:
+                #await asyncio.sleep(1)
+                pygame.time.wait(1000)
+                changes = board.tick()
+
             for event in pygame.event.get():
+                # handle MOUSEBUTTONUP
+                #If the use is still picking
+                if(user_picking):
+                    #Listens for mose event
+                    if event.type == pygame.MOUSEBUTTONUP:
+                        x,y = pygame.mouse.get_pos()
+                        #Works out col and row and add this to changes to update visual board
+                        print(x//sq_size, y//sq_size)
+                        changes.append(Cords(x//sq_size, y//sq_size, "Add"))
+                        #Revives the sqaure at the given pos in the logical grid
+                        grid.revive_square(x, y)
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
+            
+            self.update_by_changes(changes)
             pygame.display.update()
 
        
@@ -63,19 +79,20 @@ class Grid_gui:
             for y in range (0,height*sq_size,sq_size):
                 rect =  pygame.Rect(x,y,sq_size,sq_size)
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
-
-        for y in range(0 ,self.grid_length):
-            for x in range(0, self.grid_width):
-                if(self.grid[x][y].get_is_alive()):
-                    colour  = alive_colour
-                else:
-                    colour  = dead_colour
-                self.draw_sq(x*sq_size,y*sq_size,colour)
+        if(not user_picking):
+            for y in range(0 ,self.grid_length):
+                for x in range(0, self.grid_width):
+                    if(self.grid[x][y].get_is_alive()):
+                        colour  = alive_colour
+                    else:
+                        colour  = dead_colour
+                    self.draw_sq(x*sq_size,y*sq_size,colour)
 
 
     def update_by_changes(self, changes):
         for c in changes:
             x, y, change = c.get_cords()
+            print(x, y)
             if(change == "Add"):
                 colour = alive_colour            
             else:
@@ -98,6 +115,7 @@ class Grid_gui:
     def set_grid_size(self, a):
         self.grid_length = a
         print (a)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
