@@ -1,0 +1,5 @@
+{
+"patterns":[
+    {"name":"Square", "pattern":"11,11", "type":"Fixed"}
+]
+}
