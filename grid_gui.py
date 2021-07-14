@@ -63,7 +63,10 @@ class Grid_gui:
                         print(x//sq_size, y//sq_size)
                         changes.append(Cords(x//sq_size, y//sq_size, "Add"))
                         #Revives the sqaure at the given pos in the logical grid
-                        grid.revive_square(x, y)
+                        #TODO This is currently broken, gives an index out of range error
+                        #At a guess it something to do the board allways being set to random atm
+                        #I will fix this when we have implemted a button to which between input types
+                        board.revive_square(x, y)
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
