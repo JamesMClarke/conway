@@ -76,5 +76,12 @@ class Board:
                     self.grid[x][y].revive()
 
 
+    def get_grid(self):
+        return self.grid
 
+    def get_width(self):
+        return self.width
+
+    def get_length(self):
+        return self.length
    

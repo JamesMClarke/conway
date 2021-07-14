@@ -1,4 +1,4 @@
-from random import Random
+from random import Random, randint
 from boards import Board_Type
 from board import Board
 import pygame
@@ -38,10 +38,10 @@ class Grid_gui:
         grid =""
         type = Board_Type['random']
         board = Board(width, height, grid, type)
-        #TODO Add getters rather than this
-        self.grid, self.grid_width, self.grid_length = board.grid, board.width, board.length
+        self.grid = board.get_grid()
+        self.grid_width = board.get_width()
+        self.grid_length = board.get_length()
         self.drawGrid() 
-        self.update_board()
         while True:
             #await asyncio.sleep(1)
             pygame.time.wait(1000)
@@ -57,39 +57,33 @@ class Grid_gui:
        
 
     def drawGrid(self):
-
-        self.rect_list = [["" for j in range(self.grid_length)] for i in range(self.grid_width )]
         
         for x in range (0,width*sq_size,sq_size):
             for y in range (0,height*sq_size,sq_size):
                 rect =  pygame.Rect(x,y,sq_size,sq_size)
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
 
-
-
-    #updates square if corropsonding cell depending on state 
-    #TODO  I don't this this needs it's own method
-    # It is only called once and could probs be included in draw grid  
-    def update_board(self):
-
         for y in range(0 ,self.grid_length):
             for x in range(0, self.grid_width):
                 if(self.grid[x][y].get_is_alive()):
-                    self.draw_sq(x*sq_size,y*sq_size,alive_colour)
+                    colour  = alive_colour
                 else:
-                    self.draw_sq(x*sq_size,y*sq_size,dead_colour)
+                    colour  = dead_colour
+                self.draw_sq(x*sq_size,y*sq_size,colour)
+
 
     def update_by_changes(self, changes):
         for c in changes:
             x, y, change = c.get_cords()
             if(change == "Add"):
-                self.draw_sq(x*sq_size,y*sq_size,alive_colour)
+                colour = alive_colour            
             else:
-                self.draw_sq(x*sq_size,y*sq_size,dead_colour)
+                colour = dead_colour
+            self.draw_sq(x*sq_size,y*sq_size,colour)
 
-    #draws square 
+        #draws square 
     def draw_sq(self,x,y,colour):
-        print(x/sq_size,y/sq_size,colour)
+        #print(x/sq_size,y/sq_size,colour)
         rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
