@@ -18,6 +18,8 @@ line_colour = black
 alive_colour = blue
 dead_colour = backgroup_colour
 line_size = 1
+display_width = width * sq_size
+display_height = height * sq_size
 
 #TODO add menu's for pattern placement 
 async def main():
@@ -28,8 +30,7 @@ class Grid_gui:
     def __init__(self):        
         
         pygame.init()
-        display_width = width * sq_size
-        display_height = height * sq_size
+        
         self.screen = pygame.display.set_mode((display_width,display_height))
         self.screen.fill(backgroup_colour)
         #temp blank vars
@@ -40,7 +41,7 @@ class Grid_gui:
         self.grid_width = board.get_width()
         self.grid_length = board.get_length()
         #settings is commented out as it does nothing atm
-        #self.settings_menu()
+        self.settings_menu()
         self.drawGrid() 
         while True:
             #await asyncio.sleep(1)
@@ -90,7 +91,7 @@ class Grid_gui:
     #TODO add input for gird size, sq size and dead and alive sq colour select
     #TODO add menu for user picking of squares
     def settings_menu(self):
-        menu = pygame_menu.Menu('Game Settings',400,500,theme=pygame_menu.themes.THEME_BLUE)
+        menu = pygame_menu.Menu('Game Settings',display_width,display_height,theme=pygame_menu.themes.THEME_BLUE)
         menu.add.button('quit',pygame_menu.events.EXIT)
         menu.mainloop(self.screen)
 
