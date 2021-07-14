@@ -2,6 +2,7 @@ from random import Random, randint
 from boards import Board_Type
 from board import Board
 import pygame
+import pygame_menu
 import sys
 import asyncio
 
@@ -12,16 +13,16 @@ black =(0,0,0)
 white = (255,255,255)
 grey = (115, 115, 115)
 l_black = (50,50,50)
-sq_size = 20
-width = 20
-height = 20
+sq_size = 10
+width = 100
+height = 100
 backgroup_colour = white
 line_colour = black
 alive_colour = (255, 0, 0)
 dead_colour = backgroup_colour
 line_size = 1
 
-
+#TODO add menu's for pattern placement 
 async def main():
     gui =  Grid_gui()
 
@@ -41,6 +42,8 @@ class Grid_gui:
         self.grid = board.get_grid()
         self.grid_width = board.get_width()
         self.grid_length = board.get_length()
+        #settings is commented out as it does nothing atm
+        #self.settings_menu()
         self.drawGrid() 
         while True:
             #await asyncio.sleep(1)
@@ -87,6 +90,16 @@ class Grid_gui:
         rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
+    #TODO add input for gird size, sq size and dead and alive sq colour select
+    #TODO add menu for user picking of squares
+    def settings_menu(self):
+        menu = pygame_menu.Menu('Game Settings',400,500,theme=pygame_menu.themes.THEME_BLUE)
+        menu.add.button('quit',pygame_menu.events.EXIT)
+        menu.mainloop(self.screen)
+
+    def set_grid_size(self, a):
+        self.grid_length = a
+        print (a)
 
 if __name__ == "__main__":
     asyncio.run(main())
