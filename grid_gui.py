@@ -6,19 +6,16 @@ import pygame_menu
 import sys
 import asyncio
 
+sys.path.insert(1, 'data/')
+from colours import *
 #TODO in check neighbours if state is changed pass to list and pass to update   
 
-
-black =(0,0,0)
-white = (255,255,255)
-grey = (115, 115, 115)
-l_black = (50,50,50)
-sq_size = 10
-width = 100
-height = 100
+sq_size = 20
+width = 20
+height = 20
 backgroup_colour = white
 line_colour = black
-alive_colour = (255, 0, 0)
+alive_colour = blue
 dead_colour = backgroup_colour
 line_size = 1
 
