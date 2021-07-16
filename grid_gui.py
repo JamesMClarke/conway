@@ -4,9 +4,7 @@ from board import Board
 from cords import Cords
 from tools import get_patterns, load_patterns
 import pygame
-import pygame_menu
 import sys
-import asyncio
 
 sys.path.insert(1, 'data/')
 from colours import *
@@ -27,7 +25,7 @@ display_height = height * sq_size
 font_size = 30
 
 #TODO add menu's for pattern placement 
-async def main():
+def main():
     gui =  Grid_gui()
 
 class Grid_gui:
@@ -68,9 +66,9 @@ class Grid_gui:
                         #Revives the sqaure at the given pos in the logical grid
                         #TODO This will need to changed
                         self.temp_grid[real_x][real_y] = True
-                    elif(x > display_width):
+                    elif(x > display_width):                            
                         print(y)
-                        if (y >= 10 and y <= 40):
+                    if (y >= 10 and y <= 40):
                         #TODO This need defining properly
                         #Handle mouse clicks on buttons
                             type = Board_Type['random']
@@ -80,9 +78,9 @@ class Grid_gui:
                             self.grid_width = board.get_width()
                             self.grid_length = board.get_length()
                             self.playing = True
-                            self.load_sq()
+                            self.load_sq()                                
                             print(type)
-                        elif ( y >= 50 and y <= 80):
+                    elif ( y >= 50 and y <= 80):
                             type = Board_Type['user']
                             board = Board(width, height, self.temp_grid, type)
                             self.grid = board.get_grid()
@@ -91,7 +89,8 @@ class Grid_gui:
                             self.playing = True
                             self.load_sq()
                             print(type)
-                        elif(y >=80 and y <= 100):
+                    elif(y >=80 and y <= 100):
+                            place_pattern = True
                             self.draw_pattern()
 
                     
@@ -149,28 +148,34 @@ class Grid_gui:
         pygame.draw.rect(self.screen,colour,rect)
 
     def draw_pattern(self):
+        
         #TODO mouse x,y + pattern coord, if pattern coord is > or < grid x,y dont draw
+        #TODO add pattern selection option
+        #TODO update grid 
+       
+        mouse_x,mouse_y = pygame.mouse.get_pos()
 
         load_patterns()
         patterns = get_patterns()
         pattern_coords = []
 
-       
-        print(patterns[0].get_pattern_name())
-        print(patterns[0].get_pattern_pattern().split(","))
-
+        #print(patterns[0].get_pattern_name())
+        #print(patterns[0].get_pattern_pattern().split(","))
         pattern_coords = patterns[0].get_pattern_pattern().split(",")
-       
+                
         # for loop for coords list
         for i in range(len(pattern_coords) -1 ):  
 
-            #current coords
+        #current coords
             print("coord",i,pattern_coords[i])
-            x = pattern_coords[i]
-            y = pattern_coords[i+1]        
-            self.draw_sq(int(x)*sq_size,int(y)*sq_size,alive_colour)
+            x = pattern_coords[i] #+ mouse_x.round()
+            y = pattern_coords[i+1] #+ mouse_y.round
+            x = int(x)*sq_size
+            y = int(y)*sq_size
             
+            self.draw_sq(x,y,alive_colour)
+            #self.grid[x][y].revive()          
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
