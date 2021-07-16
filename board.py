@@ -1,20 +1,11 @@
-from grid_gui import Grid_gui
 from square import Square
 from boards import Board_Type
-from tkinter import *
 from random import getrandbits
-import asyncio
+from cords import Cords
 
+#TODO GUI call board
+#TODO create board getter
 
-async def main():
-    gui =  Grid_gui()
-    grid, type = gui.get_grid()
-    board = Board(gui.get_width(), gui.get_length(), grid, type)
-    gui.create_grid(board.grid,board.width,board.length)
-    while True:
-        await asyncio.sleep(1)
-        board.tick()
-        gui.update_gui()
     
 class Board:
     #Add enum ext
@@ -60,13 +51,20 @@ class Board:
         return neighbours
 
     def tick(self):
+        changes = []
         for y in range(0 , self.length):
             for x in range(0, self.width):
                 neighbours = self.no_of_neighbours(x ,y)
                 if(neighbours == 3):
-                    self.grid[x][y].revive()
+                    if(not self.grid[x][y].get_is_alive()):
+                        self.grid[x][y].revive()
+                        changes.append(Cords(x, y, "Add"))
                 elif(neighbours != 2):
-                    self.grid[x][y].kill()
+                    if(self.grid[x][y].get_is_alive()):
+                        self.grid[x][y].kill()
+                        changes.append(Cords(x, y, "Remove"))
+        
+        return changes
 
     def grid_from_input(self, user_grid):
         self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
@@ -78,6 +76,15 @@ class Board:
                     self.grid[x][y].revive()
 
 
+    def get_grid(self):
+        return self.grid
+
+    def get_width(self):
+        return self.width
+
+    def get_length(self):
+        return self.length
+
+    def revive_square(self, x, y):
+        self.grid[x][y].revive
    
-if __name__ == "__main__":
-    asyncio.run(main())
