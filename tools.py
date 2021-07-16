@@ -11,4 +11,8 @@ def load_patterns():
     return patterns
 
 patterns = load_patterns()
-print(patterns[0].get_pattern_name())
+
+def get_patterns():
+    return patterns
+print(patterns[0].get_pattern_name()) 
+print(patterns[0].get_pattern_pattern())

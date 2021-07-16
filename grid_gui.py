@@ -2,6 +2,7 @@ from random import Random, randint
 from boards import Board_Type
 from board import Board
 from cords import Cords
+from tools import get_patterns, load_patterns
 import pygame
 import pygame_menu
 import sys
@@ -90,6 +91,8 @@ class Grid_gui:
                             self.playing = True
                             self.load_sq()
                             print(type)
+                        elif(y >=80 and y <= 100):
+                            self.draw_pattern()
 
                     
                 if event.type == pygame.QUIT:
@@ -114,6 +117,9 @@ class Grid_gui:
 
         img2 = font.render('User Input', True, blue)
         self.screen.blit(img2, (display_width+10, 50))
+
+        img3 = font.render('Patterns', True, blue)
+        self.screen.blit(img3, (display_width+10, 80))
 
 
     def load_sq(self):
@@ -142,17 +148,27 @@ class Grid_gui:
         rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
-    #TODO add input for gird size, sq size and dead and alive sq colour select
-    #TODO add menu for user picking of squares
-    def settings_menu(self):
-        menu = pygame_menu.Menu('Game Settings',display_width,display_height,theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.button('quit',pygame_menu.events.EXIT)
-        menu.mainloop(self.screen)
+    def draw_pattern(self):
+        #TODO mouse x,y + pattern coord, if pattern coord is > or < grid x,y dont draw
+        load_patterns()
+        patterns = get_patterns()
+        pattern_coords = []
+        pattern_coords = patterns[1].get_pattern_pattern()
 
-    def set_grid_size(self, a):
-        self.grid_length = a
-        print (a)
-
-
+        string = patterns[0].get_pattern_pattern()
+        x = string.split(',')
+        print(x)
+        print(patterns[0].get_pattern_name())
+        print(patterns[0].get_pattern_pattern().split(","))
+        pattern_coords = patterns[0].get_pattern_pattern().split(",")
+        print(pattern_coords[1])
+       
+        # for loop for coords list
+        i = 0
+        for x in pattern_coords:
+            while i < 2:
+                    print("test")
+                    i += 1
+            i = 0
 if __name__ == "__main__":
     asyncio.run(main())
