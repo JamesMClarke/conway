@@ -150,25 +150,27 @@ class Grid_gui:
 
     def draw_pattern(self):
         #TODO mouse x,y + pattern coord, if pattern coord is > or < grid x,y dont draw
+
         load_patterns()
         patterns = get_patterns()
         pattern_coords = []
-        pattern_coords = patterns[1].get_pattern_pattern()
 
-        string = patterns[0].get_pattern_pattern()
-        x = string.split(',')
-        print(x)
+       
         print(patterns[0].get_pattern_name())
         print(patterns[0].get_pattern_pattern().split(","))
+
         pattern_coords = patterns[0].get_pattern_pattern().split(",")
-        print(pattern_coords[1])
        
         # for loop for coords list
-        i = 0
-        for x in pattern_coords:
-            while i < 2:
-                    print("test")
-                    i += 1
-            i = 0
+        for i in range(len(pattern_coords) -1 ):  
+
+            #current coords
+            print("coord",i,pattern_coords[i])
+            x = pattern_coords[i]
+            y = pattern_coords[i+1]        
+            self.draw_sq(int(x)*sq_size,int(y)*sq_size,alive_colour)
+            
+
+
 if __name__ == "__main__":
     asyncio.run(main())
