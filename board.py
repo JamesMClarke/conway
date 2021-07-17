@@ -2,10 +2,6 @@ from square import Square
 from boards import Board_Type
 from random import getrandbits
 from cords import Cords
-
-#TODO GUI call board
-#TODO create board getter
-
     
 class Board:
     #Add enum ext

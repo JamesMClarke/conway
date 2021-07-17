@@ -1,13 +1,13 @@
-from random import Random, randint
 from boards import Board_Type
 from board import Board
 from cords import Cords
-from tools import get_patterns, load_patterns
+import tools
 import pygame
 import sys
 
 sys.path.insert(1, 'data/')
 from colours import *
+
 #TODO Work out why it looks different when picking squares compaired to when the game is actually running - JC
 
 #Settings
@@ -165,7 +165,7 @@ class Grid_gui:
     def get_pattern(self, x, y):
         #TODO add pattern selection option - SC
        
-        patterns = load_patterns()
+        patterns = tools.load_patterns()
         pattern_coords = []
 
         pattern_coords = patterns[0].get_pattern_pattern().split(",")
