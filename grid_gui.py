@@ -168,19 +168,20 @@ class Grid_gui:
         patterns = tools.load_patterns()
         pattern_coords = []
 
-        pattern_coords = patterns[0].get_pattern_pattern().split(",")
+        pattern_coords = patterns[1].get_pattern_pattern().split(",")
         print(pattern_coords)
       
         # for loop for coords list
-        #TODO add checks for the pattern being out of bounds - SC
         for i in range(0, len(pattern_coords) -1, 2):  
             print(i)
             #current coords
             #print("coord",i,pattern_coords[i])
             x = int(pattern_coords[i]) + x
             y = int(pattern_coords[i+1]) + y 
-            self.temp_grid[x][y] = True
-            self.draw_sq(x,y,alive_colour)      
+            print("Pattern" , x, y)
+            if(x < (width - 1) and y < (height - 1)):
+                self.temp_grid[x][y] = True
+                self.draw_sq(x,y,alive_colour)      
 
 
 if __name__ == "__main__":
