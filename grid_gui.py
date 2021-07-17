@@ -8,7 +8,7 @@ import sys
 
 sys.path.insert(1, 'data/')
 from colours import *
-#TODO Work out why it looks different when picking squares compaired to when the game is actually running
+#TODO Work out why it looks different when picking squares compaired to when the game is actually running - JC
 
 #Settings
 sq_size = 20
@@ -24,7 +24,6 @@ full_display_width = display_width + 200
 display_height = height * sq_size
 font_size = 30
 
-#TODO add menu's for pattern placement 
 def main():
     gui =  Grid_gui()
 
@@ -53,7 +52,7 @@ class Grid_gui:
                 pygame.time.wait(1000)
                 changes = board.tick()
                 if(len(changes) == 0):
-                    #TODO Add game over screen and reset ready for next name
+                    #TODO Add game over screen and reset ready for next name - JC
                     print("game over")
             for event in pygame.event.get():
                 # handle MOUSEBUTTONUP
@@ -80,13 +79,11 @@ class Grid_gui:
                         else:
                             changes.append(Cords(real_x, real_y, "Add"))
                             #Revives the sqaure at the given pos in the logical grid
-                            #TODO This will need to changed
                             self.temp_grid[real_x][real_y] = True
                         
                     elif(x > display_width):                            
                         print(y)
                         if (y >= 10 and y <= 40):
-                            #TODO This need defining properly
                             #Handle mouse clicks on buttons
                                 type = Board_Type['random']
                                 grid =""
@@ -166,7 +163,7 @@ class Grid_gui:
         pygame.draw.rect(self.screen,colour,rect)
 
     def get_pattern(self, x, y):
-        #TODO add pattern selection option
+        #TODO add pattern selection option - SC
        
         patterns = load_patterns()
         pattern_coords = []
@@ -175,6 +172,7 @@ class Grid_gui:
         print(pattern_coords)
       
         # for loop for coords list
+        #TODO add checks for the pattern being out of bounds - SC
         for i in range(0, len(pattern_coords) -1, 2):  
             print(i)
             #current coords
