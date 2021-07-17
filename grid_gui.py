@@ -8,8 +8,6 @@ import sys
 sys.path.insert(1, 'data/')
 from colours import *
 
-#TODO Work out why it looks different when picking squares compaired to when the game is actually running - JC
-
 #Settings
 sq_size = 20
 width = 20
@@ -120,9 +118,10 @@ class Grid_gui:
 
     def drawGrid(self):
         
-        for x in range (0,width*sq_size,sq_size):
-            for y in range (0,height*sq_size,sq_size):
-                rect =  pygame.Rect(x,y,sq_size,sq_size)
+        for x in range (0,display_width,sq_size):
+            print("looping")
+            for y in range (0,display_height,sq_size):
+                rect =  pygame.Rect(x,y,sq_size+1,sq_size+1)
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
 
         font = pygame.font.SysFont(None, font_size)
@@ -159,7 +158,7 @@ class Grid_gui:
         #draws square 
     def draw_sq(self,x,y,colour):
         #print(x/sq_size,y/sq_size,colour)
-        rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
+        rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
     def get_pattern(self, x, y):
