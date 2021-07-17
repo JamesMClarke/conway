@@ -165,9 +165,11 @@ class Grid_gui:
         pattern_coords = []
 
         pattern_coords = patterns[0].get_pattern_pattern().split(",")
+        print(pattern_coords)
       
         # for loop for coords list
-        for i in range(len(pattern_coords) -1 ):  
+        for i in range(0, len(pattern_coords) -1, 2):  
+            print(i)
             #current coords
             #print("coord",i,pattern_coords[i])
             x = int(pattern_coords[i]) #+ mouse_x.round()
