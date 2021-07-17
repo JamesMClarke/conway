@@ -155,8 +155,8 @@ class Grid_gui:
        
         mouse_x,mouse_y = pygame.mouse.get_pos()
 
-        load_patterns()
-        patterns = get_patterns()
+        patterns = load_patterns()
+        #patterns = get_patterns()
         pattern_coords = []
 
         #print(patterns[0].get_pattern_name())
