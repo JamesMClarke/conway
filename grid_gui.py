@@ -91,7 +91,14 @@ class Grid_gui:
                             print(type)
                     elif(y >=80 and y <= 100):
                             place_pattern = True
-                            self.draw_pattern()
+                            self.get_pattern()
+                            type = Board_Type['pattern']  
+                            board = Board(width, height, self.temp_grid, type)
+                            self.grid = board.get_grid()
+                            self.grid_width = board.get_width()
+                            self.grid_length = board.get_length()
+                            self.playing = True
+                            self.load_sq()    
 
                     
                 if event.type == pygame.QUIT:
@@ -147,34 +154,26 @@ class Grid_gui:
         rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
-    def draw_pattern(self):
+    def get_pattern(self):
         
         #TODO mouse x,y + pattern coord, if pattern coord is > or < grid x,y dont draw
         #TODO add pattern selection option
-        #TODO update grid 
        
         mouse_x,mouse_y = pygame.mouse.get_pos()
 
         patterns = load_patterns()
-        #patterns = get_patterns()
         pattern_coords = []
 
-        #print(patterns[0].get_pattern_name())
-        #print(patterns[0].get_pattern_pattern().split(","))
         pattern_coords = patterns[0].get_pattern_pattern().split(",")
-                
+      
         # for loop for coords list
         for i in range(len(pattern_coords) -1 ):  
-
-        #current coords
-            print("coord",i,pattern_coords[i])
-            x = pattern_coords[i] #+ mouse_x.round()
-            y = pattern_coords[i+1] #+ mouse_y.round
-            x = int(x)*sq_size
-            y = int(y)*sq_size
-            
-            self.draw_sq(x,y,alive_colour)
-            #self.grid[x][y].revive()          
+            #current coords
+            #print("coord",i,pattern_coords[i])
+            x = int(pattern_coords[i]) #+ mouse_x.round()
+            y = int(pattern_coords[i+1]) #+ mouse_y.round
+            self.temp_grid[x][y] = True
+            self.draw_sq(x,y,alive_colour)      
 
 
 if __name__ == "__main__":

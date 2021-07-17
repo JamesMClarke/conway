@@ -13,7 +13,7 @@ class Board:
     def __init__(self, width, length, grid, type):
         self.length = length
         self.width = width
-        if(type == Board_Type['user']):
+        if(type == Board_Type['user'] or type == Board_Type['pattern']):
             self.grid_from_input(grid)
         elif(type == Board_Type['random']):
             #Creates a random grid
