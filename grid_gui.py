@@ -36,7 +36,7 @@ class Grid_gui:
 
 
         #Variables which will change during the game
-        self.user_picking = False
+        self.user_picking = True
         self.playing = False
         self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
@@ -46,8 +46,9 @@ class Grid_gui:
         #self.settings_menu()
         self.drawGrid() 
         changes = []
+        user_placing_pattern = False
         while True:                               
-            if not self.user_picking and self.playing:
+            if self.playing:
                 #await asyncio.sleep(1)
                 pygame.time.wait(1000)
                 changes = board.tick()
@@ -64,43 +65,51 @@ class Grid_gui:
                         #Works out col and row and add this to changes to update visual board
                         real_x, real_y = x//sq_size, y//sq_size
                         print(real_x,real_y)
-                        changes.append(Cords(real_x, real_y, "Add"))
-                        #Revives the sqaure at the given pos in the logical grid
-                        #TODO This will need to changed
-                        self.temp_grid[real_x][real_y] = True
-                    elif(x > display_width):                            
-                        print(y)
-                    if (y >= 10 and y <= 40):
-                        #TODO This need defining properly
-                        #Handle mouse clicks on buttons
-                            type = Board_Type['random']
-                            grid =""
-                            board = Board(width, height, grid, type)
-                            self.grid = board.get_grid()
-                            self.grid_width = board.get_width()
-                            self.grid_length = board.get_length()
-                            self.playing = True
-                            self.load_sq()                                
-                            print(type)
-                    elif ( y >= 50 and y <= 80):
-                            type = Board_Type['user']
-                            board = Board(width, height, self.temp_grid, type)
-                            self.grid = board.get_grid()
-                            self.grid_width = board.get_width()
-                            self.grid_length = board.get_length()
-                            self.playing = True
-                            self.load_sq()
-                            print(type)
-                    elif(y >=80 and y <= 100):
-                            place_pattern = True
-                            self.get_pattern()
-                            type = Board_Type['pattern']  
+                        #If the user has already clicked the pattern button
+                        if(user_placing_pattern):
+                            #TODO Double check that this doesn't interfear with game logic - JC
+                            #Places the patten at the x and y the user has just clicked
+                            self.get_pattern(real_x, real_y)
                             board = Board(width, height, self.temp_grid, type)
                             self.grid = board.get_grid()
                             self.grid_width = board.get_width()
                             self.grid_length = board.get_length()
                             self.playing = True
                             self.load_sq()    
+                            print(real_x,real_y)
+                        else:
+                            changes.append(Cords(real_x, real_y, "Add"))
+                            #Revives the sqaure at the given pos in the logical grid
+                            #TODO This will need to changed
+                            self.temp_grid[real_x][real_y] = True
+                        
+                    elif(x > display_width):                            
+                        print(y)
+                        if (y >= 10 and y <= 40):
+                            #TODO This need defining properly
+                            #Handle mouse clicks on buttons
+                                type = Board_Type['random']
+                                grid =""
+                                board = Board(width, height, grid, type)
+                                self.grid = board.get_grid()
+                                self.grid_width = board.get_width()
+                                self.grid_length = board.get_length()
+                                self.playing = True
+                                self.load_sq()                                
+                                print(type)
+                        elif ( y >= 50 and y <= 80):
+                                type = Board_Type['user']
+                                board = Board(width, height, self.temp_grid, type)
+                                self.grid = board.get_grid()
+                                self.grid_width = board.get_width()
+                                self.grid_length = board.get_length()
+                                self.playing = True
+                                self.load_sq()
+                                print(type)
+                        elif(y >=80 and y <= 100):
+                                type = Board_Type['pattern'] 
+                                user_placing_pattern = True
+
 
                     
                 if event.type == pygame.QUIT:
@@ -156,13 +165,9 @@ class Grid_gui:
         rect =  pygame.Rect(x,y,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
-    def get_pattern(self):
-        
-        #TODO mouse x,y + pattern coord, if pattern coord is > or < grid x,y dont draw
+    def get_pattern(self, x, y):
         #TODO add pattern selection option
        
-        mouse_x,mouse_y = pygame.mouse.get_pos()
-
         patterns = load_patterns()
         pattern_coords = []
 
@@ -174,8 +179,8 @@ class Grid_gui:
             print(i)
             #current coords
             #print("coord",i,pattern_coords[i])
-            x = int(pattern_coords[i]) #+ mouse_x.round()
-            y = int(pattern_coords[i+1]) #+ mouse_y.round
+            x = int(pattern_coords[i]) + x
+            y = int(pattern_coords[i+1]) + y 
             self.temp_grid[x][y] = True
             self.draw_sq(x,y,alive_colour)      
 
