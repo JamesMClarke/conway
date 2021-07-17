@@ -51,7 +51,9 @@ class Grid_gui:
                 #await asyncio.sleep(1)
                 pygame.time.wait(1000)
                 changes = board.tick()
-
+                if(len(changes) == 0):
+                    #TODO Add game over screen and reset ready for next name
+                    print("game over")
             for event in pygame.event.get():
                 # handle MOUSEBUTTONUP
                 #Listens for mose event
