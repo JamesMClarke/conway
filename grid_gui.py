@@ -204,7 +204,7 @@ class Grid_gui:
     def load_sq(self):
         for y in range(0 ,self.board.get_width()):
             for x in range(0, self.board.get_length()):
-                if(self.board.revive_square(x, y)):
+                if(self.board.is_sq_alive(x, y)):
                     colour  = self.alive_colour
                 else:
                     colour  = dead_colour
