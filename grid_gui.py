@@ -10,19 +10,26 @@ patterns = tools.load_patterns()
 sys.path.insert(1, 'data/')
 from colours import *
 
-#Settings
+#Board setttings
 sq_size = 20
 width = 20
 height = 20
-backgroup_colour = white
-line_colour = black
-sq_colours = [blue,black,red,orange,yellow,green,sky_blue]
-dead_colour = backgroup_colour
 line_size = 1
 display_width = width * sq_size
 full_display_width = display_width + 200
 display_height = height * sq_size
+
+#Colour settings
+backgroup_colour = white
+line_colour = black
+sq_colours = [blue,black,red,orange,yellow,green,sky_blue]
+dead_colour = backgroup_colour
+game_over_background_colour = gray
+game_over_text_colour = white
+
+#Text settings
 font_size = 30
+end_game_font_size = 50
 
 def main():
     gui =  Grid_gui()
@@ -58,8 +65,14 @@ class Grid_gui:
                 pygame.time.wait(1000)
                 changes = board.tick()
                 if(len(changes) == 0):
-                    #TODO Add game over screen and reset ready for next name - JC
-                    print("game over")
+                    #TODO Add reset button - JC
+                    #Renders game over screen
+                    rect =  pygame.Rect(0,0,full_display_width,display_height)
+                    pygame.draw.rect(self.screen,game_over_background_colour,rect)
+                    font = pygame.font.SysFont(None, end_game_font_size)
+                    game_over = font.render('Game over', True, game_over_text_colour)
+                    text_rect = game_over.get_rect(center=(full_display_width//2, display_height//2))
+                    self.screen.blit(game_over, text_rect)
             for event in pygame.event.get():
                 # handle MOUSEBUTTONUP
                 #Listens for mose event
