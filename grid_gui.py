@@ -4,6 +4,8 @@ from cords import Cords
 import tools
 import pygame
 import sys
+patterns = tools.load_patterns()
+
 
 sys.path.insert(1, 'data/')
 from colours import *
@@ -14,7 +16,7 @@ width = 20
 height = 20
 backgroup_colour = white
 line_colour = black
-sq_colours = [black,blue,red,orange,yellow,green]
+sq_colours = [blue,black,red,orange,yellow,green,sky_blue]
 dead_colour = backgroup_colour
 line_size = 1
 display_width = width * sq_size
@@ -38,16 +40,15 @@ class Grid_gui:
         self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
-        self.alive_colour = blue
+        #default 
+        self.alive_colour = sq_colours[0]
         self.count = 0
         #temp blank vars        
-        #settings is commented out as it does nothing atm
-        #self.settings_menu()
         self.drawGrid() 
         changes = []
         user_placing_pattern = False
         while True:
-            self.draw_sq(display_width+10,130,self.alive_colour)
+            self.draw_sq(display_width+10,100,self.alive_colour)
 
                                
             if self.playing:
@@ -107,12 +108,14 @@ class Grid_gui:
                                 self.load_sq()
                                 print(type)
                         elif(y >=80 and y <= 100):
-                                type = Board_Type['pattern'] 
-                                user_placing_pattern = True
-
-
-                        elif(y >= 100 and y<=120):
                             self.alive_colour = self.sq_colour()
+
+
+
+                        elif(y >= 110 and y<=130):
+                            self.display_patterns()
+                            type = Board_Type['pattern'] 
+                            user_placing_pattern = True
                            
 
     
@@ -141,21 +144,21 @@ class Grid_gui:
         img2 = font.render('User Input', True, blue)
         self.screen.blit(img2, (display_width+10, 50))
 
-        img3 = font.render('Patterns', True, blue)
+        img3 = font.render('Cycle Alive Colour', True, blue)
         self.screen.blit(img3, (display_width+10, 80))
+        
+        img4 = font.render('Patterns', True, blue)
+        self.screen.blit(img4, (display_width+10, 120))
 
-        img4 = font.render('Cycle alive Colour', True, blue)
-        self.screen.blit(img4, (display_width+10, 110))
 
     def sq_colour(self):
-        #TODO change from hard coded limit
-        if(self.count > 4):
+
+        if(self.count > len(sq_colours)-2):
             self.count = 0
         else:
             self.count += 1
         colour = sq_colours[self.count]
                            
-
         return colour
 
 
@@ -187,15 +190,25 @@ class Grid_gui:
         rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
 
+    #TODO PlaceHolder method will eventually move into __init__ while loop
+    def display_patterns(self):
+        start =130
+        font = pygame.font.SysFont(None, font_size)
+
+        for i in range(0, len(patterns)):
+            print("pattern name ", patterns[i].get_pattern_name())
+            img = font.render( str(patterns[i].get_pattern_name()), True, blue)
+            self.screen.blit(img, (display_width+10, start+30))
+            start = start+30
+
+
     def get_pattern(self, x, y):
         #TODO add pattern selection option - SC
        
-        patterns = tools.load_patterns()
+        #patterns = tools.load_patterns()
+       
         pattern_coords = []
-
-        pattern_coords = patterns[1].get_pattern_pattern().split(",")
-        print(pattern_coords)
-      
+        pattern_coords = patterns[1].get_pattern_pattern().split(",")      
         # for loop for coords list
         for i in range(0, len(pattern_coords) -1, 2):  
             print(i)
