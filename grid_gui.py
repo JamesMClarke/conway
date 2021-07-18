@@ -14,7 +14,7 @@ width = 20
 height = 20
 backgroup_colour = white
 line_colour = black
-alive_colour = blue
+sq_colours = [black,blue,red,orange,yellow,green]
 dead_colour = backgroup_colour
 line_size = 1
 display_width = width * sq_size
@@ -38,13 +38,18 @@ class Grid_gui:
         self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
+        self.alive_colour = blue
+        self.count = 0
         #temp blank vars        
         #settings is commented out as it does nothing atm
         #self.settings_menu()
         self.drawGrid() 
         changes = []
         user_placing_pattern = False
-        while True:                               
+        while True:
+            self.draw_sq(display_width+10,130,self.alive_colour)
+
+                               
             if self.playing:
                 #await asyncio.sleep(1)
                 pygame.time.wait(1000)
@@ -106,6 +111,11 @@ class Grid_gui:
                                 user_placing_pattern = True
 
 
+                        elif(y >= 100 and y<=120):
+                            self.alive_colour = self.sq_colour()
+                           
+
+    
                     
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -134,12 +144,28 @@ class Grid_gui:
         img3 = font.render('Patterns', True, blue)
         self.screen.blit(img3, (display_width+10, 80))
 
+        img4 = font.render('Cycle alive Colour', True, blue)
+        self.screen.blit(img4, (display_width+10, 110))
+
+    def sq_colour(self):
+        #TODO change from hard coded limit
+        if(self.count > 4):
+            self.count = 0
+        else:
+            self.count += 1
+        colour = sq_colours[self.count]
+                           
+
+        return colour
+
+
+
 
     def load_sq(self):
         for y in range(0 ,self.grid_length):
             for x in range(0, self.grid_width):
                 if(self.grid[x][y].get_is_alive()):
-                    colour  = alive_colour
+                    colour  = self.alive_colour
                 else:
                     colour  = dead_colour
                 self.draw_sq(x*sq_size,y*sq_size,colour)
@@ -150,7 +176,7 @@ class Grid_gui:
             x, y, change = c.get_cords()
             print(x, y)
             if(change == "Add"):
-                colour = alive_colour            
+                colour = self.alive_colour            
             else:
                 colour = dead_colour
             self.draw_sq(x*sq_size,y*sq_size,colour)
@@ -180,7 +206,7 @@ class Grid_gui:
             print("Pattern" , x, y)
             if(x < (width - 1) and y < (height - 1)):
                 self.temp_grid[x][y] = True
-                self.draw_sq(x,y,alive_colour)      
+                self.draw_sq(x,y,self.alive_colour)      
 
 
 if __name__ == "__main__":
