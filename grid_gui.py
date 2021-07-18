@@ -149,6 +149,14 @@ class Grid_gui:
         
         img4 = font.render('Patterns', True, blue)
         self.screen.blit(img4, (display_width+10, 120))
+        
+        pattern_start = 150
+        for i in range(0, len(patterns)):
+            print("pattern name ", patterns[i].get_pattern_name())
+            img5 = font.render( str(patterns[i].get_pattern_name()), True, blue)
+            self.screen.blit(img5, (display_width+10, pattern_start))
+            pattern_start = pattern_start + 30
+
 
 
     def sq_colour(self):
@@ -189,17 +197,6 @@ class Grid_gui:
         #print(x/sq_size,y/sq_size,colour)
         rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
-
-    #TODO PlaceHolder method will eventually move into __init__ while loop
-    def display_patterns(self):
-        start =130
-        font = pygame.font.SysFont(None, font_size)
-
-        for i in range(0, len(patterns)):
-            print("pattern name ", patterns[i].get_pattern_name())
-            img = font.render( str(patterns[i].get_pattern_name()), True, blue)
-            self.screen.blit(img, (display_width+10, start+30))
-            start = start+30
 
 
     def get_pattern(self, x, y):
