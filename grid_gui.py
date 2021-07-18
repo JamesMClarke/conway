@@ -40,10 +40,10 @@ class Grid_gui:
         self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
-        #default pattern selected
+        #default pattern selected - SC
         self.current_pattern = 0
         self.count = 0
-        #default alive colour
+        #default alive colour - SC
         self.alive_colour = sq_colours[0]
         #temp blank vars        
         self.drawGrid() 
@@ -119,7 +119,7 @@ class Grid_gui:
                             type = Board_Type['pattern'] 
                             user_placing_pattern = True
                            
-                        #TODO add mouse events for each pattern here
+                        #TODO add mouse events for each pattern here - SC
     
                     
                 if event.type == pygame.QUIT:
@@ -152,6 +152,7 @@ class Grid_gui:
         img4 = font.render('Patterns', True, blue)
         self.screen.blit(img4, (display_width+10, 120))
         
+        #TODO change to cycle through patterns instead of displaying all of them - SC
         pattern_start = 150
         for i in range(0, len(patterns)):
             print("pattern name ", patterns[i].get_pattern_name())
@@ -200,9 +201,9 @@ class Grid_gui:
         rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
     
-    #sets current pattern based upon pattern name
-    #TODO get rid of hard coded variable
-    #TODO pass to get_pattern 
+    #sets current pattern based upon pattern name - SC
+    #TODO get rid of hard coded variable - SC
+    #TODO pass to get_pattern - SC
     def set_current_pattern(self):
         pattern = 'test'
 
@@ -214,6 +215,7 @@ class Grid_gui:
     def get_pattern(self, x, y):
         
         #TODO add pattern selection option - SC
+        #TODO Add more patterns - SC
         #patterns = tools.load_patterns()
         pattern_coords = []
         pattern_coords = patterns[1].get_pattern_pattern().split(",")      
