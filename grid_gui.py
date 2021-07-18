@@ -4,9 +4,6 @@ from cords import Cords
 import tools
 import pygame
 import sys
-patterns = tools.load_patterns()
-
-
 sys.path.insert(1, 'data/')
 from colours import *
 
@@ -31,39 +28,47 @@ game_over_text_colour = white
 font_size = 30
 end_game_font_size = 50
 
+#Loaded from json
+patterns = tools.load_patterns()
+
 def main():
     gui =  Grid_gui()
 
 class Grid_gui:
-
     def __init__(self):        
         
         pygame.init()
 
-
         #Variables which will change during the game
+        user_placing_pattern = False
         self.user_picking = True
         self.playing = False
         self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
-        #default pattern selected - SC
+        #default pattern selected
         self.current_pattern = 0
         self.count = 0
         #default alive colour - SC
         self.alive_colour = sq_colours[0]
+
         #temp blank vars        
-        self.drawGrid() 
         changes = []
-        user_placing_pattern = False
+        
+        #Draws grid
+        self.drawGrid() 
+
         while True:
+            #Draws square to show alive colour
             self.draw_sq(display_width+10,100,self.alive_colour)
 
-                               
             if self.playing:
-                #await asyncio.sleep(1)
+                #Wait timer to slow down the game
                 pygame.time.wait(1000)
+                #Moves the board forward one cycle and saves the changes
                 changes = board.tick()
+                
+                #If there aren't any changes it then renders a game over screen
                 if(len(changes) == 0):
                     #TODO Add reset button - JC
                     #Renders game over screen
@@ -73,40 +78,57 @@ class Grid_gui:
                     game_over = font.render('Game over', True, game_over_text_colour)
                     text_rect = game_over.get_rect(center=(full_display_width//2, display_height//2))
                     self.screen.blit(game_over, text_rect)
+
             for event in pygame.event.get():
-                # handle MOUSEBUTTONUP
-                #Listens for mose event
+
+                #Listens for mouse event
                 if event.type == pygame.MOUSEBUTTONUP:
-                    #If the use is still picking
                     x,y = pygame.mouse.get_pos()
+
+                    #If the x cord is within the grid
                     if(x <= display_width):
-                        #Works out col and row and add this to changes to update visual board
+
+                        #Works out col and row
                         real_x, real_y = x//sq_size, y//sq_size
-                        print(real_x,real_y)
+
                         #If the user has already clicked the pattern button
                         if(user_placing_pattern):
                             #TODO Double check that this doesn't interfear with game logic - JC
                             #Places the patten at the x and y the user has just clicked
                             self.get_pattern(real_x, real_y)
+
+                            #TODO Remove grid - JC
+                            #I'm pretty sure we could just define board as self.board
+                            #And then call that rather than having grid as a thing
                             board = Board(width, height, self.temp_grid, type)
                             self.grid = board.get_grid()
                             self.grid_width = board.get_width()
                             self.grid_length = board.get_length()
+                            
+                            #Sets playing to be true
                             self.playing = True
+
+                            #Loads grid from board
                             self.load_sq()    
-                            print(real_x,real_y)
+                        
+                        #Otherwise the user is placing an individual square
                         else:
+                            #Adds the change to the list
                             changes.append(Cords(real_x, real_y, "Add"))
-                            #Revives the sqaure at the given pos in the logical grid
+                            #Revives the square at the given pos in the logical grid
                             self.temp_grid[real_x][real_y] = True
                         
-                    elif(x > display_width):                            
-                        print(y)
+                    #If the mouse event is on the settings panel
+                    elif(x > display_width):     
+                        #Handles mouse for random button
                         if (y >= 10 and y <= 40):
-                            #Handle mouse clicks on buttons
+                                #Sets type to enum
                                 type = Board_Type['random']
+                                #Creates a blank grid 
                                 grid =""
+                                #Creates a board
                                 board = Board(width, height, grid, type)
+                                
                                 self.grid = board.get_grid()
                                 self.grid_width = board.get_width()
                                 self.grid_length = board.get_length()
@@ -122,11 +144,13 @@ class Grid_gui:
                                 self.playing = True
                                 self.load_sq()
                                 print(type)
+                        
+                        #If the alive colour button is pressed calls sq_colour
                         elif(y >=80 and y <= 100):
                             self.alive_colour = self.sq_colour()
 
 
-
+                        #If pattern button is pressed
                         elif(y >= 110 and y<=130):
                             self.set_current_pattern()
                             type = Board_Type['pattern'] 
@@ -143,7 +167,7 @@ class Grid_gui:
             pygame.display.update()
 
        
-
+    #Draws the grid
     def drawGrid(self):
         
         for x in range (0,display_width,sq_size):
@@ -174,7 +198,7 @@ class Grid_gui:
             pattern_start = pattern_start + 30
 
 
-    #changes colour
+    #Increments colour
     def sq_colour(self):
 
         if(self.count > len(sq_colours)-2):
@@ -185,9 +209,7 @@ class Grid_gui:
                            
         return colour
 
-
-
-
+    #Loads board onto the grid
     def load_sq(self):
         for y in range(0 ,self.grid_length):
             for x in range(0, self.grid_width):
@@ -197,7 +219,7 @@ class Grid_gui:
                     colour  = dead_colour
                 self.draw_sq(x*sq_size,y*sq_size,colour)
 
-
+    #Updates the board based on the changes
     def update_by_changes(self, changes):
         for c in changes:
             x, y, change = c.get_cords()
@@ -208,13 +230,12 @@ class Grid_gui:
                 colour = dead_colour
             self.draw_sq(x*sq_size,y*sq_size,colour)
 
-        #draws square 
+    #Draws square 
     def draw_sq(self,x,y,colour):
-        #print(x/sq_size,y/sq_size,colour)
         rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
     
-    #sets current pattern based upon pattern name - SC
+    #Sets current pattern based upon pattern name
     #TODO get rid of hard coded variable - SC
     #TODO pass to get_pattern - SC
     def set_current_pattern(self):
@@ -225,8 +246,8 @@ class Grid_gui:
                 print("set pattern test",patterns[i].get_pattern_pattern())
                 current_pattern = i 
     
+    #Places pattern on the temp grid
     def get_pattern(self, x, y):
-        
         #TODO add pattern selection option - SC
         #TODO Add more patterns - SC
         #patterns = tools.load_patterns()
