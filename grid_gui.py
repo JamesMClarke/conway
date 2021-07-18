@@ -66,7 +66,7 @@ class Grid_gui:
                 #Wait timer to slow down the game
                 pygame.time.wait(1000)
                 #Moves the board forward one cycle and saves the changes
-                changes = board.tick()
+                changes = self.board.tick()
                 
                 #If there aren't any changes it then renders a game over screen
                 if(len(changes) == 0):
@@ -100,10 +100,7 @@ class Grid_gui:
                             #TODO Remove grid - JC
                             #I'm pretty sure we could just define board as self.board
                             #And then call that rather than having grid as a thing
-                            board = Board(width, height, self.temp_grid, type)
-                            self.grid = board.get_grid()
-                            self.grid_width = board.get_width()
-                            self.grid_length = board.get_length()
+                            self.board = Board(width, height, self.temp_grid, type)
                             
                             #Sets playing to be true
                             self.playing = True
@@ -127,20 +124,14 @@ class Grid_gui:
                                 #Creates a blank grid 
                                 grid =""
                                 #Creates a board
-                                board = Board(width, height, grid, type)
+                                self.board = Board(width, height, grid, type)
                                 
-                                self.grid = board.get_grid()
-                                self.grid_width = board.get_width()
-                                self.grid_length = board.get_length()
                                 self.playing = True
                                 self.load_sq()                                
                                 print(type)
                         elif ( y >= 50 and y <= 80):
                                 type = Board_Type['user']
-                                board = Board(width, height, self.temp_grid, type)
-                                self.grid = board.get_grid()
-                                self.grid_width = board.get_width()
-                                self.grid_length = board.get_length()
+                                self.board = Board(width, height, self.temp_grid, type)
                                 self.playing = True
                                 self.load_sq()
                                 print(type)
@@ -211,9 +202,9 @@ class Grid_gui:
 
     #Loads board onto the grid
     def load_sq(self):
-        for y in range(0 ,self.grid_length):
-            for x in range(0, self.grid_width):
-                if(self.grid[x][y].get_is_alive()):
+        for y in range(0 ,self.board.get_width()):
+            for x in range(0, self.board.get_length()):
+                if(self.board.revive_square(x, y)):
                     colour  = self.alive_colour
                 else:
                     colour  = dead_colour
