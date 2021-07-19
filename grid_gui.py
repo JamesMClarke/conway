@@ -62,6 +62,7 @@ class Grid_gui:
             #Draws square to show alive colour
             self.draw_sq(display_width+10,100,self.alive_colour)
             
+            #current pattern name 
             font = pygame.font.SysFont(None, font_size)
             img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
             self.screen.blit(img7,(display_width+30,150))
@@ -150,7 +151,7 @@ class Grid_gui:
                             user_placing_pattern = True
                            
                         #Mouse events for pattern select
-                        #TODO fix bug of pattern name overwriting previous pattern name -SC
+                        #TODO fix bug of pattern name overwriting previous pattern -SC
                         elif((y >= 140 and y<=160) and (x >= display_width+10 and x <= display_width+20)):
                             print("<")
                             self.current_pattern = self.current_pattern-1
