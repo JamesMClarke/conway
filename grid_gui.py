@@ -65,6 +65,11 @@ class Grid_gui:
             game_over = False
 
             
+            
+            #current pattern name 
+            font = pygame.font.SysFont(None, font_size)
+            img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
+            self.screen.blit(img7,(display_width+30,150))
 
             if self.playing:
                 #Wait timer to slow down the game
@@ -108,8 +113,7 @@ class Grid_gui:
                                 #TODO Double check that this doesn't interfear with game logic - JC
                                 #Places the patten at the x and y the user has just clicked
                                 self.get_pattern(real_x, real_y)
-
-                                #TODO Remove grid - JC
+                                
                                 #I'm pretty sure we could just define board as self.board
                                 #And then call that rather than having grid as a thing
                                 self.board = Board(width, height, self.temp_grid, type)
@@ -118,15 +122,17 @@ class Grid_gui:
                                 self.playing = True
 
                                 #Loads grid from board
-                                self.load_sq()    
-                            
-                            #Otherwise the user is placing an individual square
+                                self.load_sq()   
                             else:
                                 #Adds the change to the list
                                 changes.append(Cords(real_x, real_y, "Add"))
                                 #Revives the square at the given pos in the logical grid
                                 self.temp_grid[real_x][real_y] = True
-                            
+
+                             
+                        
+                            #Otherwise the user is placing an individual square
+                                
                         #If the mouse event is on the settings panel
                         elif(x > display_width):     
                             #Handles mouse for random button
@@ -160,6 +166,22 @@ class Grid_gui:
                                 user_placing_pattern = True
                             
                             #TODO add mouse events for each pattern here - SC
+                            #sets placement of pattern to true
+                            elif((y >= 140 and y<=160) and (x >= display_height+20 and x <= display_width+150)):
+                                type = Board_Type['pattern'] 
+                                user_placing_pattern = True
+                                
+                            #Mouse events for pattern select
+                            #TODO fix bug of pattern name overwriting previous pattern -SC
+                            elif((y >= 140 and y<=160) and (x >= display_width+10 and x <= display_width+20)):
+                                print("<")
+                                self.current_pattern = self.current_pattern-1
+                                self.set_current_pattern()
+
+                            elif((y >= 140 and y<=160) and (x >= display_width+150 and x <= display_width+170)):
+                                print(">")
+                                self.current_pattern = self.current_pattern+1
+                                self.set_current_pattern()
                     else:
                         game_over = False
                         #Variables which will change during the game
@@ -176,6 +198,9 @@ class Grid_gui:
                         self.drawGrid() 
 
                         
+
+                    
+
 
     
                     
@@ -208,14 +233,13 @@ class Grid_gui:
         
         img4 = font.render('Patterns', True, blue)
         self.screen.blit(img4, (display_width+10, 120))
+
+        img5 = font.render('<',True,blue) 
+        self.screen.blit(img5,(display_width+10,150))
+
+        img6 = font.render('>',True,blue) 
+        self.screen.blit(img6,(display_width+150,150))
         
-        #TODO change to cycle through patterns instead of displaying all of them - SC
-        pattern_start = 150
-        for i in range(0, len(patterns)):
-            print("pattern name ", patterns[i].get_pattern_name())
-            img5 = font.render( str(patterns[i].get_pattern_name()), True, blue)
-            self.screen.blit(img5, (display_width+10, pattern_start))
-            pattern_start = pattern_start + 30
 
 
     #Increments colour
@@ -259,20 +283,17 @@ class Grid_gui:
     #TODO get rid of hard coded variable - SC
     #TODO pass to get_pattern - SC
     def set_current_pattern(self):
-        pattern = 'test'
 
-        for i in range(0, len(patterns)):
-            if(patterns[i].get_pattern_name() == pattern):
-                print("set pattern test",patterns[i].get_pattern_pattern())
-                current_pattern = i 
+        if(self.current_pattern < 0 or self.current_pattern > len(patterns)-1) :
+            self.current_pattern = 0 
+        print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
     
     #Places pattern on the temp grid
     def get_pattern(self, x, y):
         #TODO add pattern selection option - SC
         #TODO Add more patterns - SC
-        #patterns = tools.load_patterns()
         pattern_coords = []
-        pattern_coords = patterns[1].get_pattern_pattern().split(",")      
+        pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")      
         # for loop for coords list
         for i in range(0, len(pattern_coords) -1, 2):  
             print(i)
