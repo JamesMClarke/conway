@@ -61,6 +61,10 @@ class Grid_gui:
         while True:
             #Draws square to show alive colour
             self.draw_sq(display_width+10,100,self.alive_colour)
+            #Varible so you can differeniate between which screen is currently showing
+            game_over = False
+
+            
 
             if self.playing:
                 #Wait timer to slow down the game
@@ -68,16 +72,23 @@ class Grid_gui:
                 #Moves the board forward one cycle and saves the changes
                 changes = self.board.tick()
                 
+                
                 #If there aren't any changes it then renders a game over screen
                 if(len(changes) == 0):
-                    #TODO Add reset button - JC
                     #Renders game over screen
                     rect =  pygame.Rect(0,0,full_display_width,display_height)
                     pygame.draw.rect(self.screen,game_over_background_colour,rect)
                     font = pygame.font.SysFont(None, end_game_font_size)
-                    game_over = font.render('Game over', True, game_over_text_colour)
-                    text_rect = game_over.get_rect(center=(full_display_width//2, display_height//2))
-                    self.screen.blit(game_over, text_rect)
+                    game_over_text = font.render('Game over', True, game_over_text_colour)
+                    reset = font.render('Reset', True, game_over_text_colour)
+                    game_over_rect = game_over_text.get_rect(center=(full_display_width//2, display_height//2))
+                    reset_rect = reset.get_rect(center = (full_display_width//2, display_height//1.5))
+                    self.screen.blit(game_over_text, game_over_rect)
+                    self.screen.blit(reset,reset_rect)
+                    game_over = True
+                    
+
+
 
             for event in pygame.event.get():
 
@@ -85,69 +96,87 @@ class Grid_gui:
                 if event.type == pygame.MOUSEBUTTONUP:
                     x,y = pygame.mouse.get_pos()
 
+                    if not game_over:
                     #If the x cord is within the grid
-                    if(x <= display_width):
+                        if(x <= display_width):
 
-                        #Works out col and row
-                        real_x, real_y = x//sq_size, y//sq_size
+                            #Works out col and row
+                            real_x, real_y = x//sq_size, y//sq_size
 
-                        #If the user has already clicked the pattern button
-                        if(user_placing_pattern):
-                            #TODO Double check that this doesn't interfear with game logic - JC
-                            #Places the patten at the x and y the user has just clicked
-                            self.get_pattern(real_x, real_y)
+                            #If the user has already clicked the pattern button
+                            if(user_placing_pattern):
+                                #TODO Double check that this doesn't interfear with game logic - JC
+                                #Places the patten at the x and y the user has just clicked
+                                self.get_pattern(real_x, real_y)
 
-                            #TODO Remove grid - JC
-                            #I'm pretty sure we could just define board as self.board
-                            #And then call that rather than having grid as a thing
-                            self.board = Board(width, height, self.temp_grid, type)
-                            
-                            #Sets playing to be true
-                            self.playing = True
-
-                            #Loads grid from board
-                            self.load_sq()    
-                        
-                        #Otherwise the user is placing an individual square
-                        else:
-                            #Adds the change to the list
-                            changes.append(Cords(real_x, real_y, "Add"))
-                            #Revives the square at the given pos in the logical grid
-                            self.temp_grid[real_x][real_y] = True
-                        
-                    #If the mouse event is on the settings panel
-                    elif(x > display_width):     
-                        #Handles mouse for random button
-                        if (y >= 10 and y <= 40):
-                                #Sets type to enum
-                                type = Board_Type['random']
-                                #Creates a blank grid 
-                                grid =""
-                                #Creates a board
-                                self.board = Board(width, height, grid, type)
-                                
-                                self.playing = True
-                                self.load_sq()                                
-                                print(type)
-                        elif ( y >= 50 and y <= 80):
-                                type = Board_Type['user']
+                                #TODO Remove grid - JC
+                                #I'm pretty sure we could just define board as self.board
+                                #And then call that rather than having grid as a thing
                                 self.board = Board(width, height, self.temp_grid, type)
+                                
+                                #Sets playing to be true
                                 self.playing = True
-                                self.load_sq()
-                                print(type)
+
+                                #Loads grid from board
+                                self.load_sq()    
+                            
+                            #Otherwise the user is placing an individual square
+                            else:
+                                #Adds the change to the list
+                                changes.append(Cords(real_x, real_y, "Add"))
+                                #Revives the square at the given pos in the logical grid
+                                self.temp_grid[real_x][real_y] = True
+                            
+                        #If the mouse event is on the settings panel
+                        elif(x > display_width):     
+                            #Handles mouse for random button
+                            if (y >= 10 and y <= 40):
+                                    #Sets type to enum
+                                    type = Board_Type['random']
+                                    #Creates a blank grid 
+                                    grid =""
+                                    #Creates a board
+                                    self.board = Board(width, height, grid, type)
+                                    
+                                    self.playing = True
+                                    self.load_sq()                                
+                                    print(type)
+                            elif ( y >= 50 and y <= 80):
+                                    type = Board_Type['user']
+                                    self.board = Board(width, height, self.temp_grid, type)
+                                    self.playing = True
+                                    self.load_sq()
+                                    print(type)
+                            
+                            #If the alive colour button is pressed calls sq_colour
+                            elif(y >=80 and y <= 100):
+                                self.alive_colour = self.sq_colour()
+
+
+                            #If pattern button is pressed
+                            elif(y >= 110 and y<=130):
+                                self.set_current_pattern()
+                                type = Board_Type['pattern'] 
+                                user_placing_pattern = True
+                            
+                            #TODO add mouse events for each pattern here - SC
+                    else:
+                        game_over = False
+                        #Variables which will change during the game
+                        user_placing_pattern = False
+                        self.user_picking = True
+                        self.playing = False
+                        self.temp_grid = [[False for j in range(width)] for i in range(height)]
+                        self.screen.fill(backgroup_colour)
+                        #default pattern selected
+                        self.current_pattern = 0
+                        self.count = 0
+                        #default alive colour - SC
+                        self.alive_colour = sq_colours[0]
+                        self.drawGrid() 
+
                         
-                        #If the alive colour button is pressed calls sq_colour
-                        elif(y >=80 and y <= 100):
-                            self.alive_colour = self.sq_colour()
 
-
-                        #If pattern button is pressed
-                        elif(y >= 110 and y<=130):
-                            self.set_current_pattern()
-                            type = Board_Type['pattern'] 
-                            user_placing_pattern = True
-                           
-                        #TODO add mouse events for each pattern here - SC
     
                     
                 if event.type == pygame.QUIT:
