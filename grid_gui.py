@@ -33,8 +33,6 @@ patterns = tools.load_patterns()
 
 #TODO move patterns.json into data folder -SC
 #TODO Implement colours from colour.json -SC
-#TODO Change user input to play - JC 
-#TODO Make it so it will automatically place selected pattern - JC
 
 def main():
     gui =  Grid_gui()
@@ -45,8 +43,8 @@ class Grid_gui:
         pygame.init()
 
         #Variables which will change during the game
-        user_placing_pattern = False
-        self.user_picking = True
+        user_placing_pattern = True
+        type = Board_Type['pattern'] 
         self.playing = False
         self.temp_grid = [[False for j in range(width)] for i in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
@@ -115,15 +113,6 @@ class Grid_gui:
                                 #TODO Double check that this doesn't interfear with game logic - JC
                                 #Places the patten at the x and y the user has just clicked
                                 self.get_pattern(real_x, real_y)
-                                
-                                #Defines board
-                                self.board = Board(width, height, self.temp_grid, type)
-                                
-                                #Sets playing to be true
-                                self.playing = True
-
-                                #Loads grid from board
-                                self.load_sq()   
                             else:
                                 #Adds the change to the list
                                 changes.append(Cords(real_x, real_y, "Add"))
@@ -134,22 +123,20 @@ class Grid_gui:
                                 
                         #If the mouse event is on the settings panel
                         elif(x > display_width):     
-                            #Handles mouse for random button
+                            #Handles mouse for play
                             if (y >= 10 and y <= 40):
-                                    #Sets type to enum
-                                    type = Board_Type['random']
-                                    #Creates a blank grid 
-                                    grid =""
-                                    #Creates a board
-                                    self.board = Board(width, height, grid, type)
-                                    self.playing = True
-                                    self.load_sq()     
+                                self.board = Board(width, height, self.temp_grid, type)
+                                self.playing = True
+                                self.load_sq()     
 
+                            #Handels mouse for random
                             elif ( y >= 50 and y <= 80):
-                                    type = Board_Type['user']
-                                    self.board = Board(width, height, self.temp_grid, type)
-                                    self.playing = True
-                                    self.load_sq()
+                                #Sets type to enum
+                                type = Board_Type['random']
+                                #Creates a blank grid 
+                                grid =""
+                                #Creates a board
+                                self.board = Board(width, height, grid, type)
                             
                             #If the alive colour button is pressed calls sq_colour
                             elif(y >=80 and y <= 100):
@@ -180,8 +167,7 @@ class Grid_gui:
                     else:
                         game_over = False
                         #Variables which will change during the game
-                        user_placing_pattern = False
-                        self.user_picking = True
+                        user_placing_pattern = True
                         self.playing = False
                         self.temp_grid = [[False for j in range(width)] for i in range(height)]
                         self.screen.fill(backgroup_colour)
@@ -192,13 +178,6 @@ class Grid_gui:
                         self.alive_colour = sq_colours[0]
                         self.drawGrid() 
 
-                        
-
-                    
-
-
-    
-                    
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
@@ -215,10 +194,10 @@ class Grid_gui:
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
 
         font = pygame.font.SysFont(None, font_size)
-        img = font.render('Random', True, blue)
+        img = font.render('Play', True, blue)
         self.screen.blit(img, (display_width+10, 20))
 
-        img2 = font.render('User Input', True, blue)
+        img2 = font.render('Random', True, blue)
         self.screen.blit(img2, (display_width+10, 50))
 
         img3 = font.render('Cycle Alive Colour', True, blue)
@@ -271,6 +250,11 @@ class Grid_gui:
     def draw_sq(self,x,y,colour):
         rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
+
+    def draw_sq_on_pos(self,x,y,colour):
+        print("Running draw_sq_on_pos", x*sq_size, y*sq_size)
+        rect =  pygame.Rect((x*sq_size)+line_size,(y*sq_size)+line_size,sq_size-line_size,sq_size-line_size)
+        pygame.draw.rect(self.screen,colour,rect)
     
     #Sets current pattern based upon pattern name
     def set_current_pattern(self):
@@ -290,17 +274,13 @@ class Grid_gui:
         pattern_coords = []
         pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")      
         # for loop for coords list
-        print("mouse pos:", x, y)
         for i in range(0, len(pattern_coords) -1, 2): 
-            print(i)
             #current coords
-            print("Cords:",pattern_coords[i],pattern_coords[i+1])
             new_x = int(pattern_coords[i]) + x
             new_y = int(pattern_coords[i+1]) + y 
-            print("Pattern" , new_x, new_y)
-            if(x < (width - 1) and y < (height - 1)):
+            if(new_x < width and new_y < height):
                 self.temp_grid[new_x][new_y] = True
-                self.draw_sq(x,y,self.alive_colour)      
+                self.draw_sq_on_pos(new_x,new_y,self.alive_colour)      
 
 
 if __name__ == "__main__":
