@@ -250,11 +250,6 @@ class Grid_gui:
     def draw_sq(self,x,y,colour):
         rect =  pygame.Rect(x+line_size,y+line_size,sq_size-line_size,sq_size-line_size)
         pygame.draw.rect(self.screen,colour,rect)
-
-    def draw_sq_on_pos(self,x,y,colour):
-        print("Running draw_sq_on_pos", x*sq_size, y*sq_size)
-        rect =  pygame.Rect((x*sq_size)+line_size,(y*sq_size)+line_size,sq_size-line_size,sq_size-line_size)
-        pygame.draw.rect(self.screen,colour,rect)
     
     #Sets current pattern based upon pattern name
     def set_current_pattern(self):
@@ -266,21 +261,30 @@ class Grid_gui:
     #Places pattern on the temp grid
     def get_pattern(self, x, y):
         #TODO Add more patterns - SC
-        #TODO I think it might be an idea to redesign how the patterns are stored - JC
-        #For example the 2x2 square would be the following
-        #11
-        #11
-        #Or something like this, due to it being confusing currently
-        pattern_coords = []
-        pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")      
-        # for loop for coords list
-        for i in range(0, len(pattern_coords) -1, 2): 
-            #current coords
-            new_x = int(pattern_coords[i]) + x
-            new_y = int(pattern_coords[i+1]) + y 
-            if(new_x < width and new_y < height):
-                self.temp_grid[new_x][new_y] = True
-                self.draw_sq_on_pos(new_x,new_y,self.alive_colour)      
+        
+        #Gets currently selected pattern
+        pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")
+        #Splits this into char array
+        squares = tools.split(patterns[self.current_pattern].get_pattern_pattern())   
+        x_pos = 0
+        y_pos = 0
+        #Loops through this char array
+        for c in squares:
+            #If the char is a ',' it goes to next line
+            if(c == ','):
+                y_pos += 1
+                x_pos =0
+            #If it is a 1 it puts a square and goes to next row
+            elif(c == '1'):
+                new_x, new_y = x+x_pos, y+y_pos
+                #Checks the square will be within the grid
+                if(new_x < width and new_y < height):
+                    self.temp_grid[new_x][new_y] = True
+                    self.draw_sq(new_x*sq_size,new_y*sq_size,self.alive_colour)
+                x_pos += 1
+            #Otherwise it goes to the next colum
+            else:
+                x_pos += 1
 
 
 if __name__ == "__main__":

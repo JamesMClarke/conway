@@ -1,6 +1,7 @@
 import json as js
 from pattern import Pattern
 
+#Tool to load patter from json
 def load_patterns():
     patterns = []
     with open("patterns.json", "r") as read_file:
@@ -10,7 +11,6 @@ def load_patterns():
         patterns.append(Pattern(x['name'], x['pattern'], x['type']))
     return patterns
 
-patterns = load_patterns()
-
-def get_patterns():
-    return patterns
+#Tool to split word into chars
+def split(word):
+    return [char for char in word]
