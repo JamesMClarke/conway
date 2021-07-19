@@ -148,6 +148,12 @@ class Grid_gui:
                            
                         #TODO add mouse events for each pattern here - SC
                         #TODO < pattern > 
+
+                        elif((y >= 140 and y<=160) and (x >= display_width+10 and x <= display_width+20)):
+                            print("<")
+                        elif((y >= 140 and y<=160) and (x >= display_width+150 and x <= display_width+170)):
+                            print(">")
+
     
                     
                 if event.type == pygame.QUIT:
@@ -179,14 +185,13 @@ class Grid_gui:
         
         img4 = font.render('Patterns', True, blue)
         self.screen.blit(img4, (display_width+10, 120))
+
+        img5 = font.render('<',True,blue) 
+        self.screen.blit(img5,(display_width+10,150))
+
+        img6 = font.render('>',True,blue) 
+        self.screen.blit(img6,(display_width+150,150))
         
-        #TODO change to cycle through patterns instead of displaying all of them - SC
-        pattern_start = 150
-        for i in range(0, len(patterns)):
-            print("pattern name ", patterns[i].get_pattern_name())
-            img5 = font.render( str(patterns[i].get_pattern_name()), True, blue)
-            self.screen.blit(img5, (display_width+10, pattern_start))
-            pattern_start = pattern_start + 30
 
 
     #Increments colour
