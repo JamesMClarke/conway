@@ -97,7 +97,6 @@ class Grid_gui:
                             #Places the patten at the x and y the user has just clicked
                             self.get_pattern(real_x, real_y)
 
-                            #TODO Remove grid - JC
                             #I'm pretty sure we could just define board as self.board
                             #And then call that rather than having grid as a thing
                             self.board = Board(width, height, self.temp_grid, type)
@@ -148,6 +147,7 @@ class Grid_gui:
                             user_placing_pattern = True
                            
                         #TODO add mouse events for each pattern here - SC
+                        #TODO < pattern > 
     
                     
                 if event.type == pygame.QUIT:
@@ -241,7 +241,6 @@ class Grid_gui:
     def get_pattern(self, x, y):
         #TODO add pattern selection option - SC
         #TODO Add more patterns - SC
-        #patterns = tools.load_patterns()
         pattern_coords = []
         pattern_coords = patterns[1].get_pattern_pattern().split(",")      
         # for loop for coords list
