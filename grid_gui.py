@@ -33,6 +33,8 @@ patterns = tools.load_patterns()
 
 #TODO move patterns.json into data folder -SC
 #TODO Implement colours from colour.json -SC
+#TODO Change user input to play - JC 
+#TODO Make it so it will automatically place selected pattern - JC
 
 def main():
     gui =  Grid_gui()
@@ -77,7 +79,7 @@ class Grid_gui:
                 #Wait timer to slow down the game
                 pygame.time.wait(1000)
                 #Moves the board forward one cycle and saves the changes
-                changes = self.board.tick()
+                #changes = self.board.tick()
                 
                 
                 #If there aren't any changes it then renders a game over screen
@@ -280,16 +282,22 @@ class Grid_gui:
     #Places pattern on the temp grid
     def get_pattern(self, x, y):
         #TODO Add more patterns - SC
+        #TODO I think it might be an idea to redesign how the patterns are stored - JC
+        #For example the 2x2 square would be the following
+        #11
+        #11
+        #Or something like this, due to it being confusing currently
         pattern_coords = []
         pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")      
         # for loop for coords list
-        for i in range(0, len(pattern_coords) -1, 2):  
+        print("mouse pos:", x, y)
+        for i in range(0, len(pattern_coords) -1, 2): 
             print(i)
             #current coords
             print("Cords:",pattern_coords[i],pattern_coords[i+1])
             new_x = int(pattern_coords[i]) + x
             new_y = int(pattern_coords[i+1]) + y 
-            print("Pattern" , x, y)
+            print("Pattern" , new_x, new_y)
             if(x < (width - 1) and y < (height - 1)):
                 self.temp_grid[new_x][new_y] = True
                 self.draw_sq(x,y,self.alive_colour)      

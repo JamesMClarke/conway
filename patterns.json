@@ -2,7 +2,7 @@
 "patterns":[
     {"name":"Square", "pattern":"0,0", "type":"Fixed"},
     {"name":"Square 2x2", "pattern":"0,0,1,0,0,1,1,1", "type":"Fixed"},
-    {"name":"Square 3x3", "pattern":"0,0,1,0,2,0,1,0,1,1,1,2,2,0,2,1,2,2","type":"Fixed"}
+    {"name":"Square 3x3", "pattern":"0,0,1,0,2,0,0,1,1,1,2,1,0,2,1,2,2,2","type":"Fixed"}
 
 ]
 }
