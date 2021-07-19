@@ -14,5 +14,3 @@ patterns = load_patterns()
 
 def get_patterns():
     return patterns
-print(patterns[0].get_pattern_name()) 
-print(patterns[0].get_pattern_pattern())

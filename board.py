@@ -62,7 +62,6 @@ class Board:
     #Creates a board based on a grid provided
     def grid_from_input(self, user_grid):
         self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
-        print(user_grid)
         for y in range(0, self.width):
             for x in range(0, self.length):
                 if(user_grid[x][y]):  

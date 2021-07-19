@@ -141,15 +141,13 @@ class Grid_gui:
                                     #Creates a board
                                     self.board = Board(width, height, grid, type)
                                     self.playing = True
-                                    self.load_sq()                                
-                                    print(type)
+                                    self.load_sq()     
 
                             elif ( y >= 50 and y <= 80):
                                     type = Board_Type['user']
                                     self.board = Board(width, height, self.temp_grid, type)
                                     self.playing = True
                                     self.load_sq()
-                                    print(type)
                             
                             #If the alive colour button is pressed calls sq_colour
                             elif(y >=80 and y <= 100):
@@ -209,9 +207,7 @@ class Grid_gui:
        
     #Draws the grid
     def drawGrid(self):
-        
         for x in range (0,display_width,sq_size):
-            print("looping")
             for y in range (0,display_height,sq_size):
                 rect =  pygame.Rect(x,y,sq_size+1,sq_size+1)
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
@@ -290,12 +286,12 @@ class Grid_gui:
         for i in range(0, len(pattern_coords) -1, 2):  
             print(i)
             #current coords
-            #print("coord",i,pattern_coords[i])
-            x = int(pattern_coords[i]) + x
-            y = int(pattern_coords[i+1]) + y 
+            print("Cords:",pattern_coords[i],pattern_coords[i+1])
+            new_x = int(pattern_coords[i]) + x
+            new_y = int(pattern_coords[i+1]) + y 
             print("Pattern" , x, y)
             if(x < (width - 1) and y < (height - 1)):
-                self.temp_grid[x][y] = True
+                self.temp_grid[new_x][new_y] = True
                 self.draw_sq(x,y,self.alive_colour)      
 
 
