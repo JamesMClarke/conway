@@ -67,6 +67,7 @@ class Grid_gui:
             
             
             #current pattern name 
+            pygame.draw.rect(self.screen,white, pygame.Rect(display_width+30,150,100,20))
             font = pygame.font.SysFont(None, font_size)
             img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
             self.screen.blit(img7,(display_width+30,150))
