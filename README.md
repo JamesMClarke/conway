@@ -4,3 +4,4 @@ Basic conway game of life simulation written in python as a group project
 =========================================================================
 
 [Trello](https://trello.com/b/dfvzeqm0/conways-game-of-life-colab)
+[Basis for patterns](https://github.com/hnrkcode/game-of-life)

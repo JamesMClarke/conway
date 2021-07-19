@@ -33,6 +33,8 @@ patterns = tools.load_patterns()
 
 #TODO move patterns.json into data folder -SC
 #TODO Implement colours from colour.json -SC
+#TODO Fix longer names of patterns glitching - JC
+#TODO Fix back button when selecting patterns - JC
 
 def main():
     gui =  Grid_gui()
@@ -52,7 +54,7 @@ class Grid_gui:
         #default pattern selected
         self.current_pattern = 0
         self.count = 0
-        #default alive colour - SC
+        #default alive colour
         self.alive_colour = sq_colours[0]
 
         #temp blank vars        
@@ -151,6 +153,7 @@ class Grid_gui:
                             
                             #sets placement of pattern to true
                             elif((y >= 140 and y<=160) and (x >= display_height+20 and x <= display_width+150)):
+                                #TODO What is this meant to do, it currently does nothing - JC
                                 type = Board_Type['pattern'] 
                                 user_placing_pattern = True
                                 
@@ -259,9 +262,7 @@ class Grid_gui:
         print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
     
     #Places pattern on the temp grid
-    def get_pattern(self, x, y):
-        #TODO Add more patterns - SC
-        
+    def get_pattern(self, x, y):        
         #Gets currently selected pattern
         pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")
         #Splits this into char array

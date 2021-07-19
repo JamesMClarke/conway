@@ -19,6 +19,9 @@ class Board:
     #Works out the number of neighbours for a given square
     def no_of_neighbours(self, x, y):
         neighbours = 0
+        #TODO Review if this should include diagonals - JC
+        #Some patterns that should work with this, it could ether be due to this
+        #Or my logic somewhere else is floored 
         
         #Checks if the square above is alive
         if(x-1 >= 0):
