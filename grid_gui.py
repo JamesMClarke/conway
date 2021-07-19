@@ -61,6 +61,10 @@ class Grid_gui:
         while True:
             #Draws square to show alive colour
             self.draw_sq(display_width+10,100,self.alive_colour)
+            
+            font = pygame.font.SysFont(None, font_size)
+            img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
+            self.screen.blit(img7,(display_width+30,150))
 
             if self.playing:
                 #Wait timer to slow down the game
@@ -140,19 +144,23 @@ class Grid_gui:
                             self.alive_colour = self.sq_colour()
 
 
-                        #If pattern button is pressed
-                        elif(y >= 110 and y<=130):
-                            self.set_current_pattern()
+                        #sets placement of pattern to true
+                        elif((y >= 140 and y<=160) and (x >= display_height+20 and x <= display_width+150)):
                             type = Board_Type['pattern'] 
                             user_placing_pattern = True
                            
-                        #TODO add mouse events for each pattern here - SC
-                        #TODO < pattern > 
-
+                        #Mouse events for pattern select
+                        #TODO fix bug of pattern name overwriting previous pattern name -SC
                         elif((y >= 140 and y<=160) and (x >= display_width+10 and x <= display_width+20)):
                             print("<")
+                            self.current_pattern = self.current_pattern-1
+                            self.set_current_pattern()
+
                         elif((y >= 140 and y<=160) and (x >= display_width+150 and x <= display_width+170)):
                             print(">")
+                            self.current_pattern = self.current_pattern+1
+                            self.set_current_pattern()
+
 
     
                     
@@ -235,19 +243,17 @@ class Grid_gui:
     #TODO get rid of hard coded variable - SC
     #TODO pass to get_pattern - SC
     def set_current_pattern(self):
-        pattern = 'test'
 
-        for i in range(0, len(patterns)):
-            if(patterns[i].get_pattern_name() == pattern):
-                print("set pattern test",patterns[i].get_pattern_pattern())
-                current_pattern = i 
+        if(self.current_pattern < 0 or self.current_pattern > len(patterns)-1) :
+            self.current_pattern = 0 
+        print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
     
     #Places pattern on the temp grid
     def get_pattern(self, x, y):
         #TODO add pattern selection option - SC
         #TODO Add more patterns - SC
         pattern_coords = []
-        pattern_coords = patterns[1].get_pattern_pattern().split(",")      
+        pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")      
         # for loop for coords list
         for i in range(0, len(pattern_coords) -1, 2):  
             print(i)
