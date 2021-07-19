@@ -31,6 +31,9 @@ end_game_font_size = 50
 #Loaded from json
 patterns = tools.load_patterns()
 
+#TODO move patterns.json into data folder -SC
+#TODO Implement colours from colour.json -SC
+
 def main():
     gui =  Grid_gui()
 
@@ -64,9 +67,7 @@ class Grid_gui:
             #Varible so you can differeniate between which screen is currently showing
             game_over = False
 
-            
-            
-            #current pattern name 
+            #displays current pattern name 
             pygame.draw.rect(self.screen,white, pygame.Rect(display_width+30,150,100,20))
             font = pygame.font.SysFont(None, font_size)
             img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
@@ -92,8 +93,6 @@ class Grid_gui:
                     self.screen.blit(game_over_text, game_over_rect)
                     self.screen.blit(reset,reset_rect)
                     game_over = True
-                    
-
 
 
             for event in pygame.event.get():
@@ -115,8 +114,7 @@ class Grid_gui:
                                 #Places the patten at the x and y the user has just clicked
                                 self.get_pattern(real_x, real_y)
                                 
-                                #I'm pretty sure we could just define board as self.board
-                                #And then call that rather than having grid as a thing
+                                #Defines board
                                 self.board = Board(width, height, self.temp_grid, type)
                                 
                                 #Sets playing to be true
@@ -130,9 +128,7 @@ class Grid_gui:
                                 #Revives the square at the given pos in the logical grid
                                 self.temp_grid[real_x][real_y] = True
 
-                             
-                        
-                            #Otherwise the user is placing an individual square
+                        #Otherwise the user is placing an individual square
                                 
                         #If the mouse event is on the settings panel
                         elif(x > display_width):     
@@ -144,10 +140,10 @@ class Grid_gui:
                                     grid =""
                                     #Creates a board
                                     self.board = Board(width, height, grid, type)
-                                    
                                     self.playing = True
                                     self.load_sq()                                
                                     print(type)
+
                             elif ( y >= 50 and y <= 80):
                                     type = Board_Type['user']
                                     self.board = Board(width, height, self.temp_grid, type)
@@ -160,20 +156,18 @@ class Grid_gui:
                                 self.alive_colour = self.sq_colour()
 
 
-                            #If pattern button is pressed
+                            #If pattern button is pressed allow for placement of pattern
                             elif(y >= 110 and y<=130):
                                 self.set_current_pattern()
                                 type = Board_Type['pattern'] 
                                 user_placing_pattern = True
                             
-                            #TODO add mouse events for each pattern here - SC
                             #sets placement of pattern to true
                             elif((y >= 140 and y<=160) and (x >= display_height+20 and x <= display_width+150)):
                                 type = Board_Type['pattern'] 
                                 user_placing_pattern = True
                                 
                             #Mouse events for pattern select
-                            #TODO fix bug of pattern name overwriting previous pattern -SC
                             elif((y >= 140 and y<=160) and (x >= display_width+10 and x <= display_width+20)):
                                 print("<")
                                 self.current_pattern = self.current_pattern-1
@@ -194,7 +188,7 @@ class Grid_gui:
                         #default pattern selected
                         self.current_pattern = 0
                         self.count = 0
-                        #default alive colour - SC
+                        #default alive colour 
                         self.alive_colour = sq_colours[0]
                         self.drawGrid() 
 
@@ -281,8 +275,6 @@ class Grid_gui:
         pygame.draw.rect(self.screen,colour,rect)
     
     #Sets current pattern based upon pattern name
-    #TODO get rid of hard coded variable - SC
-    #TODO pass to get_pattern - SC
     def set_current_pattern(self):
 
         if(self.current_pattern < 0 or self.current_pattern > len(patterns)-1) :
@@ -291,7 +283,6 @@ class Grid_gui:
     
     #Places pattern on the temp grid
     def get_pattern(self, x, y):
-        #TODO add pattern selection option - SC
         #TODO Add more patterns - SC
         pattern_coords = []
         pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")      
