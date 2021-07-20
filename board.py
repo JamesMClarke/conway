@@ -43,6 +43,23 @@ class Board:
             if(self.grid[x][y+1].get_is_alive()):
                 neighbours += 1
 
+        #Checks diagonals
+        if(y-1 >= 0 and x-1 >= 0):
+            if(self.grid[x-1][y-1].get_is_alive()):
+                neighbours += 1
+        
+        if(y-1 >= 0 and x +1 < self.length):
+            if(self.grid[x+1][y-1].get_is_alive()):
+                neighbours += 1
+        
+        if(y +1 < self.length and x -1 >= 0):
+            if(self.grid[x-1][y+1].get_is_alive()):
+                neighbours += 1
+        
+        if(y + 1 < self.length and x + 1 < self.length):
+            if(self.grid[x+1][y+1].get_is_alive()):
+                neighbours += 1
+
         return neighbours
 
     #Advances the board one unit of time and returns the changes
