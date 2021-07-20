@@ -61,7 +61,6 @@ class Grid_gui:
         
         #Draws grid
         self.drawGrid() 
-
         while True:
             #Draws square to show alive colour
             self.draw_sq(display_width+10,100,self.alive_colour)
@@ -230,7 +229,6 @@ class Grid_gui:
     def update_by_changes(self, changes):
         for c in changes:
             x, y, change = c.get_cords()
-            print(x, y)
             if(change == "Add"):
                 colour = self.alive_colour            
             else:
@@ -249,7 +247,7 @@ class Grid_gui:
             self.current_pattern = 0 
         if (self.current_pattern < 0 ) :
             self.current_pattern = len(patterns)-1
-        print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
+        #print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
     
     #Places pattern on the temp grid
     def get_pattern(self, x, y):        

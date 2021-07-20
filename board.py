@@ -15,59 +15,28 @@ class Board:
         #Otherwise it loads it for the grid provided
         else:
             self.grid_from_input(grid)
-        
+
     #Works out the number of neighbours for a given square
     def no_of_neighbours(self, x, y):
         neighbours = 0
-        #TODO Review if this should include diagonals - JC
-        #Some patterns that should work with this, it could ether be due to this
-        #Or my logic somewhere else is floored 
-        
-        #Checks if the square above is alive
-        if(x-1 >= 0):
-            if(self.grid[x-1][y].get_is_alive()):
-                neighbours += 1
-
-        #Checks if the square below if alive
-        if(x+1 < self.width):
-            if(self.grid[x+1][y].get_is_alive()):
-                neighbours += 1
-
-        #Checks if the square to the left is alive
-        if(y-1 >= 0):
-            if(self.grid[x][y-1].get_is_alive()):
-                neighbours += 1
-
-        #Checks if the square to the right is alive
-        if(y+1 < self.length):
-            if(self.grid[x][y+1].get_is_alive()):
-                neighbours += 1
-
-        #Checks diagonals
-        if(y-1 >= 0 and x-1 >= 0):
-            if(self.grid[x-1][y-1].get_is_alive()):
-                neighbours += 1
-        
-        if(y-1 >= 0 and x +1 < self.length):
-            if(self.grid[x+1][y-1].get_is_alive()):
-                neighbours += 1
-        
-        if(y +1 < self.length and x -1 >= 0):
-            if(self.grid[x-1][y+1].get_is_alive()):
-                neighbours += 1
-        
-        if(y + 1 < self.length and x + 1 < self.length):
-            if(self.grid[x+1][y+1].get_is_alive()):
-                neighbours += 1
-
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                #print(x, y)
+                x_check = x + i
+                y_check = y + j
+                if(not( i == 0 and j == 0) and (x_check > 0 and x_check <= self.length-1 and y_check > 0 and y_check <= self.width-1)):
+                    if(self.grid[x_check][y_check].get_is_alive()):
+                        neighbours += 1
         return neighbours
 
     #Advances the board one unit of time and returns the changes
     def tick(self):
+        temp = [[0 for j in range(self.width)] for i in range(self.length)]
         changes = []
         for y in range(0 , self.length):
             for x in range(0, self.width):
                 neighbours = self.no_of_neighbours(x ,y)
+                temp[x][y] = neighbours
                 if(neighbours == 3):
                     if(not self.grid[x][y].get_is_alive()):
                         self.grid[x][y].revive()
@@ -76,7 +45,7 @@ class Board:
                     if(self.grid[x][y].get_is_alive()):
                         self.grid[x][y].kill()
                         changes.append(Cords(x, y, "Remove"))
-        
+        print(temp)
         return changes
 
     #Creates a board based on a grid provided
