@@ -34,7 +34,6 @@ patterns = tools.load_patterns()
 #TODO move patterns.json into data folder -SC
 #TODO Implement colours from colour.json -SC
 #TODO Fix longer names of patterns glitching - JC
-#TODO Fix back button when selecting patterns - JC
 
 def main():
     gui =  Grid_gui()
@@ -70,7 +69,7 @@ class Grid_gui:
             game_over = False
 
             #displays current pattern name 
-            pygame.draw.rect(self.screen,white, pygame.Rect(display_width+30,150,120,30))
+            pygame.draw.rect(self.screen,white, pygame.Rect(display_width+30,150,150,20))
             font = pygame.font.SysFont(None, font_size)
             img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
             self.screen.blit(img7,(display_width+30,150))
@@ -143,27 +142,16 @@ class Grid_gui:
                             #If the alive colour button is pressed calls sq_colour
                             elif(y >=80 and y <= 100):
                                 self.alive_colour = self.sq_colour()
-
-
-                            #If pattern button is pressed allow for placement of pattern
-                            elif(y >= 110 and y<=130):
-                                self.set_current_pattern()
-                                type = Board_Type['pattern'] 
-                                user_placing_pattern = True
-                            
-                            #sets placement of pattern to true
-                            elif((y >= 140 and y<=160) and (x >= display_height+20 and x <= display_width+150)):
-                                #TODO What is this meant to do, it currently does nothing - JC
-                                type = Board_Type['pattern'] 
-                                user_placing_pattern = True
+                    
                                 
                             #Mouse events for pattern select
-                            elif((y >= 140 and y<=160) and (x >= display_width+10 and x <= display_width+20)):
+                            elif((y >= 140 and y<=170) and (x >= display_width+10 and x <= display_width+25)):
                                 print("<")
                                 self.current_pattern = self.current_pattern-1
                                 self.set_current_pattern()
+                                print("back button")
 
-                            elif((y >= 140 and y<=160) and (x >= display_width+150 and x <= display_width+170)):
+                            elif((y >= 140 and y<=170) and (x >= display_width+180 and x <= display_width+200)):
                                 print(">")
                                 self.current_pattern = self.current_pattern+1
                                 self.set_current_pattern()
@@ -213,7 +201,7 @@ class Grid_gui:
         self.screen.blit(img5,(display_width+10,150))
 
         img6 = font.render('>',True,blue) 
-        self.screen.blit(img6,(display_width+150,150))
+        self.screen.blit(img6,(display_width+180,150))
         
 
 
@@ -257,8 +245,10 @@ class Grid_gui:
     #Sets current pattern based upon pattern name
     def set_current_pattern(self):
 
-        if(self.current_pattern < 0 or self.current_pattern > len(patterns)-1) :
+        if (self.current_pattern > len(patterns)-1) :
             self.current_pattern = 0 
+        if (self.current_pattern < 0 ) :
+            self.current_pattern = len(patterns)-1
         print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
     
     #Places pattern on the temp grid
