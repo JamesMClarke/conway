@@ -8,6 +8,7 @@ class Board:
     def __init__(self, width, length, grid, type):
         self.length = length
         self.width = width
+        self.neighbours = [[0 for j in range(self.width)] for i in range(self.length)]
         #If the user want's a random board
         if(type == Board_Type['random']):
             #Creates a random grid
@@ -31,12 +32,11 @@ class Board:
 
     #Advances the board one unit of time and returns the changes
     def tick(self):
-        temp = [[0 for j in range(self.width)] for i in range(self.length)]
         changes = []
         for y in range(0 , self.length):
             for x in range(0, self.width):
                 neighbours = self.no_of_neighbours(x ,y)
-                temp[x][y] = neighbours
+                self.neighbours[x][y] = neighbours
                 if(neighbours == 3):
                     if(not self.grid[x][y].get_is_alive()):
                         self.grid[x][y].revive()
@@ -45,7 +45,6 @@ class Board:
                     if(self.grid[x][y].get_is_alive()):
                         self.grid[x][y].kill()
                         changes.append(Cords(x, y, "Remove"))
-        print(temp)
         return changes
 
     #Creates a board based on a grid provided
