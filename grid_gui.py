@@ -7,6 +7,9 @@ import sys
 sys.path.insert(1, 'data/')
 from colours import *
 
+#
+debug = True
+
 #Board setttings
 sq_size = 20
 width = 20
@@ -47,7 +50,7 @@ class Grid_gui:
         user_placing_pattern = True
         type = Board_Type['pattern'] 
         self.playing = False
-        self.temp_grid = [[False for j in range(width)] for i in range(height)]
+        self.temp_grid = [[False for i in range(width)] for j in range(height)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
         #default pattern selected
@@ -112,7 +115,9 @@ class Grid_gui:
                             if(user_placing_pattern):
                                 #TODO Double check that this doesn't interfear with game logic - JC
                                 #Places the patten at the x and y the user has just clicked
+                                print("real x y ",real_x,real_y)
                                 self.get_pattern(real_x, real_y)
+                                
                             else:
                                 #Adds the change to the list
                                 changes.append(Cords(real_x, real_y, "Add"))
@@ -159,7 +164,7 @@ class Grid_gui:
                         #Variables which will change during the game
                         user_placing_pattern = True
                         self.playing = False
-                        self.temp_grid = [[False for j in range(width)] for i in range(height)]
+                        self.temp_grid = [[False for i in range(width)] for j in range(height)]
                         self.screen.fill(backgroup_colour)
                         #default pattern selected
                         self.current_pattern = 0
@@ -172,7 +177,14 @@ class Grid_gui:
                     pygame.quit()
                     sys.exit()
             
-            self.update_by_changes(changes)
+            if(debug):
+                #Changed for debug
+                if(self.playing):
+                    self.load_sq()
+                else:
+                    self.update_by_changes(changes)
+            else:
+                self.update_by_changes(changes)
             pygame.display.update()
 
        
@@ -217,20 +229,23 @@ class Grid_gui:
 
     #Loads board onto the grid
     def load_sq(self):
-        for y in range(0 ,self.board.get_width()):
-            for x in range(0, self.board.get_length()):
+        for x in range(0 ,self.board.get_width()):
+            for y in range(0, self.board.get_length()):
                 if(self.board.is_sq_alive(x, y)):
                     colour  = self.alive_colour
                 else:
                     colour  = dead_colour
                 self.draw_sq(x*sq_size,y*sq_size,colour)
+                font = pygame.font.SysFont(None, font_size)
+                img = font.render(str(self.board.neighbours[x][y]), True, black)
+                self.screen.blit(img, (x*sq_size, y*sq_size))
 
     #Updates the board based on the changes
     def update_by_changes(self, changes):
         for c in changes:
             x, y, change = c.get_cords()
             if(change == "Add"):
-                colour = self.alive_colour            
+                colour = self.alive_colour  
             else:
                 colour = dead_colour
             self.draw_sq(x*sq_size,y*sq_size,colour)
