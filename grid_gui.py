@@ -35,9 +35,7 @@ end_game_font_size = 50
 #Loaded from json
 patterns = tools.load_patterns(pattern_file)
 
-#TODO move patterns.json into data folder -SC
 #TODO Implement colours from colour.json -SC
-#TODO Add removing squares - JC
 #TODO Add reset button - JC
 #TODO Overhall ui - JC
 #TODO Fix longer names of patterns glitching - JC
@@ -114,18 +112,20 @@ class Grid_gui:
 
                             #Works out col and row
                             real_x, real_y = x//sq_size, y//sq_size
-
-                            #If the user has already clicked the pattern button
-                            if(user_placing_pattern):
-                                #Places the patten at the x and y the user has just clicked
-                                print("real x y ",real_x,real_y)
-                                self.get_pattern(real_x, real_y)
-                                
+                            #Checks if the square is alive
+                            if(not self.temp_grid[real_x][real_y]):
+                                print("Adding")
+                                #If the user has already clicked the pattern button
+                                if(user_placing_pattern):
+                                    #Places the patten at the x and y the user has just clicked
+                                    print("real x y ",real_x,real_y)
+                                    self.get_pattern(real_x, real_y)
+                            #If it is already alive then it will kill it
                             else:
-                                #Adds the change to the list
-                                changes.append(Cords(real_x, real_y, "Add"))
-                                #Revives the square at the given pos in the logical grid
-                                self.temp_grid[real_x][real_y] = True
+                                print("Removing")
+                                self.temp_grid[real_x][real_y] = False
+                                self.draw_sq(real_x*sq_size,real_y*sq_size,dead_colour)
+
 
                         #Otherwise the user is placing an individual square
                                 
