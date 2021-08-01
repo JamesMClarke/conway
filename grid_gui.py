@@ -7,8 +7,8 @@ import sys
 sys.path.insert(1, 'data/')
 from colours import *
 
-#
-debug = True
+#Enables and disables debug board
+debug = False
 
 #Board setttings
 sq_size = 20

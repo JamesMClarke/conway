@@ -19,7 +19,7 @@ class Board:
 
     #Works out the number of neighbours for a given square
     def no_of_neighbours(self, x, y):
-        neighbours = 0
+        n = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
                 #print(x, y)
@@ -27,25 +27,34 @@ class Board:
                 y_check = y + j
                 if(not( i == 0 and j == 0) and (x_check > 0 and x_check <= self.length-1 and y_check > 0 and y_check <= self.width-1)):
                     if(self.grid[x_check][y_check].get_is_alive()):
-                        neighbours += 1
-        return neighbours
+                        n += 1
+        return n
 
     #Advances the board one unit of time and returns the changes
     def tick(self):
         changes = []
         for y in range(0 , self.length):
             for x in range(0, self.width):
-                neighbours = self.no_of_neighbours(x ,y)
-                self.neighbours[x][y] = neighbours
-                if(neighbours == 3):
+                n = self.no_of_neighbours(x ,y)
+                self.neighbours[x][y] = n
+                if(n == 3):
                     if(not self.grid[x][y].get_is_alive()):
-                        self.grid[x][y].revive()
                         changes.append(Cords(x, y, "Add"))
-                elif(neighbours != 2):
+                elif(n != 2):
                     if(self.grid[x][y].get_is_alive()):
-                        self.grid[x][y].kill()
                         changes.append(Cords(x, y, "Remove"))
+
+        #Applies changes after the board is checked
+        self.apply_changes(changes)
         return changes
+
+    def apply_changes(self, changes):
+        for c in changes:
+            x, y, change = c.get_cords()
+            if(change == "Add"):
+                self.grid[x][y].revive()
+            else:
+                self.grid[x][y].kill()
 
     #Creates a board based on a grid provided
     def grid_from_input(self, user_grid):
