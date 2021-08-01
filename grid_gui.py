@@ -12,6 +12,7 @@ debug = False
 
 #Board setttings
 sq_size = 20
+#TODO Fix problem where if width and height are not the same it gives index out of range error - JC
 width = 20
 height = 20
 line_size = 1
