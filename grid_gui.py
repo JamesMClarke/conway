@@ -13,8 +13,8 @@ debug = False
 #Board setttings
 sq_size = 20
 #TODO Fix problem where if width and height are not the same it gives index out of range error - JC
-width = 20
-height = 20
+width = 70
+height = 40
 line_size = 1
 display_width = width * sq_size
 full_display_width = display_width + 200
@@ -53,7 +53,7 @@ class Grid_gui:
         user_placing_pattern = True
         type = Board_Type['pattern'] 
         self.playing = False
-        self.temp_grid = [[False for i in range(width)] for j in range(height)]
+        self.temp_grid = [[False for i in range(height)] for j in range(width)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
         self.screen.fill(backgroup_colour)
         #default pattern selected
@@ -168,7 +168,7 @@ class Grid_gui:
                         #Variables which will change during the game
                         user_placing_pattern = True
                         self.playing = False
-                        self.temp_grid = [[False for i in range(width)] for j in range(height)]
+                        self.temp_grid = [[False for i in range(height)] for j in range(width)]
                         self.screen.fill(backgroup_colour)
                         #default pattern selected
                         self.current_pattern = 0

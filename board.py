@@ -8,7 +8,7 @@ class Board:
     def __init__(self, width, length, grid, type):
         self.length = length
         self.width = width
-        self.neighbours = [[0 for j in range(self.width)] for i in range(self.length)]
+        self.neighbours = [[0 for j in range(self.length)] for i in range(self.width)]
         #If the user want's a random board
         if(type == Board_Type['random']):
             #Creates a random grid
@@ -25,7 +25,7 @@ class Board:
                 #print(x, y)
                 x_check = x + i
                 y_check = y + j
-                if(not( i == 0 and j == 0) and (x_check > 0 and x_check <= self.length-1 and y_check > 0 and y_check <= self.width-1)):
+                if(not( i == 0 and j == 0) and (x_check > 0 and x_check <= self.width-1 and y_check > 0 and y_check <= self.length-1)):
                     if(self.grid[x_check][y_check].get_is_alive()):
                         n += 1
         return n
@@ -58,9 +58,10 @@ class Board:
 
     #Creates a board based on a grid provided
     def grid_from_input(self, user_grid):
+        #TODO This can most likely be made more efficient, ether by having a list of changes or searching better - JC
         self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
-        for y in range(0, self.width):
-            for x in range(0, self.length):
+        for y in range(0, self.length):
+            for x in range(0, self.width):
                 if(user_grid[x][y]):  
                     self.grid[x][y].revive()
 
