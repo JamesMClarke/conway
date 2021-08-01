@@ -18,6 +18,7 @@ line_size = 1
 display_width = width * sq_size
 full_display_width = display_width + 200
 display_height = height * sq_size
+pattern_file = "data/patterns.json"
 
 #Colour settings
 backgroup_colour = white
@@ -32,10 +33,13 @@ font_size = 30
 end_game_font_size = 50
 
 #Loaded from json
-patterns = tools.load_patterns()
+patterns = tools.load_patterns(pattern_file)
 
 #TODO move patterns.json into data folder -SC
 #TODO Implement colours from colour.json -SC
+#TODO Add removing squares - JC
+#TODO Add reset button - JC
+#TODO Overhall ui - JC
 #TODO Fix longer names of patterns glitching - JC
 
 def main():
