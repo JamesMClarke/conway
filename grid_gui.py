@@ -113,7 +113,6 @@ class Grid_gui:
 
                             #If the user has already clicked the pattern button
                             if(user_placing_pattern):
-                                #TODO Double check that this doesn't interfear with game logic - JC
                                 #Places the patten at the x and y the user has just clicked
                                 print("real x y ",real_x,real_y)
                                 self.get_pattern(real_x, real_y)
@@ -236,9 +235,11 @@ class Grid_gui:
                 else:
                     colour  = dead_colour
                 self.draw_sq(x*sq_size,y*sq_size,colour)
-                font = pygame.font.SysFont(None, font_size)
-                img = font.render(str(self.board.neighbours[x][y]), True, black)
-                self.screen.blit(img, (x*sq_size, y*sq_size))
+                
+                if(debug):
+                    font = pygame.font.SysFont(None, font_size)
+                    img = font.render(str(self.board.neighbours[x][y]), True, black)
+                    self.screen.blit(img, (x*sq_size, y*sq_size))
 
     #Updates the board based on the changes
     def update_by_changes(self, changes):
