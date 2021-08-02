@@ -20,14 +20,18 @@ display_width = width * sq_size
 full_display_width = display_width + 200
 display_height = height * sq_size
 pattern_file = "data/patterns.json"
+colours_file ="data/colours.json"
 
 #Colour settings
-backgroup_colour = white
-line_colour = black
-sq_colours = [blue,black,red,orange,yellow,green,sky_blue]
+colours = tools.load_colours(colours_file)
+backgroup_colour = tools.get_colour(colours,"white")
+line_colour = tools.get_colour(colours,"black")
+sq_colours = tools.get_colour(colours,"blue")
 dead_colour = backgroup_colour
-game_over_background_colour = gray
-game_over_text_colour = white
+game_over_background_colour = tools.get_colour(colours,"darkgrey")
+game_over_text_colour = tools.get_colour(colours,"white")
+blue = tools.get_colour(colours,"blue")
+white = tools.get_colour(colours,"white")
 
 #Text settings
 font_size = 30
@@ -60,8 +64,7 @@ class Grid_gui:
         self.current_pattern = 0
         self.count = 0
         #default alive colour
-        self.alive_colour = sq_colours[0]
-
+        self.alive_colour = blue
         #temp blank vars        
         changes = []
         
@@ -273,7 +276,6 @@ class Grid_gui:
     #Places pattern on the temp grid
     def get_pattern(self, x, y):        
         #Gets currently selected pattern
-        pattern_coords = patterns[self.current_pattern].get_pattern_pattern().split(",")
         #Splits this into char array
         squares = tools.split(patterns[self.current_pattern].get_pattern_pattern())   
         x_pos = 0
