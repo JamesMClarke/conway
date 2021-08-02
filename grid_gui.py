@@ -25,6 +25,7 @@ colours_file ="data/colours.json"
 #Colour settings
 colours = tools.load_colours(colours_file)
 
+#TODO so that colours array is not passed multiple times -SC
 backgroup_colour = tools.get_colour(colours,"white")
 line_colour = tools.get_colour(colours,"black")
 dead_colour = backgroup_colour

@@ -34,7 +34,7 @@ def load_colours(file):
     except FileNotFoundError:
         colours.append(Colour("Error,1"))
     return colours
-
+#TODO remove this once colour is redone
 def get_colour(colours,colour_name):
     for i in range(len(colours)):
          if(colours[i].get_colour_name() == colour_name):
@@ -43,5 +43,5 @@ def get_colour(colours,colour_name):
 
 
 
-
+load_colours("data/colours.json")
     
