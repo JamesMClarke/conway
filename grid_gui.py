@@ -178,7 +178,7 @@ class Grid_gui:
                         self.current_pattern = 0
                         self.count = 0
                         #default alive colour 
-                        self.alive_colour = tools.get_colour[colours,"black"]
+                        self.alive_colour = line_colour
                         self.drawGrid() 
 
                 if event.type == pygame.QUIT:
