@@ -12,12 +12,11 @@ debug = False
 
 #Board setttings
 sq_size = 20
-#TODO Fix problem where if width and height are not the same it gives index out of range error - JC
 width = 70
 height = 40
 line_size = 1
 display_width = width * sq_size
-full_display_width = display_width + 200
+full_display_width = display_width + 300
 display_height = height * sq_size
 pattern_file = "data/patterns.json"
 colours_file ="data/colours.json"
@@ -26,16 +25,16 @@ colours_file ="data/colours.json"
 colours = tools.load_colours(colours_file)
 
 #TODO so that colours array is not passed multiple times -SC
-backgroup_colour = tools.get_colour(colours,"white")
-line_colour = tools.get_colour(colours,"black")
+backgroup_colour = tools.get_colour(colours,"dimgrey")
+line_colour = tools.get_colour(colours,"grey")
 dead_colour = backgroup_colour
+text_colour = tools.get_colour(colours,"lightgrey")
 game_over_background_colour = tools.get_colour(colours,"darkgrey")
 game_over_text_colour = tools.get_colour(colours,"white")
-blue = tools.get_colour(colours,"blue")
 white = tools.get_colour(colours,"white")
 
 #Text settings
-font_size = 30
+font_size = 40
 end_game_font_size = 50
 
 #Loaded from json
@@ -73,15 +72,26 @@ class Grid_gui:
         self.drawGrid() 
         while True:
             #Draws square to show alive colour
-            self.draw_sq(display_width+10,100,self.alive_colour)
-            #Varible so you can differeniate between which screen is currently showing
+            rect =  pygame.Rect(display_width+30,145,140,sq_size)
+            pygame.draw.rect(self.screen,self.alive_colour,rect)
+
+            #Variable so you can differentiate between which screen is currently showing
             game_over = False
 
             #displays current pattern name 
-            pygame.draw.rect(self.screen,white, pygame.Rect(display_width+30,150,150,20))
+            pygame.draw.rect(self.screen,backgroup_colour, pygame.Rect(display_width+30,220,230,30))
             font = pygame.font.SysFont(None, font_size)
-            img7 = font.render(patterns[self.current_pattern].get_pattern_name(),True,blue) 
-            self.screen.blit(img7,(display_width+30,150))
+            pattern_name = patterns[self.current_pattern].get_pattern_name()
+            if (len(pattern_name) > 15):
+                name_array = [char for char in pattern_name]
+                name_array[14] = '.'
+                name_array[15] = '.'
+                for i in range(16,len(name_array)):
+                    name_array.pop()
+                str1 = ""
+                pattern_name = str1.join(name_array)
+            img7 = font.render(pattern_name,True,text_colour) 
+            self.screen.blit(img7,(display_width+30,220))
 
             if self.playing:
                 #Wait timer to slow down the game
@@ -137,13 +147,13 @@ class Grid_gui:
                         #If the mouse event is on the settings panel
                         elif(x > display_width):     
                             #Handles mouse for play
-                            if (y >= 10 and y <= 40):
+                            if (y >= 20 and y < 60):
                                 self.board = Board(width, height, self.temp_grid, type)
                                 self.playing = True
                                 self.load_sq()     
 
                             #Handels mouse for random
-                            elif ( y >= 50 and y <= 80):
+                            elif ( y >= 60 and y < 100):
                                 #Sets type to enum
                                 type = Board_Type['random']
                                 #Creates a blank grid 
@@ -152,18 +162,18 @@ class Grid_gui:
                                 self.board = Board(width, height, grid, type)
                             
                             #If the alive colour button is pressed calls sq_colour
-                            elif(y >=80 and y <= 100):
+                            elif(y >=100 and y < 140):
                                 self.alive_colour = self.sq_colour()
                     
                                 
                             #Mouse events for pattern select
-                            elif((y >= 140 and y<=170) and (x >= display_width+10 and x <= display_width+25)):
+                            elif((y >= 220 and y<=260) and (x >= display_width+10 and x <= display_width+25)):
                                 print("<")
                                 self.current_pattern = self.current_pattern-1
                                 self.set_current_pattern()
                                 print("back button")
 
-                            elif((y >= 140 and y<=170) and (x >= display_width+180 and x <= display_width+200)):
+                            elif((y >= 220 and y<=260) and (x >= display_width+260 and x <= display_width+300)):
                                 print(">")
                                 self.current_pattern = self.current_pattern+1
                                 self.set_current_pattern()
@@ -204,23 +214,29 @@ class Grid_gui:
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
 
         font = pygame.font.SysFont(None, font_size)
-        img = font.render('Play', True, blue)
+        img = font.render('Play', True, text_colour)
         self.screen.blit(img, (display_width+10, 20))
 
-        img2 = font.render('Random', True, blue)
-        self.screen.blit(img2, (display_width+10, 50))
+        img2 = font.render('Random', True, text_colour)
+        self.screen.blit(img2, (display_width+10, 60))
 
-        img3 = font.render('Cycle Alive Colour', True, blue)
-        self.screen.blit(img3, (display_width+10, 80))
+        img3 = font.render('Cycle Alive Colour', True, text_colour)
+        self.screen.blit(img3, (display_width+10, 100))
+
+        img7 = font.render('<',True,text_colour) 
+        self.screen.blit(img7,(display_width+10,140))
+
+        img8 = font.render('>',True,text_colour) 
+        self.screen.blit(img8,(display_width+180,140))
         
-        img4 = font.render('Patterns', True, blue)
-        self.screen.blit(img4, (display_width+10, 120))
+        img4 = font.render('Patterns', True, text_colour)
+        self.screen.blit(img4, (display_width+10, 180))
 
-        img5 = font.render('<',True,blue) 
-        self.screen.blit(img5,(display_width+10,150))
+        img5 = font.render('<',True,text_colour) 
+        self.screen.blit(img5,(display_width+10,220))
 
-        img6 = font.render('>',True,blue) 
-        self.screen.blit(img6,(display_width+180,150))
+        img6 = font.render('>',True,text_colour) 
+        self.screen.blit(img6,(display_width+260,220))
         
 
 

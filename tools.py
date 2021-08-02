@@ -37,7 +37,7 @@ def load_colours(file):
 #TODO remove this once colour is redone
 def get_colour(colours,colour_name):
     for i in range(len(colours)):
-         if(colours[i].get_colour_name() == colour_name):
+        if(colours[i].get_colour_name() == colour_name):
              rgb_value = colours[i].get_rgb_value() 
     return rgb_value 
 

@@ -20,7 +20,11 @@
   {"colour":"darkolive","rgb_value":[85, 107, 47]},
   {"colour":"darkorange","rgb_value":[255, 140, 0]},
   {"colour":"darkorchid","rgb_value":[153, 50, 204]},
-  {"colour":"darkred","rgb_value":[139, 0, 0]}
+  {"colour":"darkred","rgb_value":[139, 0, 0]},
+  {"colour":"lightslategrey","rgb_value":[119,136,153]},
+  {"colour":"lightgrey","rgb_value":[211,211,211]},
+  {"colour":"dimgrey","rgb_value":[105,105,105]},
+  {"colour":"grey","rgb_value":[128,128,128]}
   ]
 }
 
