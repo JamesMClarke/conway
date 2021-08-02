@@ -24,9 +24,9 @@ colours_file ="data/colours.json"
 
 #Colour settings
 colours = tools.load_colours(colours_file)
+
 backgroup_colour = tools.get_colour(colours,"white")
 line_colour = tools.get_colour(colours,"black")
-sq_colours = tools.get_colour(colours,"blue")
 dead_colour = backgroup_colour
 game_over_background_colour = tools.get_colour(colours,"darkgrey")
 game_over_text_colour = tools.get_colour(colours,"white")
@@ -62,9 +62,9 @@ class Grid_gui:
         self.screen.fill(backgroup_colour)
         #default pattern selected
         self.current_pattern = 0
-        self.count = 0
         #default alive colour
-        self.alive_colour = blue
+        self.sq_colour_count = 0
+        self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
         #temp blank vars        
         changes = []
         
@@ -177,7 +177,7 @@ class Grid_gui:
                         self.current_pattern = 0
                         self.count = 0
                         #default alive colour 
-                        self.alive_colour = sq_colours[0]
+                        self.alive_colour = tools.get_colour[colours,"black"]
                         self.drawGrid() 
 
                 if event.type == pygame.QUIT:
@@ -226,11 +226,11 @@ class Grid_gui:
     #Increments colour
     def sq_colour(self):
 
-        if(self.count > len(sq_colours)-2):
-            self.count = 0
+        if(self.sq_colour_count > len(colours)-2):
+             self.sq_colour_count = 0
         else:
-            self.count += 1
-        colour = sq_colours[self.count]
+             self.sq_colour_count += 1
+        colour = colours[self.sq_colour_count].get_rgb_value()
                            
         return colour
 
@@ -246,7 +246,7 @@ class Grid_gui:
                 
                 if(debug):
                     font = pygame.font.SysFont(None, font_size)
-                    img = font.render(str(self.board.neighbours[x][y]), True, black)
+                    img = font.render(str(self.board.neighbours[x][y]), True, tools.get_colour(colours,"black"))
                     self.screen.blit(img, (x*sq_size, y*sq_size))
 
     #Updates the board based on the changes
