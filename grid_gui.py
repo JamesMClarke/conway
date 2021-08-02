@@ -40,10 +40,7 @@ end_game_font_size = 50
 #Loaded from json
 patterns = tools.load_patterns(pattern_file)
 
-#TODO Implement colours from colour.json -SC
 #TODO Add reset button - JC
-#TODO Overhall ui - JC
-#TODO Fix longer names of patterns glitching - JC
 
 def main():
     gui =  Grid_gui()
@@ -63,6 +60,7 @@ class Grid_gui:
         #default pattern selected
         self.current_pattern = 0
         #default alive colour
+        self.current_alive_colour = 0
         self.sq_colour_count = 0
         self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
         #temp blank vars        
@@ -71,6 +69,7 @@ class Grid_gui:
         #Draws grid
         self.drawGrid() 
         while True:
+            self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
             #Draws square to show alive colour
             rect =  pygame.Rect(display_width+30,145,140,sq_size)
             pygame.draw.rect(self.screen,self.alive_colour,rect)
@@ -120,7 +119,7 @@ class Grid_gui:
                 #Listens for mouse event
                 if event.type == pygame.MOUSEBUTTONUP:
                     x,y = pygame.mouse.get_pos()
-
+                    print(x,y)
                     if not game_over:
                     #If the x cord is within the grid
                         if(x <= display_width):
@@ -162,8 +161,16 @@ class Grid_gui:
                                 self.board = Board(width, height, grid, type)
                             
                             #If the alive colour button is pressed calls sq_colour
-                            elif(y >=100 and y < 140):
-                                self.alive_colour = self.sq_colour()
+                            elif((y >=130 and y < 170) and (x >= display_width+10 and x <= display_width+25)):
+                                print("<")
+                                self.sq_colour_count = self.sq_colour_count-1
+                                self.set_current_colour()
+                                print("back button")
+                            
+                            elif((y >= 130 and y<170) and (x >= display_width+150 and x <= display_width+190)):
+                                print(">")
+                                self.sq_colour_count = self.sq_colour_count+1
+                                self.set_current_colour()
                     
                                 
                             #Mouse events for pattern select
@@ -290,6 +297,15 @@ class Grid_gui:
         if (self.current_pattern < 0 ) :
             self.current_pattern = len(patterns)-1
         #print("set pattern test",patterns[self.current_pattern].get_pattern_pattern())
+
+    #Sets current colour
+    def set_current_colour(self):
+
+        if (self.sq_colour_count > len(colours)-1) :
+            self.sq_colour_count = 0 
+        if (self.sq_colour_count < 0 ) :
+            self.sq_colour_count = len(colours)-1
+        print("set colour test",colours[self.sq_colour_count].get_colour_name())
     
     #Places pattern on the temp grid
     def get_pattern(self, x, y):        
