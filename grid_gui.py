@@ -178,6 +178,8 @@ class Grid_gui:
                         self.current_pattern = 0
                         #default colour selected
                         self.sq_colour_count = 0
+                        self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
+
                         self.drawGrid() 
 
                 if event.type == pygame.QUIT:
