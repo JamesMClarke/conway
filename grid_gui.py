@@ -246,19 +246,6 @@ class Grid_gui:
         img6 = font.render('>',True,text_colour) 
         self.screen.blit(img6,(display_width+260,220))
         
-
-
-    #Increments colour
-    def sq_colour(self):
-
-        if(self.sq_colour_count > len(colours)-2):
-             self.sq_colour_count = 0
-        else:
-             self.sq_colour_count += 1
-        colour = colours[self.sq_colour_count].get_rgb_value()
-                           
-        return colour
-
     #Loads board onto the grid
     def load_sq(self):
         for x in range(0 ,self.board.get_width()):
