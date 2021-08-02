@@ -32,7 +32,7 @@ def load_colours(file):
                 colours.append(Colour(i['colour'],i["rgb_value"]))
                 
     except FileNotFoundError:
-        colours.append(Colour("Error,1"))
+        colours.append(Colour("Error","1"))
     return colours
 #TODO remove this once colour is redone
 def get_colour(colours,colour_name):
