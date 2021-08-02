@@ -176,9 +176,8 @@ class Grid_gui:
                         self.screen.fill(backgroup_colour)
                         #default pattern selected
                         self.current_pattern = 0
-                        self.count = 0
-                        #default alive colour 
-                        self.alive_colour = line_colour
+                        #default colour selected
+                        self.sq_colour_count = 0
                         self.drawGrid() 
 
                 if event.type == pygame.QUIT:
