@@ -189,7 +189,7 @@ class Grid_gui:
                             elif((y >= 260 and y<300) and (x >= display_width+10 and x <= display_width+200)):
                                 self.game_over = True
                                 self.reset_board()
-                                
+
                             #Mouse event to quit game
                             elif((y >= 300 and y<=330) and (x >= display_width+10 and x <= display_width+100)):
                                 pygame.quit()
@@ -240,6 +240,8 @@ class Grid_gui:
                 pygame.draw.rect(self.screen,line_colour,rect,line_size)
 
         font = pygame.font.SysFont(None, font_size)
+
+        #TODO put some of the text code into a for loop, remove repitition of img
         img = font.render('Play', True, text_colour)
         self.screen.blit(img, (display_width+10, 20))
 
