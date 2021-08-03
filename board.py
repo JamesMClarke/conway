@@ -1,21 +1,15 @@
 from square import Square
-from boards import Board_Type
-from random import getrandbits
 from cords import Cords
     
 class Board:
     #TODO Make variables protected
-    def __init__(self, width, length, grid, type):
+    def __init__(self, width, length, grid):
         self.length = length
         self.width = width
         self.neighbours = [[0 for j in range(self.length)] for i in range(self.width)]
-        #If the user want's a random board
-        if(type == Board_Type['random']):
-            #Creates a random grid
-            self.grid = [[Square(bool(getrandbits(1))) for j in range(self.length)] for i in range(self.width)]
-        #Otherwise it loads it for the grid provided
-        else:
-            self.grid_from_input(grid)
+        #Loads it for the grid provided
+        
+        self.grid_from_input(grid)
 
     #Works out the number of neighbours for a given square
     def no_of_neighbours(self, x, y):

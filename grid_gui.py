@@ -1,6 +1,6 @@
-from boards import Board_Type
 from board import Board
 from cords import Cords
+from random import getrandbits
 import tools
 import pygame
 import sys
@@ -52,7 +52,6 @@ class Grid_gui:
 
         #Variables which will change during the game
         user_placing_pattern = True
-        type = Board_Type['pattern'] 
         self.playing = False
         self.temp_grid = [[False for i in range(height)] for j in range(width)]
         self.screen = pygame.display.set_mode((full_display_width,display_height))
@@ -149,18 +148,13 @@ class Grid_gui:
                         elif(x > display_width):     
                             #Handles mouse for play
                             if (y >= 20 and y < 60):
-                                self.board = Board(width, height, self.temp_grid, type)
+                                self.board = Board(width, height, self.temp_grid)
                                 self.playing = True
                                 self.load_sq()     
 
                             #Handels mouse for random
                             elif ( y >= 60 and y < 100):
-                                #Sets type to enum
-                                type = Board_Type['random']
-                                #Creates a blank grid 
-                                grid =""
-                                #Creates a board
-                                self.board = Board(width, height, grid, type)
+                                self.temp_grid = [[(bool(getrandbits(1))) for j in range(height)] for i in range(width)]
                             
                             #If the alive colour button is pressed calls sq_colour
                             elif((y >=130 and y < 170) and (x >= display_width+10 and x <= display_width+25)):
