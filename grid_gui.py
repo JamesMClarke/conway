@@ -41,7 +41,6 @@ end_game_font_size = 50
 patterns = tools.load_patterns(pattern_file)
 
 #TODO change mouse listener y coord to display  length instead of hard coded -SC
-#TODO add quit game and mouse listener to game over screen? -SC
 def main():
     gui =  Grid_gui()
 
@@ -100,6 +99,7 @@ class Grid_gui:
                 
                 
                 #If there aren't any changes it then renders a game over screen
+                #TODO add quit game and mouse listener to game over screen? -SC
                 if(len(changes) == 0):
                     #Renders game over screen
                     rect =  pygame.Rect(0,0,full_display_width,display_height)
@@ -241,7 +241,7 @@ class Grid_gui:
 
         font = pygame.font.SysFont(None, font_size)
 
-        #TODO put some of the text code into a for loop, remove repitition of img
+        #TODO put some of the text code into a for loop, remove repitition of img| check with JC first -SC
         img = font.render('Play', True, text_colour)
         self.screen.blit(img, (display_width+10, 20))
 
