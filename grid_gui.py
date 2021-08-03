@@ -93,6 +93,7 @@ class Grid_gui:
 
             if self.playing:
                 #Wait timer to slow down the game
+                #TODO change wait time value when finished
                 pygame.time.wait(1000)
                 #Moves the board forward one cycle and saves the changes
                 changes = self.board.tick()
