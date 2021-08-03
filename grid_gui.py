@@ -7,8 +7,6 @@ import sys
 sys.path.insert(1, 'data/')
 from colours import *
 
-#TODO Makes squares that have already been placed colours change - JC
-
 #Enables and disables debug board
 debug = False
 
@@ -67,7 +65,6 @@ class Grid_gui:
         #Draws grid
         self.drawGrid() 
         while True:
-            self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
             #Draws square to show alive colour
             rect =  pygame.Rect(display_width+30,145,140,sq_size)
             pygame.draw.rect(self.screen,self.alive_colour,rect)
@@ -324,7 +321,9 @@ class Grid_gui:
             self.sq_colour_count = 0 
         if (self.sq_colour_count < 0 ) :
             self.sq_colour_count = len(colours)-1
-        print("set colour test",colours[self.sq_colour_count].get_colour_name())
+
+        self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
+        self.load_temp()
     
     #Places pattern on the temp grid
     def get_pattern(self, x, y):        
