@@ -40,8 +40,8 @@ end_game_font_size = 50
 #Loaded from json
 patterns = tools.load_patterns(pattern_file)
 
-#TODO Add reset button - JC
-
+#TODO change mouse listener y coord to display  length instead of hard coded -SC
+#TODO add quit game and mouse listener to game over screen? -SC
 def main():
     gui =  Grid_gui()
 
@@ -186,10 +186,14 @@ class Grid_gui:
                                 self.set_current_pattern()
                             
                             #Mouse events for reset
-                            elif((y >= 260 and y<=300) and (x >= display_width+10 and x <= display_width+200)):
-                                print ("reset")
+                            elif((y >= 260 and y<300) and (x >= display_width+10 and x <= display_width+200)):
                                 self.game_over = True
                                 self.reset_board()
+                                
+                            #Mouse event to quit game
+                            elif((y >= 300 and y<=330) and (x >= display_width+10 and x <= display_width+100)):
+                                pygame.quit()
+                                sys.exit()
                             
 
 
@@ -226,7 +230,6 @@ class Grid_gui:
         #default colour selected
         self.sq_colour_count = 0
         self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
-
         self.drawGrid() 
        
     #Draws the grid
@@ -263,6 +266,9 @@ class Grid_gui:
 
         img9 = font.render("Reset Board",True,text_colour)
         self.screen.blit(img9,(display_width+10,260))
+
+        img9 = font.render("Quit game",True,text_colour)
+        self.screen.blit(img9,(display_width+10,300))
         
     #Loads board onto the grid
     def load_sq(self):
