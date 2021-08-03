@@ -7,6 +7,8 @@ import sys
 sys.path.insert(1, 'data/')
 from colours import *
 
+#TODO Makes squares that have already been placed colours change - JC
+
 #Enables and disables debug board
 debug = False
 
@@ -24,14 +26,13 @@ colours_file ="data/colours.json"
 #Colour settings
 colours = tools.load_colours(colours_file)
 
-#TODO so that colours array is not passed multiple times -SC
-backgroup_colour = tools.get_colour(colours,"dimgrey")
-line_colour = tools.get_colour(colours,"grey")
+backgroup_colour = tools.get_colour("dimgrey")
+line_colour = tools.get_colour("grey")
 dead_colour = backgroup_colour
-text_colour = tools.get_colour(colours,"lightgrey")
-game_over_background_colour = tools.get_colour(colours,"darkgrey")
-game_over_text_colour = tools.get_colour(colours,"white")
-white = tools.get_colour(colours,"white")
+text_colour = tools.get_colour("lightgrey")
+game_over_background_colour = tools.get_colour("darkgrey")
+game_over_text_colour = tools.get_colour("white")
+white = tools.get_colour("white")
 
 #Text settings
 font_size = 40
@@ -94,7 +95,6 @@ class Grid_gui:
             if self.playing:
                 if(not self.game_over):
                     #Wait timer to slow down the game
-                    #TODO change wait time value when finished
                     pygame.time.wait(1000)
                     #Moves the board forward one cycle and saves the changes
                     changes = self.board.tick()

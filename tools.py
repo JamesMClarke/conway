@@ -2,6 +2,8 @@ import json as js
 from pattern import Pattern
 from colours import Colour
 
+colours = []
+
 #Tool to load patter from json
 def load_patterns(file):
     patterns = []
@@ -23,7 +25,6 @@ def split(word):
 
 
 def load_colours(file):
-    colours = []
     try: 
         with open(file, "r") as read_file:
             data = js.load(read_file)
@@ -34,8 +35,9 @@ def load_colours(file):
     except FileNotFoundError:
         colours.append(Colour("Error","1"))
     return colours
+    
 #TODO remove this once colour is redone
-def get_colour(colours,colour_name):
+def get_colour(colour_name):
     for i in range(len(colours)):
         if(colours[i].get_colour_name() == colour_name):
              rgb_value = colours[i].get_rgb_value() 
