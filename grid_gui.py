@@ -92,11 +92,12 @@ class Grid_gui:
             self.screen.blit(img7,(display_width+30,220))
 
             if self.playing:
-                #Wait timer to slow down the game
-                #TODO change wait time value when finished
-                pygame.time.wait(1000)
-                #Moves the board forward one cycle and saves the changes
-                changes = self.board.tick()
+                if(not self.game_over):
+                    #Wait timer to slow down the game
+                    #TODO change wait time value when finished
+                    pygame.time.wait(1000)
+                    #Moves the board forward one cycle and saves the changes
+                    changes = self.board.tick()
                 
                 
                 #If there aren't any changes it then renders a game over screen
