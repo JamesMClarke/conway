@@ -75,7 +75,7 @@ class Grid_gui:
             pygame.draw.rect(self.screen,self.alive_colour,rect)
 
             #Variable so you can differentiate between which screen is currently showing
-            game_over = False
+            self.game_over = False
 
             #displays current pattern name 
             pygame.draw.rect(self.screen,backgroup_colour, pygame.Rect(display_width+30,220,230,30))
@@ -111,7 +111,7 @@ class Grid_gui:
                     reset_rect = reset.get_rect(center = (full_display_width//2, display_height//1.5))
                     self.screen.blit(game_over_text, game_over_rect)
                     self.screen.blit(reset,reset_rect)
-                    game_over = True
+                    self.game_over = True
 
 
             for event in pygame.event.get():
@@ -120,7 +120,7 @@ class Grid_gui:
                 if event.type == pygame.MOUSEBUTTONUP:
                     x,y = pygame.mouse.get_pos()
                     print(x,y)
-                    if not game_over:
+                    if not self.game_over:
                     #If the x cord is within the grid
                         if(x <= display_width):
 
@@ -184,20 +184,20 @@ class Grid_gui:
                                 print(">")
                                 self.current_pattern = self.current_pattern+1
                                 self.set_current_pattern()
-                    else:
-                        game_over = False
-                        #Variables which will change during the game
-                        user_placing_pattern = True
-                        self.playing = False
-                        self.temp_grid = [[False for i in range(height)] for j in range(width)]
-                        self.screen.fill(backgroup_colour)
-                        #default pattern selected
-                        self.current_pattern = 0
-                        #default colour selected
-                        self.sq_colour_count = 0
-                        self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
+                            
+                            #Mouse events for reset
+                            elif((y >= 260 and y<=300) and (x >= display_width+10 and x <= display_width+200)):
+                                print ("reset")
+                                self.game_over = True
+                                self.reset_board()
+                            
 
-                        self.drawGrid() 
+
+                    else:
+                        self.game_over = True
+                        self.reset_board()
+
+                        
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -213,6 +213,21 @@ class Grid_gui:
                 self.update_by_changes(changes)
             pygame.display.update()
 
+    def reset_board(self):
+
+        self.game_over = False
+        #Variables which will change during the game
+        user_placing_pattern = True
+        self.playing = False
+        self.temp_grid = [[False for i in range(height)] for j in range(width)]
+        self.screen.fill(backgroup_colour)
+        #default pattern selected
+        self.current_pattern = 0
+        #default colour selected
+        self.sq_colour_count = 0
+        self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
+
+        self.drawGrid() 
        
     #Draws the grid
     def drawGrid(self):
@@ -245,6 +260,9 @@ class Grid_gui:
 
         img6 = font.render('>',True,text_colour) 
         self.screen.blit(img6,(display_width+260,220))
+
+        img9 = font.render("Reset Board",True,text_colour)
+        self.screen.blit(img9,(display_width+10,260))
         
     #Loads board onto the grid
     def load_sq(self):
