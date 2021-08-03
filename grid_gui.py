@@ -41,7 +41,6 @@ end_game_font_size = 50
 #Loaded from json
 patterns = tools.load_patterns(pattern_file)
 
-#TODO change mouse listener y coord to display  length instead of hard coded -SC
 def main():
     gui =  Grid_gui()
 
@@ -155,6 +154,7 @@ class Grid_gui:
                             #Handels mouse for random
                             elif ( y >= 60 and y < 100):
                                 self.temp_grid = [[(bool(getrandbits(1))) for j in range(height)] for i in range(width)]
+                                self.load_temp()
                             
                             #If the alive colour button is pressed calls sq_colour
                             elif((y >=130 and y < 170) and (x >= display_width+10 and x <= display_width+25)):
@@ -292,6 +292,16 @@ class Grid_gui:
             else:
                 colour = dead_colour
             self.draw_sq(x*sq_size,y*sq_size,colour)
+
+    def load_temp(self):
+        for x in range(0 ,len(self.temp_grid)):
+            for y in range(0, len(self.temp_grid[0])):
+                if(self.temp_grid[x][y]):
+                    colour  = self.alive_colour
+                else:
+                    colour  = dead_colour
+                self.draw_sq(x*sq_size,y*sq_size,colour)
+                
 
     #Draws square 
     def draw_sq(self,x,y,colour):
