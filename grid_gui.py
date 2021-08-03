@@ -4,8 +4,10 @@ from random import getrandbits
 import tools
 import pygame
 import sys
-sys.path.insert(1, 'data/')
-from colours import *
+
+#TODO Allow user to save custom patterns into json - JC
+#TODO Add something that shows the user details about the pattern -JC
+#E.G. If it is a user pattern, or still life
 
 #Enables and disables debug board
 debug = False
@@ -234,36 +236,25 @@ class Grid_gui:
 
         font = pygame.font.SysFont(None, font_size)
 
-        #TODO put some of the text code into a for loop, remove repitition of img| check with JC first -SC
-        img = font.render('Play', True, text_colour)
-        self.screen.blit(img, (display_width+10, 20))
+        self.screen.blit(font.render('Play', True, text_colour), (display_width+10, 20))
 
-        img2 = font.render('Random', True, text_colour)
-        self.screen.blit(img2, (display_width+10, 60))
+        self.screen.blit(font.render('Random', True, text_colour), (display_width+10, 60))
 
-        img3 = font.render('Cycle Alive Colour', True, text_colour)
-        self.screen.blit(img3, (display_width+10, 100))
+        self.screen.blit(font.render('Cycle Alive Colour', True, text_colour), (display_width+10, 100))
 
-        img7 = font.render('<',True,text_colour) 
-        self.screen.blit(img7,(display_width+10,140))
+        self.screen.blit(font.render('<',True,text_colour),(display_width+10,140))
 
-        img8 = font.render('>',True,text_colour) 
-        self.screen.blit(img8,(display_width+180,140))
+        self.screen.blit(font.render('>',True,text_colour),(display_width+180,140))
         
-        img4 = font.render('Patterns', True, text_colour)
-        self.screen.blit(img4, (display_width+10, 180))
+        self.screen.blit(font.render('Patterns', True, text_colour), (display_width+10, 180))
 
-        img5 = font.render('<',True,text_colour) 
-        self.screen.blit(img5,(display_width+10,220))
+        self.screen.blit(font.render('<',True,text_colour) ,(display_width+10,220))
 
-        img6 = font.render('>',True,text_colour) 
-        self.screen.blit(img6,(display_width+260,220))
+        self.screen.blit(font.render('>',True,text_colour) ,(display_width+260,220))
 
-        img9 = font.render("Reset Board",True,text_colour)
-        self.screen.blit(img9,(display_width+10,260))
+        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,260))
 
-        img9 = font.render("Quit game",True,text_colour)
-        self.screen.blit(img9,(display_width+10,300))
+        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,300))
         
     #Loads board onto the grid
     def load_sq(self):
