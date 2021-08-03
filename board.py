@@ -2,40 +2,39 @@ from square import Square
 from cords import Cords
     
 class Board:
-    #TODO Make variables protected
-    def __init__(self, width, length, grid):
-        self.length = length
-        self.width = width
-        self.neighbours = [[0 for j in range(self.length)] for i in range(self.width)]
-        #Loads it for the grid provided
+    def __init__(self, __width, __height, __grid):
+        self.__height = __height
+        self.__width = __width
+        self.__neighbours = [[0 for j in range(self.__height)] for i in range(self.__width)]
+        #Loads it for the __grid provided
         
-        self.grid_from_input(grid)
+        self.grid_from_input(__grid)
 
-    #Works out the number of neighbours for a given square
-    def no_of_neighbours(self, x, y):
+    #Works out the number of ____neighbours for a given square
+    def no_of___neighbours(self, x, y):
         n = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
                 #print(x, y)
                 x_check = x + i
                 y_check = y + j
-                if(not( i == 0 and j == 0) and (x_check > 0 and x_check <= self.width-1 and y_check > 0 and y_check <= self.length-1)):
-                    if(self.grid[x_check][y_check].get_is_alive()):
+                if(not( i == 0 and j == 0) and (x_check > 0 and x_check <= self.__width-1 and y_check > 0 and y_check <= self.__height-1)):
+                    if(self.__grid[x_check][y_check].get_is_alive()):
                         n += 1
         return n
 
     #Advances the board one unit of time and returns the changes
     def tick(self):
         changes = []
-        for y in range(0 , self.length):
-            for x in range(0, self.width):
-                n = self.no_of_neighbours(x ,y)
-                self.neighbours[x][y] = n
+        for y in range(0 , self.__height):
+            for x in range(0, self.__width):
+                n = self.no_of___neighbours(x ,y)
+                self.__neighbours[x][y] = n
                 if(n == 3):
-                    if(not self.grid[x][y].get_is_alive()):
+                    if(not self.__grid[x][y].get_is_alive()):
                         changes.append(Cords(x, y, "Add"))
                 elif(n != 2):
-                    if(self.grid[x][y].get_is_alive()):
+                    if(self.__grid[x][y].get_is_alive()):
                         changes.append(Cords(x, y, "Remove"))
 
         #Applies changes after the board is checked
@@ -46,34 +45,33 @@ class Board:
         for c in changes:
             x, y, change = c.get_cords()
             if(change == "Add"):
-                self.grid[x][y].revive()
+                self.__grid[x][y].revive()
             else:
-                self.grid[x][y].kill()
+                self.__grid[x][y].kill()
 
-    #Creates a board based on a grid provided
-    def grid_from_input(self, user_grid):
-        #TODO This can most likely be made more efficient, ether by having a list of changes or searching better - JC
-        self.grid = [[Square(False) for j in range(self.length)] for i in range(self.width)]
-        for y in range(0, self.length):
-            for x in range(0, self.width):
-                if(user_grid[x][y]):  
-                    self.grid[x][y].revive()
+    #Creates a board based on a __grid provided
+    def grid_from_input(self, user___grid):
+        self.__grid = [[Square(False) for j in range(self.__height)] for i in range(self.__width)]
+        for y in range(0, self.__height):
+            for x in range(0, self.__width):
+                if(user___grid[x][y]):  
+                    self.__grid[x][y].revive()
 
-    #Returns grid
+    #Returns __grid
     def get_grid(self):
-        return self.grid
+        return self.__grid
 
-    #Returns the width of the board
+    #Returns the __width of the board
     def get_width(self):
-        return self.width
+        return self.__width
 
-    #Returns the length of the board
-    def get_length(self):
-        return self.length
+    #Returns the __height of the board
+    def get_height(self):
+        return self.__height
 
     def revive_square(self, x, y):
-        self.grid[x][y].revive
+        self.__grid[x][y].revive
 
     def is_sq_alive(self, x, y):
-        return self.grid[x][y].get_is_alive()
+        return self.__grid[x][y].get_is_alive()
    

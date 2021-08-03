@@ -268,7 +268,7 @@ class Grid_gui:
     #Loads board onto the grid
     def load_sq(self):
         for x in range(0 ,self.board.get_width()):
-            for y in range(0, self.board.get_length()):
+            for y in range(0, self.board.get_height()):
                 if(self.board.is_sq_alive(x, y)):
                     colour  = self.alive_colour
                 else:
