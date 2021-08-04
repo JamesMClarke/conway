@@ -1,4 +1,6 @@
 import json as js
+from random import randrange
+from sys import implementation
 from pattern import Pattern
 from colours import Colour
 
@@ -42,6 +44,27 @@ def get_colour(colour_name):
         if(colours[i].get_colour_name() == colour_name):
              rgb_value = colours[i].get_rgb_value() 
     return rgb_value 
+
+def save_custom_pattern(board):
+
+    final_coord =""
+
+    for j in range (40):
+        for i in range(70):
+            if(board[i][j]== True):
+                x = f'{i:08b}'
+                y = f'{j:08b}'
+                print("x y = ",x,y)
+                coord = x,y
+                
+                final_coord += str(coord)
+
+                #coords = str()
+    type = "custom"
+    name = "test"
+    custom = Pattern(name,final_coord,type)
+    print(custom.get_pattern_name(),"  ",custom.get_pattern_pattern()," ",custom.get_pattern_type())
+
 
 
 
