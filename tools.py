@@ -46,7 +46,7 @@ def get_colour(colour_name):
     return rgb_value 
 
 
-
+#TODO implement load and delete custom patterns assigned to -SC
 def save_to_json(file, js_obj):
     
         try:
@@ -63,7 +63,7 @@ def save_custom_pattern(board):
     file = "data/custom_patterns.json"
     coord =""
     #TODO reove hardcoded value change to width height from gui-SC 
-    #TODO aloow user to name patterns-SC
+    #TODO aloow user to name patterns assigned to -SC
     for j in range (40):
         for i in range(70):
             
