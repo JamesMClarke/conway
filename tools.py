@@ -47,7 +47,6 @@ def get_colour(colour_name):
 
 
 
-#TODO BUG FIX saving any pattern more than once overwrites custom-patterns, trying again crashes program -SC
 def save_to_json(file, js_obj):
     
         try:
@@ -55,7 +54,7 @@ def save_to_json(file, js_obj):
                 data = js.load(file)
                 data['custom_patterns'].append(js_obj)
                 file.seek(0)
-                js.dump(data,file)
+                js.dump(data,file,indent=4)
 
         except FileNotFoundError:
             print("error")
