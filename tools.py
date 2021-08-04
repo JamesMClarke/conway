@@ -45,25 +45,50 @@ def get_colour(colour_name):
              rgb_value = colours[i].get_rgb_value() 
     return rgb_value 
 
+
+
+#TODO BUG FIX saving any pattern more than once overwrites custom-patterns, trying again crashes program -SC
+def save_to_json(file, js_obj):
+    
+        try:
+            with open(file,'r+') as file:
+                data = js.load(file)
+                data['custom_patterns'].append(js_obj)
+                file.seek(0)
+                js.dump(js_obj,file)
+
+        except FileNotFoundError:
+            print("error")
+
 def save_custom_pattern(board):
-
-    final_coord =""
-
+    file = "data/custom_patterns.json"
+    coord =""
+    #TODO reove hardcoded value change to width height from gui-SC 
+    #TODO aloow user to name patterns-SC
     for j in range (40):
         for i in range(70):
+            
+            #converts alive squares coords on board to binary add to string
             if(board[i][j]== True):
                 x = f'{i:08b}'
                 y = f'{j:08b}'
                 print("x y = ",x,y)
-                coord = x,y
-                
-                final_coord += str(coord)
+                coord += x+','
+                coord += y+',' 
 
-                #coords = str()
-    type = "custom"
+    #removes last , at end of coord              
+    coord = coord.rstrip(coord[-1])
+    print("coord=", coord)
+    pattern_type = "custom"
     name = "test"
-    custom = Pattern(name,final_coord,type)
-    print(custom.get_pattern_name(),"  ",custom.get_pattern_pattern()," ",custom.get_pattern_type())
+    json_obj = {"name":name,"pattern":coord,"type":pattern_type}
+    save_to_json(file,json_obj)
+
+
+    
+
+
+
 
 
 
