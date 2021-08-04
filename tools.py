@@ -55,7 +55,7 @@ def save_to_json(file, js_obj):
                 data = js.load(file)
                 data['custom_patterns'].append(js_obj)
                 file.seek(0)
-                js.dump(js_obj,file)
+                js.dump(data,file)
 
         except FileNotFoundError:
             print("error")
