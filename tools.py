@@ -82,8 +82,8 @@ def save_custom_pattern(board,height,width):
     #removes last , at end of coord string         
     coord = coord.rstrip(coord[-1])
     print("coord=", coord)
-    pattern_type = "user"
-    name = "custom pattern"
+    pattern_type = "User"
+    name = "Custom pattern"
     json_obj = {"name":name,"pattern":coord,"type":pattern_type}
     save_to_json(file,json_obj)
 

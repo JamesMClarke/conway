@@ -33,6 +33,7 @@ text_colour = tools.get_colour("lightgrey")
 game_over_background_colour = tools.get_colour("darkgrey")
 game_over_text_colour = tools.get_colour("white")
 white = tools.get_colour("white")
+pattern_menu_colour = tools.get_colour("grey")
 
 #Text settings
 font_size = 40
@@ -75,7 +76,7 @@ class Grid_gui:
             pygame.draw.rect(self.screen,self.alive_colour,rect)
             
             #displays current pattern name 
-            pygame.draw.rect(self.screen,backgroup_colour, pygame.Rect(display_width+30,220,230,30))
+            pygame.draw.rect(self.screen,pattern_menu_colour, pygame.Rect(display_width+30,220,230,30))
             font = pygame.font.SysFont(None, font_size)
             pattern_name = patterns[self.current_pattern].get_pattern_name()
             if (len(pattern_name) > 15):
@@ -91,7 +92,7 @@ class Grid_gui:
 
 
             #Shows the pattern type
-            pygame.draw.rect(self.screen,backgroup_colour, pygame.Rect(display_width+90,260,230,30))
+            pygame.draw.rect(self.screen,pattern_menu_colour, pygame.Rect(display_width+90,260,150,30))
             pattern = font.render(patterns[self.current_pattern].get_pattern_type(), True, text_colour)
             self.screen.blit(pattern,(display_width+90, 260))
 
@@ -264,6 +265,9 @@ class Grid_gui:
 
         self.screen.blit(font.render('>',True,text_colour),(display_width+180,140))
         
+        rect =  pygame.Rect(display_width+5,180,275,150)
+        pygame.draw.rect(self.screen,pattern_menu_colour,rect)
+
         self.screen.blit(font.render('Pattern:', True, text_colour), (display_width+10, 180))
 
         self.screen.blit(font.render('<',True,text_colour) ,(display_width+10,220))
@@ -272,7 +276,7 @@ class Grid_gui:
 
         self.screen.blit(font.render('Type:', True, text_colour), (display_width+10, 260))
 
-        self.screen.blit(font.render("save pattern",True,text_colour),(display_width+10,300))
+        self.screen.blit(font.render("Save pattern",True,text_colour),(display_width+10,300))
 
         self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,340))
 
