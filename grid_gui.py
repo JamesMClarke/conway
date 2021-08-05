@@ -158,8 +158,6 @@ class Grid_gui:
                             if (y >= 20 and y < 60):
 
                                 self.board = Board(width, height, self.temp_grid)
-                                #tools.save_custom_pattern(self.temp_grid)
-
                                 self.playing = True
                                 self.load_sq()     
 
@@ -198,8 +196,12 @@ class Grid_gui:
                                 self.game_over = True
                                 self.reset_board()
 
-                            #Mouse event to quit game
+                            #Mouse event for save board
                             elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
+                                tools.save_custom_pattern(self.temp_grid,height,width)
+
+                            #Mouse event to quit game
+                            elif((y >= 380 and y<=420) and (x >= display_width+10 and x <= display_width+200)):
                                 pygame.quit()
                                 sys.exit()
                             
@@ -273,7 +275,10 @@ class Grid_gui:
 
         self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,300))
 
-        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,340))
+        self.screen.blit(font.render("save pattern",True,text_colour),(display_width+10,340))
+
+        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,380))
+
         
     #Loads board onto the grid
     def load_sq(self):

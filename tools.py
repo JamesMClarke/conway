@@ -38,7 +38,6 @@ def load_colours(file):
         colours.append(Colour("Error","1"))
     return colours
     
-#TODO remove this once colour is redone
 def get_colour(colour_name):
     for i in range(len(colours)):
         if(colours[i].get_colour_name() == colour_name):
@@ -48,6 +47,7 @@ def get_colour(colour_name):
 
 #TODO implement load and delete custom patterns assigned to -SC
 def save_to_json(file, js_obj):
+
     
         try:
             with open(file,'r+') as file:
@@ -59,15 +59,15 @@ def save_to_json(file, js_obj):
         except FileNotFoundError:
             print("error")
 
-def save_custom_pattern(board):
+def save_custom_pattern(board,height,width):
+
     file = "data/custom_patterns.json"
     coord =""
-    #TODO reove hardcoded value change to width height from gui-SC 
     #TODO aloow user to name patterns assigned to -SC
-    for j in range (40):
-        for i in range(70):
+    for j in range (height):
+        for i in range(width):
             
-            #converts alive squares coords on board to binary add to string
+            #converts alive squares coords on board to binary adds to coord string
             if(board[i][j]== True):
                 x = f'{i:08b}'
                 y = f'{j:08b}'
@@ -77,11 +77,11 @@ def save_custom_pattern(board):
     if(coord ==""):
         return
 
-    #removes last , at end of coord              
+    #removes last , at end of coord string         
     coord = coord.rstrip(coord[-1])
     print("coord=", coord)
-    pattern_type = "custom"
-    name = "test"
+    pattern_type = "user"
+    name = "custom pattern"
     json_obj = {"name":name,"pattern":coord,"type":pattern_type}
     save_to_json(file,json_obj)
 
