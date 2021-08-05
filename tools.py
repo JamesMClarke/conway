@@ -52,7 +52,7 @@ def save_to_json(file, js_obj):
         try:
             with open(file,'r+') as file:
                 data = js.load(file)
-                data['custom_patterns'].append(js_obj)
+                data['patterns'].append(js_obj)
                 file.seek(0)
                 js.dump(data,file,indent=4)
 
@@ -61,7 +61,7 @@ def save_to_json(file, js_obj):
 
 def save_custom_pattern(board,height,width):
 
-    file = "data/custom_patterns.json"
+    file = "data/patterns.json"
     coord =""
     #TODO aloow user to name patterns assigned to -SC
     for j in range (height):
@@ -74,6 +74,8 @@ def save_custom_pattern(board,height,width):
                 print("x y = ",x,y)
                 coord += x+','
                 coord += y+',' 
+
+    #if no pattern to save coord ="" and func returns none
     if(coord ==""):
         return
 
