@@ -102,6 +102,15 @@ class Grid_gui:
                     pygame.time.wait(1000)
                     #Moves the board forward one cycle and saves the changes
                     changes = self.board.tick()
+                    
+                    if(debug):
+                        #Changed for debug
+                        if(self.playing):
+                            self.load_sq()
+                        else:
+                            self.update_by_changes(changes)
+                    else:
+                        self.update_by_changes(changes)
                 
                 
                 #If there aren't any changes it then renders a game over screen
@@ -219,29 +228,18 @@ class Grid_gui:
                     pygame.quit()
                     sys.exit()
             
-            if(debug):
-                #Changed for debug
-                if(self.playing):
-                    self.load_sq()
-                else:
-                    self.update_by_changes(changes)
-            else:
-                self.update_by_changes(changes)
+            
             pygame.display.update()
 
     def reset_board(self):
-
+        self.board = None
         self.game_over = False
         #Variables which will change during the game
-        user_placing_pattern = True
         self.playing = False
         self.temp_grid = [[False for i in range(height)] for j in range(width)]
         self.screen.fill(backgroup_colour)
         #default pattern selected
         self.current_pattern = 0
-        #default colour selected
-        self.sq_colour_count = 0
-        self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
         self.drawGrid() 
        
     #Draws the grid
