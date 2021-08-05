@@ -6,8 +6,6 @@ import pygame
 import sys
 
 #TODO Allow user to save custom patterns into json - JC
-#TODO Add something that shows the user details about the pattern -JC
-#E.G. If it is a user pattern, or still life
 
 #Enables and disables debug board
 debug = False
@@ -51,6 +49,7 @@ class Grid_gui:
         pygame.init()
 
         #Variables which will change during the game
+        self.user_text = ''
         user_placing_pattern = True
         self.playing = False
         self.temp_grid = [[False for i in range(height)] for j in range(width)]
@@ -95,6 +94,14 @@ class Grid_gui:
             pygame.draw.rect(self.screen,pattern_menu_colour, pygame.Rect(display_width+90,260,150,30))
             pattern = font.render(patterns[self.current_pattern].get_pattern_type(), True, text_colour)
             self.screen.blit(pattern,(display_width+90, 260))
+
+            #Draws text input
+            input_rect =  pygame.Rect(display_width+10,300,260,30)
+            pygame.draw.rect(self.screen,backgroup_colour,input_rect)
+            text_surface = font.render(self.user_text, True, (255, 255, 255))
+                
+            # render at position stated in arguments
+            self.screen.blit(text_surface, (input_rect.x+5, input_rect.y))
 
             if self.playing:
                 print(self.game_over)
@@ -202,17 +209,17 @@ class Grid_gui:
                                 self.set_current_pattern()
                             
                            #Mouse event for save board
-                            elif((y >= 300 and y<=340) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
                                 tools.save_custom_pattern(self.temp_grid,height,width)
 
                             #Mouse events for reset
-                            elif((y >= 340 and y<380) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):
                                 print("reset")
                                 self.game_over = True
                                 self.reset_board()
 
                             #Mouse event to quit game
-                            elif((y >= 380 and y<=420) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 420 and y<=460) and (x >= display_width+10 and x <= display_width+200)):
                                 pygame.quit()
                                 sys.exit()
                                 
@@ -231,6 +238,26 @@ class Grid_gui:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
+                if event.type == pygame.KEYDOWN:
+  
+                    # Check for backspace
+                    if event.key == pygame.K_BACKSPACE:
+        
+                        # get text input from 0 to -1 i.e. end.
+                        self.user_text = self.user_text[:-1]
+                    #Check of escape
+                    elif event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                        
+                    # Unicode standard is used for string
+                    # formation
+                    else:
+                        if(len(self.user_text) < 14):
+                            self.user_text += event.unicode
+                            print(self.user_text)
+      
             
             
             pygame.display.update()
@@ -265,7 +292,7 @@ class Grid_gui:
 
         self.screen.blit(font.render('>',True,text_colour),(display_width+180,140))
         
-        rect =  pygame.Rect(display_width+5,180,275,150)
+        rect =  pygame.Rect(display_width+5,180,275,190)
         pygame.draw.rect(self.screen,pattern_menu_colour,rect)
 
         self.screen.blit(font.render('Pattern:', True, text_colour), (display_width+10, 180))
@@ -276,11 +303,14 @@ class Grid_gui:
 
         self.screen.blit(font.render('Type:', True, text_colour), (display_width+10, 260))
 
-        self.screen.blit(font.render("Save pattern",True,text_colour),(display_width+10,300))
+        rect =  pygame.Rect(display_width+10,300,260,30)
+        pygame.draw.rect(self.screen,backgroup_colour,rect)
 
-        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,340))
+        self.screen.blit(font.render("Save pattern",True,text_colour),(display_width+10,340))
 
-        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,380))
+        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,380))
+
+        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,420))
         
     #Loads board onto the grid
     def load_sq(self):
