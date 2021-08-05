@@ -200,20 +200,21 @@ class Grid_gui:
                                 self.current_pattern = self.current_pattern+1
                                 self.set_current_pattern()
                             
+                           #Mouse event for save board
+                            elif((y >= 300 and y<=340) and (x >= display_width+10 and x <= display_width+200)):
+                                tools.save_custom_pattern(self.temp_grid,height,width)
+
                             #Mouse events for reset
-                            elif((y >= 300 and y<340) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 340 and y<380) and (x >= display_width+10 and x <= display_width+200)):
+                                print("reset")
                                 self.game_over = True
                                 self.reset_board()
-
-                            #Mouse event for save board
-                            elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
-                                tools.save_custom_pattern(self.temp_grid,height,width)
 
                             #Mouse event to quit game
                             elif((y >= 380 and y<=420) and (x >= display_width+10 and x <= display_width+200)):
                                 pygame.quit()
                                 sys.exit()
-                            
+                                
 
 
                     else:
@@ -271,12 +272,11 @@ class Grid_gui:
 
         self.screen.blit(font.render('Type:', True, text_colour), (display_width+10, 260))
 
-        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,300))
+        self.screen.blit(font.render("save pattern",True,text_colour),(display_width+10,300))
 
-        self.screen.blit(font.render("save pattern",True,text_colour),(display_width+10,340))
+        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,340))
 
         self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,380))
-
         
     #Loads board onto the grid
     def load_sq(self):
