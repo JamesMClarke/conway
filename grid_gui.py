@@ -1,13 +1,13 @@
 from board import Board
 from cords import Cords
 from random import getrandbits
+from time import time
 import tools
 import pygame
 import sys
 
+
 #TODO Allow user to save custom patterns into json - JC
-#TODO Fix menu having lag when game is playing - JC
-#This will probs need some type of multi threading
 
 #Enables and disables debug board
 debug = False
@@ -22,6 +22,8 @@ full_display_width = display_width + 300
 display_height = height * sq_size
 pattern_file = "data/patterns.json"
 colours_file ="data/colours.json"
+#Time delay in seconds
+delay = 1
 
 #Colour settings
 colours = tools.load_colours(colours_file)
@@ -71,6 +73,10 @@ class Grid_gui:
 
         #Draws grid
         self.drawGrid() 
+
+        #Setting up delay
+        start_time = time()
+        next_update = start_time + delay
         while True:
             #Draws square to show alive colour
             rect =  pygame.Rect(display_width+30,145,140,sq_size)
@@ -106,39 +112,40 @@ class Grid_gui:
             self.screen.blit(text_surface, (input_rect.x+5, input_rect.y))
 
             if self.playing:
-                print(self.game_over)
+                #print(self.game_over)
                 if(not self.game_over):
-                    #Wait timer to slow down the game
-                    pygame.time.wait(1000)
-                    #Moves the board forward one cycle and saves the changes
-                    changes = self.board.tick()
-                    
-                    if(debug):
-                        #Changed for debug
-                        if(self.playing):
-                            self.load_sq()
+                    if(time() >= next_update):
+                        #Moves the board forward one cycle and saves the changes
+                        changes = self.board.tick()
+                        
+                        if(debug):
+                            #Changed for debug
+                            if(self.playing):
+                                self.load_sq()
+                            else:
+                                self.update_by_changes(changes)
                         else:
                             self.update_by_changes(changes)
-                    else:
-                        self.update_by_changes(changes)
+                        
+                        next_update = next_update + delay
                 
                 
-                #If there aren't any changes it then renders a game over screen
-                if(len(changes) == 0):
-                    self.game_over = True
-                    #Renders game over screen
-                    rect =  pygame.Rect(0,0,full_display_width,display_height)
-                    pygame.draw.rect(self.screen,game_over_background_colour,rect)
-                    font = pygame.font.SysFont(None, end_game_font_size)
-                    game_over_text = font.render('Game over', True, game_over_text_colour)
-                    reset = font.render('Reset', True, game_over_text_colour)
-                    quit = font.render('Quit', True, game_over_text_colour)
-                    game_over_rect = game_over_text.get_rect(center=(full_display_width//2, display_height//2))
-                    reset_rect = reset.get_rect(center = (full_display_width//4, display_height//1.5))
-                    quit_rect = reset.get_rect(center =((full_display_width//4)*3, display_height//1.5))
-                    self.screen.blit(game_over_text, game_over_rect)
-                    self.screen.blit(reset,reset_rect)
-                    self.screen.blit(quit, quit_rect)
+                        #If there aren't any changes it then renders a game over screen
+                        if(len(changes) == 0):
+                            self.game_over = True
+                            #Renders game over screen
+                            rect =  pygame.Rect(0,0,full_display_width,display_height)
+                            pygame.draw.rect(self.screen,game_over_background_colour,rect)
+                            font = pygame.font.SysFont(None, end_game_font_size)
+                            game_over_text = font.render('Game over', True, game_over_text_colour)
+                            reset = font.render('Reset', True, game_over_text_colour)
+                            quit = font.render('Quit', True, game_over_text_colour)
+                            game_over_rect = game_over_text.get_rect(center=(full_display_width//2, display_height//2))
+                            reset_rect = reset.get_rect(center = (full_display_width//4, display_height//1.5))
+                            quit_rect = reset.get_rect(center =((full_display_width//4)*3, display_height//1.5))
+                            self.screen.blit(game_over_text, game_over_rect)
+                            self.screen.blit(reset,reset_rect)
+                            self.screen.blit(quit, quit_rect)
                     
 
 
