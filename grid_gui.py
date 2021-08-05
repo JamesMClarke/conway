@@ -8,8 +8,6 @@ import sys
 #TODO Allow user to save custom patterns into json - JC
 #TODO Add something that shows the user details about the pattern -JC
 #E.G. If it is a user pattern, or still life
-#TODO Make endgame screen more responsive - JC
-#Probs need to make it so the tick and wait aren't run if the game is over
 
 #Enables and disables debug board
 debug = False
@@ -91,10 +89,15 @@ class Grid_gui:
             img7 = font.render(pattern_name,True,text_colour) 
             self.screen.blit(img7,(display_width+30,220))
 
+
+            #Shows the pattern type
+            pygame.draw.rect(self.screen,backgroup_colour, pygame.Rect(display_width+90,260,230,30))
+            pattern = font.render(patterns[self.current_pattern].get_pattern_type(), True, text_colour)
+            self.screen.blit(pattern,(display_width+90, 260))
+
             if self.playing:
                 print(self.game_over)
                 if(not self.game_over):
-                    print("tick running")
                     #Wait timer to slow down the game
                     pygame.time.wait(1000)
                     #Moves the board forward one cycle and saves the changes
@@ -155,7 +158,7 @@ class Grid_gui:
                             if (y >= 20 and y < 60):
 
                                 self.board = Board(width, height, self.temp_grid)
-                                tools.save_custom_pattern(self.temp_grid)
+                                #tools.save_custom_pattern(self.temp_grid)
 
                                 self.playing = True
                                 self.load_sq()     
@@ -191,12 +194,12 @@ class Grid_gui:
                                 self.set_current_pattern()
                             
                             #Mouse events for reset
-                            elif((y >= 260 and y<300) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 300 and y<340) and (x >= display_width+10 and x <= display_width+200)):
                                 self.game_over = True
                                 self.reset_board()
 
                             #Mouse event to quit game
-                            elif((y >= 300 and y<=330) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
                                 pygame.quit()
                                 sys.exit()
                             
@@ -260,15 +263,17 @@ class Grid_gui:
 
         self.screen.blit(font.render('>',True,text_colour),(display_width+180,140))
         
-        self.screen.blit(font.render('Patterns', True, text_colour), (display_width+10, 180))
+        self.screen.blit(font.render('Pattern:', True, text_colour), (display_width+10, 180))
 
         self.screen.blit(font.render('<',True,text_colour) ,(display_width+10,220))
 
         self.screen.blit(font.render('>',True,text_colour) ,(display_width+260,220))
 
-        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,260))
+        self.screen.blit(font.render('Type:', True, text_colour), (display_width+10, 260))
 
-        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,300))
+        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,300))
+
+        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,340))
         
     #Loads board onto the grid
     def load_sq(self):
