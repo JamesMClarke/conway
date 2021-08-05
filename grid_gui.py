@@ -6,6 +6,8 @@ import pygame
 import sys
 
 #TODO Allow user to save custom patterns into json - JC
+#TODO Fix menu having lag when game is playing - JC
+#This will probs need some type of multi threading
 
 #Enables and disables debug board
 debug = False
@@ -180,8 +182,9 @@ class Grid_gui:
 
                             #Handels mouse for random
                             elif ( y >= 60 and y < 100):
-                                self.temp_grid = [[(bool(getrandbits(1))) for j in range(height)] for i in range(width)]
-                                self.load_temp()
+                                if(not self.playing):
+                                    self.temp_grid = [[(bool(getrandbits(1))) for j in range(height)] for i in range(width)]
+                                    self.load_temp()
                             
                             #If the alive colour button is pressed calls sq_colour
                             elif((y >=130 and y < 170) and (x >= display_width+10 and x <= display_width+25)):
