@@ -65,17 +65,17 @@ class Grid_gui:
         self.alive_colour = colours[self.sq_colour_count].get_rgb_value()
         #temp blank vars        
         changes = []
-        
+
+        #Variable so you can differentiate between which screen is currently showing
+        self.game_over = False
+
         #Draws grid
         self.drawGrid() 
         while True:
             #Draws square to show alive colour
             rect =  pygame.Rect(display_width+30,145,140,sq_size)
             pygame.draw.rect(self.screen,self.alive_colour,rect)
-
-            #Variable so you can differentiate between which screen is currently showing
-            self.game_over = False
-
+            
             #displays current pattern name 
             pygame.draw.rect(self.screen,backgroup_colour, pygame.Rect(display_width+30,220,230,30))
             font = pygame.font.SysFont(None, font_size)
@@ -92,7 +92,9 @@ class Grid_gui:
             self.screen.blit(img7,(display_width+30,220))
 
             if self.playing:
+                print(self.game_over)
                 if(not self.game_over):
+                    print("tick running")
                     #Wait timer to slow down the game
                     pygame.time.wait(1000)
                     #Moves the board forward one cycle and saves the changes
@@ -101,6 +103,7 @@ class Grid_gui:
                 
                 #If there aren't any changes it then renders a game over screen
                 if(len(changes) == 0):
+                    self.game_over = True
                     #Renders game over screen
                     rect =  pygame.Rect(0,0,full_display_width,display_height)
                     pygame.draw.rect(self.screen,game_over_background_colour,rect)
@@ -114,7 +117,7 @@ class Grid_gui:
                     self.screen.blit(game_over_text, game_over_rect)
                     self.screen.blit(reset,reset_rect)
                     self.screen.blit(quit, quit_rect)
-                    self.game_over = True
+                    
 
 
             for event in pygame.event.get():

@@ -29,6 +29,26 @@
             "name": "test",
             "pattern": "00111001,00001001",
             "type": "custom"
+        },
+        {
+            "name": "test",
+            "pattern": "00111110,00000101",
+            "type": "custom"
+        },
+        {
+            "name": "test",
+            "pattern": "00110100,00001010",
+            "type": "custom"
+        },
+        {
+            "name": "test",
+            "pattern": "00110101,00001000",
+            "type": "custom"
+        },
+        {
+            "name": "test",
+            "pattern": "00110010,00001001",
+            "type": "custom"
         }
     ]
 }
