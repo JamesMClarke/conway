@@ -74,6 +74,8 @@ def save_custom_pattern(board):
                 print("x y = ",x,y)
                 coord += x+','
                 coord += y+',' 
+    if(coord ==""):
+        return
 
     #removes last , at end of coord              
     coord = coord.rstrip(coord[-1])
