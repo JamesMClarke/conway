@@ -174,7 +174,7 @@ class Grid_gui:
                             #Handles mouse for play
                             if (y >= 20 and y < 60):
 
-                                self.board = Board(width, height, self.temp_grid)
+                                self.board = Board(self.temp_grid)
                                 self.playing = True
                                 self.load_sq()     
 
@@ -210,7 +210,7 @@ class Grid_gui:
                             
                            #Mouse event for save board
                             elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
-                                tools.save_custom_pattern(self.temp_grid,height,width)
+                                tools.save_custom_pattern(self.temp_grid,self.user_text)
 
                             #Mouse events for reset
                             elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):

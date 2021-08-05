@@ -2,13 +2,13 @@ from square import Square
 from cords import Cords
     
 class Board:
-    def __init__(self, __width, __height, __grid):
-        self.__height = __height
-        self.__width = __width
+    def __init__(self, grid):
+        self.__width = len(grid)
+        self.__height = len(grid[0])
         self.__neighbours = [[0 for j in range(self.__height)] for i in range(self.__width)]
         #Loads it for the __grid provided
         
-        self.grid_from_input(__grid)
+        self.grid_from_input(grid)
 
     #Works out the number of ____neighbours for a given square
     def no_of___neighbours(self, x, y):

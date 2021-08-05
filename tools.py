@@ -59,13 +59,12 @@ def save_to_json(file, js_obj):
         except FileNotFoundError:
             print("error")
 
-def save_custom_pattern(board,height,width):
+def save_custom_pattern(board,name):
 
     file = "data/patterns.json"
     coord =""
-    #TODO aloow user to name patterns assigned to -SC
-    for j in range (height):
-        for i in range(width):
+    for j in range (board[0]):
+        for i in range(len(board)):
             
             #converts alive squares coords on board to binary adds to coord string
             if(board[i][j]== True):
@@ -83,7 +82,6 @@ def save_custom_pattern(board,height,width):
     coord = coord.rstrip(coord[-1])
     print("coord=", coord)
     pattern_type = "User"
-    name = "Custom pattern"
     json_obj = {"name":name,"pattern":coord,"type":pattern_type}
     save_to_json(file,json_obj)
 
