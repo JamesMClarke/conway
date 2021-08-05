@@ -8,6 +8,8 @@ import sys
 #TODO Allow user to save custom patterns into json - JC
 #TODO Add something that shows the user details about the pattern -JC
 #E.G. If it is a user pattern, or still life
+#TODO Make endgame screen more responsive - JC
+#Probs need to make it so the tick and wait aren't run if the game is over
 
 #Enables and disables debug board
 debug = False
@@ -98,7 +100,6 @@ class Grid_gui:
                 
                 
                 #If there aren't any changes it then renders a game over screen
-                #TODO add quit game and mouse listener to game over screen? -SC
                 if(len(changes) == 0):
                     #Renders game over screen
                     rect =  pygame.Rect(0,0,full_display_width,display_height)
@@ -106,10 +107,13 @@ class Grid_gui:
                     font = pygame.font.SysFont(None, end_game_font_size)
                     game_over_text = font.render('Game over', True, game_over_text_colour)
                     reset = font.render('Reset', True, game_over_text_colour)
+                    quit = font.render('Quit', True, game_over_text_colour)
                     game_over_rect = game_over_text.get_rect(center=(full_display_width//2, display_height//2))
-                    reset_rect = reset.get_rect(center = (full_display_width//2, display_height//1.5))
+                    reset_rect = reset.get_rect(center = (full_display_width//4, display_height//1.5))
+                    quit_rect = reset.get_rect(center =((full_display_width//4)*3, display_height//1.5))
                     self.screen.blit(game_over_text, game_over_rect)
                     self.screen.blit(reset,reset_rect)
+                    self.screen.blit(quit, quit_rect)
                     self.game_over = True
 
 
@@ -196,8 +200,12 @@ class Grid_gui:
 
 
                     else:
-                        self.game_over = True
-                        self.reset_board()
+                        if(x < full_display_width//2):
+                            self.game_over = True
+                            self.reset_board()
+                        else:
+                            pygame.quit()
+                            sys.exit()
 
                         
 
