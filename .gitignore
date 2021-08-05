@@ -140,4 +140,4 @@ dmypy.json
 cython_debug/
 
 #patterns.json
-patterns.json
+data/patterns.json
