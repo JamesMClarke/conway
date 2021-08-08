@@ -95,22 +95,12 @@ def save_custom_pattern(board,name):
                     left_alive_sq = old_sq_x,old_sq_y   
                 
                 
-                if(current_sq_x > old_sq_x):
+                elif(current_sq_x > old_sq_x):
           
                     old_sq_y = current_sq_y
                     old_sq_x = current_sq_x
                     right_alive_sq = old_sq_x,old_sq_y
 
-               
-
-
-                if (current_sq_y < old_sq_y):
-                    
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    top_alive_sq = old_sq_x,old_sq_y
-
-               
 
 
                 if(current_sq_y > old_sq_y):
@@ -118,6 +108,13 @@ def save_custom_pattern(board,name):
                     old_sq_y = current_sq_y
                     old_sq_x = current_sq_x
                     bottom_alive_sq = old_sq_x,old_sq_y   
+
+                elif (current_sq_y < old_sq_y):
+                    
+                    old_sq_y = current_sq_y
+                    old_sq_x = current_sq_x
+                    top_alive_sq = old_sq_x,old_sq_y
+
 
                 #finds farthest left and right alive squares
               
