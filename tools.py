@@ -88,30 +88,40 @@ def save_custom_pattern(board,name):
                 current_sq_y = j
                 
                 #Finds the furthest top and bottom alive squares
+                if(current_sq_x < old_sq_x):
+            
+                    old_sq_y = current_sq_y
+                    old_sq_x = current_sq_x
+                    left_alive_sq = old_sq_x,old_sq_y   
+                
+                
+                if(current_sq_x > old_sq_x):
+          
+                    old_sq_y = current_sq_y
+                    old_sq_x = current_sq_x
+                    right_alive_sq = old_sq_x,old_sq_y
+
+               
+
+
                 if (current_sq_y < old_sq_y):
                     
                     old_sq_y = current_sq_y
                     old_sq_x = current_sq_x
                     top_alive_sq = old_sq_x,old_sq_y
 
-                elif(current_sq_y > old_sq_y):
+               
 
+
+                if(current_sq_y > old_sq_y):
+    
                     old_sq_y = current_sq_y
                     old_sq_x = current_sq_x
                     bottom_alive_sq = old_sq_x,old_sq_y   
 
                 #finds farthest left and right alive squares
-                if(current_sq_x < old_sq_x):
-
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    left_alive_sq = old_sq_x,old_sq_y   
-
-                elif(current_sq_x > old_sq_x):
-      
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    right_alive_sq = old_sq_x,old_sq_y
+              
+                
 
 
     print("tp ",top_alive_sq,"btm ",bottom_alive_sq,"left ",left_alive_sq,"right ",right_alive_sq)
