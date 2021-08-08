@@ -88,14 +88,14 @@ def save_custom_pattern(board,name):
                 current_sq_y = j
                 
                 #Finds the furthest top and bottom alive squares
-                if ((current_sq_y <= old_sq_y)and (current_sq_x, current_sq_y != top_alive_sq)):
+                if ((current_sq_y < old_sq_y)and (current_sq_x, current_sq_y != top_alive_sq)):
                     
                     top_alive_sq = None
                     old_sq_y = current_sq_y
                     old_sq_x = current_sq_x
                     top_alive_sq = old_sq_x,old_sq_y
 
-                if((current_sq_y >= old_sq_y) and (current_sq_x, current_sq_y != bottom_alive_sq)):
+                if((current_sq_y > old_sq_y) and (current_sq_x, current_sq_y != bottom_alive_sq)):
 
                     bottom_alive_sq = None
                     old_sq_y = current_sq_y
@@ -105,14 +105,14 @@ def save_custom_pattern(board,name):
                 #finds farthest left and right alive squares
                
 
-                if((current_sq_x <= old_sq_x) and (current_sq_x, current_sq_y != left_alive_sq)):
+                if((current_sq_x < old_sq_x) and (current_sq_x, current_sq_y != left_alive_sq)):
 
                     left_alive_sq = None
                     old_sq_y = current_sq_y
                     old_sq_x = current_sq_x
                     left_alive_sq = old_sq_x,old_sq_y   
 
-                if((current_sq_x >= old_sq_x) and (current_sq_x, current_sq_y != right_alive_sq)):
+                if((current_sq_x > old_sq_x) and (current_sq_x, current_sq_y != right_alive_sq)):
                             
                     right_alive_sq = None
                     old_sq_y = current_sq_y
