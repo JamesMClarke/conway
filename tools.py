@@ -1,4 +1,5 @@
 import json as js
+import math
 from random import randrange
 from sys import implementation
 from typing import Coroutine
@@ -78,82 +79,58 @@ def save_custom_pattern(board,name):
 
 def calculate_furthest_points(board):
 
+    min_x = 0
+    max_x = 0
 
-    old_sq_x = 0
-    old_sq_y = 0
-    top_alive_sq = 0
-    bottom_alive_sq = 0
-    left_alive_sq = 0
-    right_alive_sq = 0
-    
+    min_y = 0
+    max_y = 0
+
     coord =""
 
     #calculates the farthest top,bottom,left,right alive squares
-    #TODO Bug save has to be ran twice for the top and bottm alive squares to print correctly ? -SC
-    #TODO flaw in logic 
     for i in range(len(board)):
         for j in range (len(board[0])):
 
             if(board[i][j]==True):
-            
-                current_sq_x = i 
-                current_sq_y = j
+
+                if ((i < min_x) or (i == 0)):
+                    min_x = i
                 
-                if(current_sq_x < old_sq_x):
-                    old_sq_x = current_sq_x
-                    left_alive_sq = old_sq_x
+                elif(i > max_x):
+                    max_x = i
+
+                if ((j < min_y) or (j == 0)):
+                    min_y = j
+
+                elif(j > max_y):
+                    max_y = j
+
                 
-                
-                elif(current_sq_x > old_sq_x):
-                    old_sq_x = current_sq_x
-                    right_alive_sq = old_sq_x
-
-
-                
-
-                if(current_sq_y > old_sq_y):    
-                    old_sq_y = current_sq_y
-                    bottom_alive_sq = old_sq_y 
-
-                elif (current_sq_y < old_sq_y): 
-                    print("old and new y",old_sq_y,current_sq_y) 
-                    old_sq_y = current_sq_y
-                    top_alive_sq = old_sq_y 
-
                
-
-                #finds farthest left and right alive squares
               
                 
 
 
-    print("tp ",top_alive_sq,"btm ",bottom_alive_sq,"left ",left_alive_sq,"right ",right_alive_sq)
+    print("tp ",min_y,"btm ",max_y,"left ",min_x,"right ",max_x)
 
-    height_dist = abs(top_alive_sq - bottom_alive_sq)
-
-    width_dist = abs(left_alive_sq - right_alive_sq)
-
-
-
-
-
-                #Works out the most left alive square and most right square
+    y_diff = abs(min_y-max_y)
+    x_diff = abs(min_x-max_x)
                 
-    for j in range (width_dist):
-        for i in range (height_dist):
+    for i in range (x_diff):
+        for j in range (y_diff):
 
-            if(j == width_dist):
-                       #add , to end of coor
+            if(i == x_diff):
                 coord += ','
-            if (board[left_alive_sq+i][top_alive_sq+j]==True):
-                coord += '1'
-                print(coord)
-
-            else:
-                coord += '0'
-                print(coord)
+            
+            if((board[min_x+i][min_y]==True) or (board[min_x][min_y+j]==True)):
     
+                coord += '1'
+            
 
+            elif((board[min_x+i][min_y]==False) or (board[min_x][min_y+j]==False)):
+                coord += '0'
+    
+    print(coord)
 
 
 
