@@ -6,12 +6,7 @@ from pattern import Pattern
 from colours import Colour
 
 colours = []
-old_sq_x = 0
-old_sq_y = 0
-top_alive_sq = 0
-bottom_alive_sq = 0
-left_alive_sq = 0
-right_alive_sq = 0
+
 
 #Tool to load patter from json
 def load_patterns(file):
@@ -69,83 +64,9 @@ def save_to_json(file, js_obj):
 def save_custom_pattern(board,name):
 
     file = "data/patterns.json"
+    calculate_furthest_points(board)
 
-    global old_sq_x
-    global old_sq_y
-    global top_alive_sq
-    global bottom_alive_sq
-    global left_alive_sq
-    global right_alive_sq
-
-    #calculates the farthest top,bottom,left,right alive squares
-    #TODO Bug save has to be ran twice for the top and bottm alive squares to print correctly ? -SC
-    #TODO flaw in logic 
-    for i in range(len(board)):
-        for j in range (len(board[0])):
-
-            if(board[i][j]==True):
-                current_sq_x = i 
-                current_sq_y = j
-                
-                #Finds the furthest top and bottom alive squares
-                if(current_sq_x < old_sq_x):
-            
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    left_alive_sq = old_sq_x,old_sq_y   
-                
-                
-                elif(current_sq_x > old_sq_x):
-          
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    right_alive_sq = old_sq_x,old_sq_y
-
-
-
-                if(current_sq_y > old_sq_y):
     
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    bottom_alive_sq = old_sq_x,old_sq_y   
-
-                elif (current_sq_y < old_sq_y):
-                    
-                    old_sq_y = current_sq_y
-                    old_sq_x = current_sq_x
-                    top_alive_sq = old_sq_x,old_sq_y
-
-
-                #finds farthest left and right alive squares
-              
-                
-
-
-    print("tp ",top_alive_sq,"btm ",bottom_alive_sq,"left ",left_alive_sq,"right ",right_alive_sq)
-
-
-
-
-
-                #Works out the most left alive square and most right square
-                
-           #for j in range (width_distance):
-#               for i in range (height_distance):
-
- #                  if(j == width_dist):
-                       #add , to end of coord
-                   
-  #                 if (board[left_alive+i][top_alive+j]==True):
-                       # if  j == width_dist add , to end of string
-   #                    pass
-    #               if (board[left_alive+i][top_alive+j]==False):
-     #                  pass
-    
-
-
-
-
-    #if no pattern to save coord ="" and func returns none
     
 
     #removes last , at end of coord string         
@@ -155,7 +76,90 @@ def save_custom_pattern(board,name):
     #save_to_json(file,json_obj)
 
 
+def calculate_furthest_points(board):
+
+
+    old_sq_x = 0
+    old_sq_y = 0
+    top_alive_sq = 0
+    bottom_alive_sq = 0
+    left_alive_sq = 0
+    right_alive_sq = 0
     
+    coord =""
+
+    #calculates the farthest top,bottom,left,right alive squares
+    #TODO Bug save has to be ran twice for the top and bottm alive squares to print correctly ? -SC
+    #TODO flaw in logic 
+    for i in range(len(board)):
+        for j in range (len(board[0])):
+
+            if(board[i][j]==True):
+            
+                current_sq_x = i 
+                current_sq_y = j
+                
+                if(current_sq_x < old_sq_x):
+                    old_sq_x = current_sq_x
+                    left_alive_sq = old_sq_x
+                
+                
+                elif(current_sq_x > old_sq_x):
+                    old_sq_x = current_sq_x
+                    right_alive_sq = old_sq_x
+
+
+                
+
+                if(current_sq_y > old_sq_y):    
+                    old_sq_y = current_sq_y
+                    bottom_alive_sq = old_sq_y 
+
+                elif (current_sq_y < old_sq_y): 
+                    print("old and new y",old_sq_y,current_sq_y) 
+                    old_sq_y = current_sq_y
+                    top_alive_sq = old_sq_y 
+
+               
+
+                #finds farthest left and right alive squares
+              
+                
+
+
+    print("tp ",top_alive_sq,"btm ",bottom_alive_sq,"left ",left_alive_sq,"right ",right_alive_sq)
+
+    height_dist = abs(top_alive_sq - bottom_alive_sq)
+
+    width_dist = abs(left_alive_sq - right_alive_sq)
+
+
+
+
+
+                #Works out the most left alive square and most right square
+                
+    for j in range (width_dist):
+        for i in range (height_dist):
+
+            if(j == width_dist):
+                       #add , to end of coor
+                coord += ','
+            if (board[left_alive_sq+i][top_alive_sq+j]==True):
+                coord += '1'
+                print(coord)
+
+            else:
+                coord += '0'
+                print(coord)
+    
+
+
+
+
+    #if no pattern to save coord ="" and func returns none
+
+    return
 
 
 
