@@ -6,8 +6,7 @@ import tools
 import pygame
 import sys
 
-
-#TODO Allow user to save custom patterns into json - JC
+#TODO Make it so the user has to enter a name for the pattern - JC
 
 #Enables and disables debug board
 debug = False
@@ -220,7 +219,7 @@ class Grid_gui:
                             
                            #Mouse event for save board
                             elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
-                                tools.save_custom_pattern(self.temp_grid,self.user_text)
+                                tools.save_custom_pattern(self.temp_grid,self.user_text, pattern_file)
 
                             #Mouse events for reset
                             elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):

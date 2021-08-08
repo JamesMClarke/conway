@@ -62,30 +62,11 @@ def save_to_json(file, js_obj):
         except FileNotFoundError:
             print("error")
 
-def save_custom_pattern(board,name):
+def save_custom_pattern(board,name, file):
 
-    file = "data/patterns.json"
-    calculate_furthest_points(board)
+    min_x, max_x, min_y, max_y = 0,0,0,0
 
-    
-    
-
-    #removes last , at end of coord string         
-    #coord = coord.rstrip(coord[-1])
-    #pattern_type = "User"
-    #json_obj = {"name":name,"pattern":coord,"type":pattern_type}
-    #save_to_json(file,json_obj)
-
-
-def calculate_furthest_points(board):
-
-    min_x = 0
-    max_x = 0
-
-    min_y = 0
-    max_y = 0
-
-    coord =""
+    coord = ''
 
     #calculates the farthest top,bottom,left,right alive squares
     for i in range(len(board)):
@@ -93,49 +74,43 @@ def calculate_furthest_points(board):
 
             if(board[i][j]==True):
 
-                if ((i < min_x) or (i == 0)):
+                if ((i < min_x) or (min_x == 0)):
                     min_x = i
                 
-                elif(i > max_x):
+                if(i > max_x):
                     max_x = i
 
-                if ((j < min_y) or (j == 0)):
+                if ((j < min_y) or (min_y == 0)):
                     min_y = j
 
-                elif(j > max_y):
+                if(j > max_y):
                     max_y = j
-
-                
-               
-              
-                
 
 
     print("tp ",min_y,"btm ",max_y,"left ",min_x,"right ",max_x)
-
-    y_diff = abs(min_y-max_y)
-    x_diff = abs(min_x-max_x)
                 
-    for i in range (x_diff):
-        for j in range (y_diff):
-
-            if(i == x_diff):
-                coord += ','
-            
-            if((board[min_x+i][min_y]==True) or (board[min_x][min_y+j]==True)):
     
+    for j in range (min_y, max_y+1):
+        for i in range (min_x, max_x+1):
+            if(board[i][j]==True):
                 coord += '1'
-            
-
-            elif((board[min_x+i][min_y]==False) or (board[min_x][min_y+j]==False)):
+            else:
                 coord += '0'
+
+        coord += ','
     
+    
+
+
+    
+
+    #removes last , at end of coord string         
+    coord = coord.rstrip(coord[-1])
     print(coord)
-
-
-
-    #if no pattern to save coord ="" and func returns none
-
+    pattern_type = "User"
+    json_obj = {"name":name,"pattern":coord,"type":pattern_type}
+    save_to_json(file,json_obj)
+    
     return
 
 
