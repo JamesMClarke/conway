@@ -63,7 +63,7 @@ def save_to_json(file, js_obj):
             print("error")
 
 def save_custom_pattern(board,name, file):
-
+    
     min_x, max_x, min_y, max_y = 0,0,0,0
 
     coord = ''
@@ -112,7 +112,43 @@ def save_custom_pattern(board,name, file):
     save_to_json(file,json_obj)
     
     return
+#pass custom patttern name
+def delete_pattern(name):
+    #if type = User
+    file = 'data/patterns.json'
+    pattern_name = name
 
+    try:
+        with open(file,'r+') as file:
+            data = js.load(file)
+            pattern_data = data['patterns']
+            for i in range (len(pattern_data)):
+                
+                if(pattern_data[i]['name'] == pattern_name):
+                    if(pattern_data[i]['type'] == "User"):
+                        print(pattern_data[i]['type'])
+
+                        
+                        file.seek(0)
+                        del pattern_data[i]['name'],pattern_data[i]['pattern'],pattern_data[i]['type']
+                        file.truncate(0)
+                        js.dump(data,file,indent=4)
+                        break
+                    elif(not pattern_data[i]['type'] == 'User'):
+                        print('Protected pattern')
+                        break
+                    
+
+        
+    
+
+
+                
+
+                   
+    except FileNotFoundError:
+
+        print("error")
 
 
 
@@ -120,4 +156,3 @@ def save_custom_pattern(board,name, file):
 
 
 load_colours("data/colours.json")
-    

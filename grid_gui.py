@@ -102,6 +102,7 @@ class Grid_gui:
             pattern = font.render(patterns[self.current_pattern].get_pattern_type(), True, text_colour)
             self.screen.blit(pattern,(display_width+90, 260))
 
+
             #Draws text input
             input_rect =  pygame.Rect(display_width+10,300,260,30)
             pygame.draw.rect(self.screen,backgroup_colour,input_rect)
@@ -217,18 +218,28 @@ class Grid_gui:
                                 self.current_pattern = self.current_pattern+1
                                 self.set_current_pattern()
                             
-                           #Mouse event for save board
+                           #Mouse event for save pattern
                             elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
                                 tools.save_custom_pattern(self.temp_grid,self.user_text, pattern_file)
+                                #TODO reloads patterns to update with latest custom pattern pattern
+                            
+                            
+                            elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):
+                            
+                                
+                                pattern_to_delete = patterns[self.current_pattern].get_pattern_name()
+                                tools.delete_pattern(pattern_to_delete)
+
+
 
                             #Mouse events for reset
-                            elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 420 and y<460) and (x >= display_width+10 and x <= display_width+200)):
                                 print("reset")
                                 self.game_over = True
                                 self.reset_board()
 
                             #Mouse event to quit game
-                            elif((y >= 420 and y<=460) and (x >= display_width+10 and x <= display_width+200)):
+                            elif((y >= 460 and y<=500) and (x >= display_width+10 and x <= display_width+200)):
                                 pygame.quit()
                                 sys.exit()
                                 
@@ -317,9 +328,14 @@ class Grid_gui:
 
         self.screen.blit(font.render("Save pattern",True,text_colour),(display_width+10,340))
 
-        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,380))
+        self.screen.blit(font.render("Delete pattern",True,text_colour),(display_width+10,380))
 
-        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,420))
+
+        self.screen.blit(font.render("Reset Board",True,text_colour),(display_width+10,420))
+
+        self.screen.blit(font.render("Quit game",True,text_colour),(display_width+10,460))
+
+
         
     #Loads board onto the grid
     def load_sq(self):
