@@ -1,3 +1,4 @@
+from pattern import Pattern
 from board import Board
 from cords import Cords
 from random import getrandbits
@@ -221,7 +222,8 @@ class Grid_gui:
                            #Mouse event for save pattern
                             elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
                                 tools.save_custom_pattern(self.temp_grid,self.user_text, pattern_file)
-                                #TODO reloads patterns to update with latest custom pattern pattern
+                                patterns.append(Pattern(self.user_text, pattern_file,"User"))
+                                
                             
                             
                             elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):
