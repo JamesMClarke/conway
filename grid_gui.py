@@ -228,7 +228,11 @@ class Grid_gui:
                             
                                 
                                 pattern_to_delete = patterns[self.current_pattern].get_pattern_name()
+                                
                                 tools.delete_pattern(pattern_to_delete)
+                                patterns.pop(self.current_pattern)
+                                self.current_pattern = self.current_pattern -1
+                                self.set_current_pattern()
 
 
 
