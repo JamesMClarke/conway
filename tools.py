@@ -130,7 +130,7 @@ def delete_pattern(name):
 
                         
                         file.seek(0)
-                        del pattern_data[i]['name'],pattern_data[i]['pattern'],pattern_data[i]['type']
+                        pattern_data.pop(i)              
                         file.truncate(0)
                         js.dump(data,file,indent=4)
                         break
