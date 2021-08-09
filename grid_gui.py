@@ -7,7 +7,7 @@ import tools
 import pygame
 import sys
 
-#TODO Make it so the user has to enter a name for the pattern - JC
+#TODO Add UI prompt if pattern name is empty
 
 #Enables and disables debug board
 debug = False
@@ -219,24 +219,23 @@ class Grid_gui:
                                 self.current_pattern = self.current_pattern+1
                                 self.set_current_pattern()
                             
-                           #Mouse event for save pattern
+                           #Mouse event for save pattern if user_text empty do not not save
                             elif((y >= 340 and y<=380) and (x >= display_width+10 and x <= display_width+200)):
-                                tools.save_custom_pattern(self.temp_grid,self.user_text, pattern_file)
-                                patterns.append(Pattern(self.user_text, pattern_file,"User"))
+                                if(self.user_text != ""):
+                                    tools.save_custom_pattern(self.temp_grid,self.user_text, pattern_file)
+                                    patterns.append(Pattern(self.user_text, pattern_file,"User"))
+                                else:
+                                    print("enter a pattern name")
                                 
                             
-                            
+                            #Mouse event for delete pattern
                             elif((y >= 380 and y<420) and (x >= display_width+10 and x <= display_width+200)):
                             
-                                
                                 pattern_to_delete = patterns[self.current_pattern].get_pattern_name()
-                                
                                 tools.delete_pattern(pattern_to_delete)
                                 patterns.pop(self.current_pattern)
                                 self.current_pattern = self.current_pattern -1
                                 self.set_current_pattern()
-
-
 
                             #Mouse events for reset
                             elif((y >= 420 and y<460) and (x >= display_width+10 and x <= display_width+200)):
